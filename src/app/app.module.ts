@@ -12,6 +12,9 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { AddClientesComponent } from './admin/dashboard/add-clientes/add-clientes.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +25,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     DashboardComponent,
     AddClientesComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    NbThemeModule.forRoot({ name: 'default' }),
+    NbLayoutModule,
+    NbEvaIconsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

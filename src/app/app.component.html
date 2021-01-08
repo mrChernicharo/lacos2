@@ -1,10 +1,18 @@
-<div class="app-container">
-  <app-header> </app-header>
+<nb-layout>
+  <nb-layout-header fixed>
+    <!-- Insert header here -->
+    <app-header> </app-header>
+  </nb-layout-header>
 
-  <div class="page-container">
-    <router-outlet></router-outlet>
-  </div>
-  <!-- <app-auth>
-    <p>Projected content</p>
-  </app-auth> -->
-</div>
+  <nb-layout-column>
+    <div class="app-container">
+      <div class="page-container">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </nb-layout-column>
+
+  <nb-layout-footer fixed>
+    <!-- Insert footer here -->
+  </nb-layout-footer>
+</nb-layout>
