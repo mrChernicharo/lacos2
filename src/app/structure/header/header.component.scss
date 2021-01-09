@@ -6,16 +6,20 @@
   justify-content: space-between;
   height: 38px;
 
+  .left-column {
+    display: flex;
+    align-items: center;
+
+    img.lacos-logo {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
   img.avatar-img {
     width: 28px;
     height: 28px;
   }
-
-  img.lacos-logo {
-    width: 28px;
-    height: 28px;
-  }
-
   // .action-block {
   // border: 1px solid blue;
   // width: 50px;

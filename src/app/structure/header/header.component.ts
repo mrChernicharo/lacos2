@@ -33,8 +33,20 @@ export class HeaderComponent implements OnInit {
   }
 
   goToPage(page: string) {
-    page === 'profissional'
-      ? this.router.navigate(['profissional/novo-relatorio'])
-      : this.router.navigate(['admin/clientes']);
+    console.log(page);
+    switch (page) {
+      case 'profissional':
+        this.router.navigate(['profissional/novo-relatorio']);
+        break;
+      case 'admin':
+        this.router.navigate(['admin/clientes']);
+        break;
+      case 'novo relatorio':
+        this.router.navigate(['profissional']);
+        break;
+      case 'clientes':
+        this.router.navigate(['admin']);
+        break;
+    }
   }
 }

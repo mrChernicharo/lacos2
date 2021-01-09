@@ -1,33 +1,57 @@
 <ng-container *ngIf="routerState$ | async as routerState">
-  <!--  -->
-  <div class="action-block" [ngSwitch]="true">
-    <div *ngSwitchDefault>
-      <img class="lacos-logo" [src]="lacosIcon" />
-    </div>
-    <!-- shape="round" -->
+  <div class="left-column">
+    <img class="lacos-logo" [src]="lacosIcon" />
 
-    <div *ngSwitchCase="routerState === 'profissional'">
-      <button
-        nbButton
-        status="success"
-        size="small"
-        appearance="ghost"
-        (click)="goToPage(routerState)"
-      >
-        <nb-icon icon="plus-outline"></nb-icon> novo relatório
-      </button>
-    </div>
+    <!--  -->
+    <div class="action-block" [ngSwitch]="true">
+      <div *ngSwitchDefault></div>
+      <!-- shape="round" -->
 
-    <div *ngSwitchCase="routerState === 'admin'">
-      <button
-        nbButton
-        status="success"
-        size="small"
-        appearance="ghost"
-        (click)="goToPage(routerState)"
-      >
-        <nb-icon icon="person-add-outline"></nb-icon> cadastrar clientes
-      </button>
+      <div *ngSwitchCase="routerState === 'profissional'">
+        <button
+          nbButton
+          status="success"
+          size="small"
+          appearance="ghost"
+          (click)="goToPage(routerState)"
+        >
+          <nb-icon icon="plus-outline"></nb-icon> novo relatório
+        </button>
+      </div>
+
+      <div *ngSwitchCase="routerState === 'novo relatorio'">
+        <button
+          nbButton
+          size="small"
+          appearance="ghost"
+          (click)="goToPage(routerState)"
+        >
+          <nb-icon icon="arrow-back-outline"></nb-icon>
+        </button>
+      </div>
+
+      <div *ngSwitchCase="routerState === 'admin'">
+        <button
+          nbButton
+          status="success"
+          size="small"
+          appearance="ghost"
+          (click)="goToPage(routerState)"
+        >
+          <nb-icon icon="person-add-outline"></nb-icon> cadastrar clientes
+        </button>
+      </div>
+
+      <div *ngSwitchCase="routerState === 'clientes'">
+        <button
+          nbButton
+          size="small"
+          appearance="ghost"
+          (click)="goToPage(routerState)"
+        >
+          <nb-icon icon="arrow-back-outline"></nb-icon>
+        </button>
+      </div>
     </div>
   </div>
 
