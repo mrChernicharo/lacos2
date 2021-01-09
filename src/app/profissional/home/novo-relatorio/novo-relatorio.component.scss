@@ -10,14 +10,14 @@ nb-calendar {
 }
 
 .consulta-form {
-  border: 1px solid green;
+  // border: 1px solid green;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-end;
 
   .select-wrapper {
     display: flex;
-    border: 1px solid grey;
+    // border: 1px solid grey;
     flex-direction: column;
     width: 212px;
 

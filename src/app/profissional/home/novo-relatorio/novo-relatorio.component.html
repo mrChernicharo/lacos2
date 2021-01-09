@@ -4,7 +4,6 @@
     <nb-stepper #stepper>
       <!-- /*********************/ STEP #1 /*********************/ -->
       <nb-step label="Selecione a Data" [stepControl]="calendarForm">
-        <!-- <app-calendar-form></app-calendar-form> -->
         <form [formGroup]="calendarForm">
           <span>selecione a data</span>
           <nb-calendar
@@ -12,7 +11,6 @@
             (dateChange)="handleDateChange($event)"
           ></nb-calendar>
           <h4 class="selected-date">{{ date | date }}</h4>
-          <!-- <input readonly nbInput [value]="date" formControlName="date" /> -->
           <button nbButton status="success" [disabled]="!date" nbStepperNext>
             <nb-icon icon="arrow-right"></nb-icon>
             Próximo
@@ -26,8 +24,6 @@
           class="consulta-form"
           *ngFor="let consulta of getConsultasControls(); let i = index"
         >
-          <!-- [formGroup]="consultaForm" -->
-          <!-- <nb-form-field> -->
           <div class="button-wrapper">
             <button
               *ngIf="i > 0"
@@ -43,7 +39,6 @@
           <div class="select-wrapper">
             <nb-select-label>Paciente</nb-select-label>
             <nb-select size="small" status="basic">
-              <!-- [status]="getFieldStatus('nomePaciente')" -->
               <nb-option
                 *ngFor="let cliente of clientes"
                 [value]="cliente.nome"
@@ -95,14 +90,24 @@
           Voltar
         </button>
 
-        <button nbButton status="success" nbStepperNext>
+        <button
+          nbButton
+          status="success"
+          (click)="handleFormData($event)"
+          nbStepperNext
+        >
           <nb-icon icon="arrow-right"></nb-icon>
           Próximo
         </button>
       </nb-step>
 
       <!-- /*********************/ STEP #3 /*********************/ -->
-      <nb-step label="Revisão" [stepControl]="calendarForm">
+      <nb-step label="revisao" [stepControl]="revisionTable">
+        <ng-template #revisao>
+          <div>
+            step number three
+          </div>
+        </ng-template>
         <button nbButton nbStepperPrevious>
           <nb-icon icon="arrow-back-outline"></nb-icon>
           Voltar
@@ -116,5 +121,3 @@
     </nb-stepper>
   </nb-card-body>
 </nb-card>
-<!-- <input [nbDatepicker]="datepicker" />
-<nb-datepicker #datepicker></nb-datepicker> -->
