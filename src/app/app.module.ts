@@ -12,8 +12,40 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { AddClientesComponent } from './admin/dashboard/add-clientes/add-clientes.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
+import {
+  NbThemeModule,
+  NbLayoutModule,
+  NbCardModule,
+  NbFormFieldModule,
+  NbInputModule,
+  NbButtonModule,
+  NbDatepickerModule,
+  NbCalendarModule,
+  NbSelectModule,
+  NbAccordionModule,
+  NbDialogModule,
+  NbTableModule,
+  NbIconModule,
+  NbOptionModule,
+} from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+
+const nbModules = [
+  NbLayoutModule,
+  NbEvaIconsModule,
+  NbCardModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbInputModule,
+  NbButtonModule,
+  NbDatepickerModule,
+  NbCalendarModule,
+  NbSelectModule,
+  NbAccordionModule,
+  NbDialogModule,
+  NbTableModule,
+  NbOptionModule,
+];
 
 @NgModule({
   declarations: [
@@ -30,8 +62,7 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     AppRoutingModule,
     BrowserAnimationsModule,
     NbThemeModule.forRoot({ name: 'default' }),
-    NbLayoutModule,
-    NbEvaIconsModule,
+    ...nbModules,
   ],
   providers: [],
   bootstrap: [AppComponent],
