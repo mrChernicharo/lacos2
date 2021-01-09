@@ -44,7 +44,11 @@
             <nb-select-label>Paciente</nb-select-label>
             <nb-select size="small" status="basic">
               <!-- [status]="getFieldStatus('nomePaciente')" -->
-              <!-- <nb-option *ngFor="let consulta of reportForm"></nb-option> -->
+              <nb-option
+                *ngFor="let cliente of clientes"
+                [value]="cliente.nome"
+                >{{ cliente.nome }}</nb-option
+              >
             </nb-select>
           </div>
           <!-- </nb-form-field> -->

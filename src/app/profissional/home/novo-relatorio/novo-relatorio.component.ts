@@ -1,4 +1,10 @@
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  Inject,
+  Input,
+  OnInit,
+  ViewEncapsulation,
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -12,6 +18,7 @@ import { RxwebValidators } from '@rxweb/reactive-form-validators';
 
 import { CalendarFormComponent } from './calendar-form/calendar-form.component';
 import { ReportFormComponent } from './report-form/report-form.component';
+import { Cliente } from 'src/app/models/cliente.model';
 
 @Component({
   selector: 'app-novo-relatorio',
@@ -26,6 +33,8 @@ export class NovoRelatorioComponent implements OnInit {
   calendarForm: FormGroup;
   reportForm: FormGroup;
   consultaForm: FormGroup;
+
+  @Input() clientes: Cliente[];
   horarios = HORARIOS;
   modalidades = MODALIDADES;
 
@@ -39,6 +48,7 @@ export class NovoRelatorioComponent implements OnInit {
     this.calendarForm = new FormGroup({
       date: new FormControl('', Validators.required),
     });
+    console.log(this.clientes);
 
     this.createReportForm();
     this.addConsulta();

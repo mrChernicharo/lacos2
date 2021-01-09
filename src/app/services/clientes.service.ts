@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Cliente } from '../models/cliente.model';
 import { DbService } from './db.service';
 
@@ -7,10 +8,15 @@ import { DbService } from './db.service';
   providedIn: 'root',
 })
 export class ClientesService {
-  private clientesSubject$ = new BehaviorSubject<Cliente[]>([]);
-  public clientes$ = this.clientesSubject$.asObservable();
+  // private clientesSubject$ = new BehaviorSubject<Cliente[]>([]);
+  // public clientes$ = this.clientesSubject$.asObservable();
+  _clientes$: Observable<Cliente[]>;
 
-  constructor(private db: DbService) {}
+  constructor(private db: DbService) {
+    this._clientes$ = this.db
+      .fetchAllClientes()
+      .pipe(tap((data) => console.log(data)));
+  }
 
   addCliente(
     formData: Omit<Cliente, 'dataCadastro' | 'atualizadoEm' | 'atendimentos'>
@@ -25,7 +31,7 @@ export class ClientesService {
     this.db.createCliente(cliente);
   }
 
-  getAllClientes() {
-    return this.db.fetchAllClientes();
-  }
+  // getAllClientes() {
+  // this._clientes$
+  // }
 }

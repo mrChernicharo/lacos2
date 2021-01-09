@@ -1,2 +1,5 @@
-<p>home works!</p>
-<router-outlet></router-outlet>
+<ng-container *ngIf="clientes$ | async as clientes">
+  <p>home works!</p>
+  <!-- <router-outlet></router-outlet> -->
+  <app-novo-relatorio [clientes]="clientes"></app-novo-relatorio>
+</ng-container>
