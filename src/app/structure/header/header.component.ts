@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
 import { appIcons } from '../../../assets/app-icons';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +11,9 @@ import { tap } from 'rxjs/operators';
 })
 export class HeaderComponent implements OnInit {
   defaultUserIcon = appIcons.curlyGuy;
-  routerState$: Observable<any>;
+  lacosIcon = appIcons.lacos;
+
+  routerState$: Observable<string>;
 
   constructor(
     private router: Router,
@@ -20,7 +22,13 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.routerState$ = this.router.events.pipe(
-      tap((state) => console.log(state))
+      filter(
+        (state: any) => state.__proto__.constructor.name === 'NavigationStart'
+      ),
+      map((state: NavigationStart) => {
+        console.log(state.url);
+        return state.url;
+      })
     );
   }
 }

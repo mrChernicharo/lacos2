@@ -1,3 +1,20 @@
 <ng-container *ngIf="routerState$ | async as routerState">
-  <img class="avatar-img" [src]="defaultUserIcon" />
+  <!--  -->
+  <div class="action-block" [ngSwitch]="true">
+    <div *ngSwitchDefault>
+      <img class="lacos-logo" [src]="lacosIcon" />
+    </div>
+
+    <div *ngSwitchCase="routerState === '/profissional'">
+      <nb-icon icon="plus-outline" status="success"></nb-icon>
+    </div>
+
+    <div *ngSwitchCase="routerState === '/admin'">
+      <nb-icon icon="person-add-outline" status="success"></nb-icon>
+    </div>
+  </div>
+
+  <div class="avatar-block">
+    <img class="avatar-img" [src]="defaultUserIcon" />
+  </div>
 </ng-container>
