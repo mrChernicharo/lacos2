@@ -28,7 +28,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss","node_modules/@nebular/theme/styles/prebuilt/default.css"
+              "src/styles.scss",
+              "node_modules/@nebular/theme/styles/prebuilt/default.css"
             ],
             "scripts": []
           },
@@ -123,6 +124,10 @@
               "devServerTarget": "lacos2:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
     }

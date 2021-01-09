@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Cliente } from '../models/cliente.model';
+import { DbService } from './db.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClientesService {
-  constructor() {}
+  constructor(private db: DbService) {}
 
-  addCliente(formData: Partial<Cliente>) {
+  addCliente(
+    formData: Omit<Cliente, 'dataCadastro' | 'atualizadoEm' | 'atendimentos'>
+  ) {
     console.log(formData);
 
     const cliente = Object.assign(formData, {
@@ -17,5 +20,6 @@ export class ClientesService {
     });
 
     console.log(cliente as Cliente);
+    this.db.createCliente(cliente);
   }
 }

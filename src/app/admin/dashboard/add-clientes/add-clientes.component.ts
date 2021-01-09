@@ -38,6 +38,11 @@ export class AddClientesComponent implements OnInit {
   }
 
   saveCliente() {
-    this.clientesService.addCliente(this.clienteForm.value as Partial<Cliente>);
+    this.clientesService.addCliente(
+      this.clienteForm.value as Omit<
+        Cliente,
+        'dataCadastro' | 'atualizadoEm' | 'atendimentos'
+      >
+    );
   }
 }

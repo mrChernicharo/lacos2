@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "lacos2-dev"
+  },
+  "targets": {
+    "lacos2-dev": {
+      "hosting": {
+        "lacos2": [
+          "lacos2-dev"
+        ]
+      }
+    }
+  }
+}
