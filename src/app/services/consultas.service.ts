@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class ConsultasService {
   constructor() {}
 }
-export const MODALIDADES: string[] = ['online', 'presencial'];
+export const MODALIDADES: string[] = ['online', 'presencial', 'externa'];
 export const HORARIOS: string[] = [
   '07:00',
   '07:30',
