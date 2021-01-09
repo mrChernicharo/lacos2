@@ -4,14 +4,35 @@
     <div *ngSwitchDefault>
       <img class="lacos-logo" [src]="lacosIcon" />
     </div>
+    <!-- shape="round" -->
 
-    <div *ngSwitchCase="routerState === '/profissional'">
-      <nb-icon icon="plus-outline" status="success"></nb-icon>
+    <div *ngSwitchCase="routerState === 'profissional'">
+      <button
+        nbButton
+        status="success"
+        size="small"
+        appearance="ghost"
+        (click)="goToPage(routerState)"
+      >
+        <nb-icon icon="plus-outline"></nb-icon> novo relatório
+      </button>
     </div>
 
-    <div *ngSwitchCase="routerState === '/admin'">
-      <nb-icon icon="person-add-outline" status="success"></nb-icon>
+    <div *ngSwitchCase="routerState === 'admin'">
+      <button
+        nbButton
+        status="success"
+        size="small"
+        appearance="ghost"
+        (click)="goToPage(routerState)"
+      >
+        <nb-icon icon="person-add-outline"></nb-icon> cadastrar clientes
+      </button>
     </div>
+  </div>
+
+  <div class="page-title">
+    <span>{{ routerState | titlecase }}</span>
   </div>
 
   <div class="avatar-block">

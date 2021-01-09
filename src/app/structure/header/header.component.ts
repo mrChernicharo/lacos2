@@ -26,9 +26,15 @@ export class HeaderComponent implements OnInit {
         (state: any) => state.__proto__.constructor.name === 'NavigationStart'
       ),
       map((state: NavigationStart) => {
-        console.log(state.url);
-        return state.url;
+        console.log(state.url.split('/'));
+        return state.url.split('/').pop().replace('-', ' ');
       })
     );
+  }
+
+  goToPage(page: string) {
+    page === 'profissional'
+      ? this.router.navigate(['profissional/novo-relatorio'])
+      : this.router.navigate(['admin/clientes']);
   }
 }
