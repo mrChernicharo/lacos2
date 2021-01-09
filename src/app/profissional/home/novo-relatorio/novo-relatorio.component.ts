@@ -12,7 +12,7 @@ import { ReportFormComponent } from './report-form/report-form.component';
 })
 export class NovoRelatorioComponent implements OnInit {
   // date = new Date();
-  date = null;
+  date: Date = null;
   calendarForm: FormGroup;
   reportForm;
 
@@ -24,5 +24,11 @@ export class NovoRelatorioComponent implements OnInit {
     });
 
     this.reportForm = new FormArray([]);
+  }
+
+  handleDateChange(date: Date) {
+    console.log(date);
+    this.date = date;
+    this.calendarForm.get('date').setValue(date);
   }
 }

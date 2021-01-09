@@ -6,21 +6,24 @@
         <!-- <app-calendar-form></app-calendar-form> -->
         <ng-container>
           <form>
-            <h4>selecione a data</h4>
-            <h4>{{ date | date }}</h4>
-            <nb-calendar [(date)]="date"></nb-calendar>
-
-            <!-- <nb-form-field> -->
-            <!-- <input nbInput /> -->
-            <!-- <input [nbDatepicker]="datepicker" />
-              <nb-datepicker #datepicker></nb-datepicker> -->
-            <!-- </nb-form-field> -->
+            <span>selecione a data</span>
+            <nb-calendar
+              [date]="date"
+              (dateChange)="handleDateChange($event)"
+            ></nb-calendar>
+            <h4 class="selected-date">{{ date | date }}</h4>
+            <button nbButton status="success" [disabled]="!date" nbStepperNext>
+              Próximo
+            </button>
           </form>
         </ng-container>
       </nb-step>
 
       <nb-step label="Relatório" [stepControl]="reportForm">
         <!-- <app-report-form></app-report-form> -->
+        <button nbButton nbStepperPrevious>
+          <nb-icon icon="arrow-back-outline"></nb-icon> Voltar
+        </button>
       </nb-step>
     </nb-stepper>
   </nb-card-body>
