@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  Router,
-  ActivatedRoute,
-  ActivatedRouteSnapshot,
-} from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { appIcons } from '../../../assets/app-icons';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -13,13 +10,13 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  defaultUserIcon = appIcons.curlyGuy;
   routerState$: Observable<any>;
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute
-  ) // private routeSnapshot: ActivatedRouteSnapshot
-  {}
+    private activatedRoute: ActivatedRoute // private routeSnapshot: ActivatedRouteSnapshot
+  ) {}
 
   ngOnInit(): void {
     this.routerState$ = this.router.events.pipe(
