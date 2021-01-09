@@ -22,6 +22,7 @@
       <nb-step label="Relatório" [stepControl]="reportForm">
         <div
           class="consulta-form"
+          [formGroup]="consulta"
           *ngFor="let consulta of getConsultasControls(); let i = index"
         >
           <div class="button-wrapper">
@@ -38,7 +39,11 @@
 
           <div class="select-wrapper">
             <nb-select-label>Paciente</nb-select-label>
-            <nb-select size="small" status="basic">
+            <nb-select
+              formControlName="nomePaciente"
+              size="small"
+              status="basic"
+            >
               <nb-option
                 *ngFor="let cliente of clientes"
                 [value]="cliente.nome"
@@ -51,7 +56,7 @@
           <!-- <nb-form-field> -->
           <div class="select-wrapper">
             <nb-select-label>Horário</nb-select-label>
-            <nb-select status="basic" size="small">
+            <nb-select formControlName="horario" status="basic" size="small">
               <!-- [status]="getFieldStatus('horario')" -->
               <nb-option *ngFor="let hora of horarios" [value]="hora">
                 {{ hora }}
@@ -62,7 +67,12 @@
           <div class="select-wrapper">
             <!-- <nb-form-field> -->
             <nb-select-label>Modalidade</nb-select-label>
-            <nb-select [selected]="modalidades[0]" size="small" status="basic">
+            <nb-select
+              formControlName="modalidade"
+              [selected]="modalidades[0]"
+              size="small"
+              status="basic"
+            >
               <!-- [status]="getFieldStatus('modalidade')" -->
               <nb-option
                 *ngFor="let modalidade of modalidades"

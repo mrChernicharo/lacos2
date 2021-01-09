@@ -61,11 +61,6 @@ export class NovoRelatorioComponent implements OnInit {
     console.log(this.reportForm.value);
   }
 
-  handleDateChange(date: Date) {
-    this.date = date;
-    this.calendarForm.get('date').setValue(date);
-  }
-
   createReportForm() {
     return (this.reportForm = this.fb.group({
       nomeProfissional: new FormControl(''),
@@ -76,11 +71,16 @@ export class NovoRelatorioComponent implements OnInit {
       consultas: this.fb.array([]),
     }));
   }
+  handleDateChange(date: Date) {
+    this.date = date;
+    this.calendarForm.get('date').setValue(date);
+    this.reportForm.get('dataRelatorio').patchValue(date);
+  }
 
   newConultaForm() {
     return this.fb.group({
       nomePaciente: new FormControl('', Validators.required),
-      idPaciente: new FormControl(''),
+      // idPaciente: new FormControl(''),
       modalidade: new FormControl('', Validators.required),
       horario: new FormControl('', [
         Validators.required,
