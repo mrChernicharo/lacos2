@@ -4,15 +4,22 @@
     <nb-card-header><h3>Cadastrar cliente</h3></nb-card-header>
 
     <nb-card-body>
-      <form>
+      <form [formGroup]="clienteForm">
         <nb-form-field>
           <label for="input-nome">Nome</label>
-          <input type="nome" id="input-nome" placeholder="fulano" nbInput />
+          <input
+            formControlName="nome"
+            type="text"
+            id="input-nome"
+            placeholder="fulano"
+            nbInput
+          />
         </nb-form-field>
 
         <nb-form-field>
           <label for="input-email">Email</label>
           <input
+            formControlName="email"
             type="email"
             id="input-email"
             placeholder="nome@email.com"
@@ -21,15 +28,42 @@
         </nb-form-field>
 
         <nb-form-field>
+          <label for="input-telefone">Telefone</label>
+          <input
+            formControlName="telefone"
+            type="text"
+            id="input-telefone"
+            placeholder="21xxx..."
+            nbInput
+          />
+        </nb-form-field>
+
+        <nb-form-field>
           <div class="select-wrapper">
             <nb-select-label for="selcet-origem">Origem</nb-select-label>
-            <nb-select id="selcet-origem" placeholder="fulano">
+            <nb-select
+              formControlName="origem"
+              id="selcet-origem"
+              [selected]="origens[0]"
+            >
               <nb-option *ngFor="let origem of origens" [value]="origem">
                 {{ origem }}
               </nb-option>
             </nb-select>
           </div>
         </nb-form-field>
+
+        <button
+          nbButton
+          type="button"
+          status="success"
+          size="small"
+          [disabled]="clienteForm.invalid"
+          (click)="saveCliente()"
+        >
+          <!-- appearance="hero" -->
+          <nb-icon icon="plus-outline"></nb-icon> pronto
+        </button>
       </form>
     </nb-card-body>
   </nb-card>
