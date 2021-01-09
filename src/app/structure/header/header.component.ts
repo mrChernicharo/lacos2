@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
         (state: any) => state.__proto__.constructor.name === 'NavigationStart'
       ),
       map((state: NavigationStart) => {
-        console.log(state.url.split('/'));
+        // console.log(state.url.split('/'));
         return state.url.split('/').pop().replace('-', ' ');
       })
     );
@@ -36,17 +36,16 @@ export class HeaderComponent implements OnInit {
     console.log(page);
     switch (page) {
       case 'profissional':
-        this.router.navigate(['profissional/novo-relatorio']);
-        break;
+        return this.router.navigate(['profissional', 'novo-relatorio']);
+
       case 'admin':
-        this.router.navigate(['admin/clientes']);
-        break;
+        return this.router.navigate(['admin', 'clientes']);
+
       case 'novo relatorio':
-        this.router.navigate(['profissional']);
-        break;
+        return this.router.navigate(['profissional']);
+
       case 'clientes':
-        this.router.navigate(['admin']);
-        break;
+        return this.router.navigate(['admin']);
     }
   }
 }

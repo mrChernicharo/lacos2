@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -12,23 +12,23 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { AddClientesComponent } from './admin/dashboard/add-clientes/add-clientes.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {
-  NbThemeModule,
-  NbLayoutModule,
-  NbCardModule,
-  NbFormFieldModule,
-  NbInputModule,
-  NbButtonModule,
-  NbDatepickerModule,
-  NbCalendarModule,
-  NbSelectModule,
-  NbAccordionModule,
-  NbDialogModule,
-  NbTableModule,
-  NbIconModule,
-  NbOptionModule,
-} from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+import {
+  NbAccordionModule,
+  NbButtonModule,
+  NbCalendarModule,
+  NbCardModule,
+  NbDatepickerModule,
+  NbDialogModule,
+  NbFormFieldModule,
+  NbIconModule,
+  NbInputModule,
+  NbLayoutModule,
+  NbOptionModule,
+  NbSelectModule,
+  NbTableModule,
+  NbThemeModule,
+} from '@nebular/theme';
 
 const nbModules = [
   NbLayoutModule,
