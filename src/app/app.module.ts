@@ -6,6 +6,8 @@ import {
 } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
+
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 
@@ -38,7 +40,7 @@ import {
   NbIconModule,
   NbInputModule,
   NbLayoutModule,
-  NbNativeDateService,
+  // NbNativeDateService,
   NbOptionModule,
   NbSelectModule,
   NbStepperModule,
@@ -90,6 +92,7 @@ const nbModules = [
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    RxReactiveFormsModule,
     NbThemeModule.forRoot({ name: 'default' }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule.enablePersistence(),

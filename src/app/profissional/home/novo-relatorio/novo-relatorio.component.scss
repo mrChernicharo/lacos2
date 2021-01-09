@@ -1,3 +1,9 @@
 h4.selected-date {
   margin: 12px auto;
 }
+
+.select-wrapper {
+  display: flex;
+  border: 1px solid grey;
+  flex-direction: column;
+}

@@ -23,11 +23,12 @@
     "@angular/router": "~10.1.2",
     "@nebular/eva-icons": "6.2.1",
     "@nebular/theme": "^6.2.1",
+    "@rxweb/reactive-form-validators": "^2.1.2",
     "eva-icons": "^1.1.2",
+    "firebase": "^7.0 || ^8.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.2",
-    "firebase": "^7.0 || ^8.0"
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1001.2",

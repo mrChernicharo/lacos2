@@ -7,6 +7,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { NbNativeDateService } from '@nebular/theme';
+import { HORARIOS, MODALIDADES } from 'src/app/services/consultas.service';
+import { RxwebValidators } from '@rxweb/reactive-form-validators';
+
 import { CalendarFormComponent } from './calendar-form/calendar-form.component';
 import { ReportFormComponent } from './report-form/report-form.component';
 
@@ -22,6 +25,8 @@ export class NovoRelatorioComponent implements OnInit {
   calendarForm: FormGroup;
   reportForm: FormGroup;
   consultaForm: FormGroup;
+  horarios = HORARIOS;
+  modalidades = MODALIDADES;
 
   constructor(private fb: FormBuilder) {} // @Inject('reportForm') public reportForm: ReportFormComponent // @Inject('calendarForm') public calendarForm: CalendarFormComponent,
 
@@ -56,10 +61,16 @@ export class NovoRelatorioComponent implements OnInit {
 
   newConultaForm() {
     return this.fb.group({
-      nomePaciente: new FormControl('', Validators.required),
+      nomePaciente: new FormControl(
+        ''
+        // Validators.required
+      ),
       idPaciente: new FormControl(''),
       modalidade: new FormControl('', Validators.required),
-      horario: new FormControl('', Validators.required),
+      horario: new FormControl('', [
+        Validators.required,
+        RxwebValidators.unique(),
+      ]),
     });
   }
 
