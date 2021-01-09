@@ -57,24 +57,18 @@ export class NovoRelatorioComponent implements OnInit {
 
   handleFormData(event) {
     console.log(this.calendarForm.value);
-    // console.log(this.consultaForm.value);
     console.log(this.reportForm.value);
   }
 
   createReportForm() {
     return (this.reportForm = this.fb.group({
-      nomeProfissional: new FormControl(''),
-      idProfissional: new FormControl(''),
+      // nomeProfissional: new FormControl(''),
+      // idProfissional: new FormControl(''),
       dataRelatorio: new FormControl(''),
       dataCriacao: new FormControl(new Date()),
       dataAtualizacao: new FormControl(new Date()),
       consultas: this.fb.array([]),
     }));
-  }
-  handleDateChange(date: Date) {
-    this.date = date;
-    this.calendarForm.get('date').setValue(date);
-    this.reportForm.get('dataRelatorio').patchValue(date);
   }
 
   newConultaForm() {
@@ -87,6 +81,12 @@ export class NovoRelatorioComponent implements OnInit {
         RxwebValidators.unique(),
       ]),
     });
+  }
+
+  handleCalendarDateChanges(date: Date) {
+    this.date = date;
+    this.calendarForm.get('date').setValue(date);
+    this.reportForm.get('dataRelatorio').setValue(date);
   }
 
   getConsultasControls() {
@@ -103,11 +103,15 @@ export class NovoRelatorioComponent implements OnInit {
     }
   }
 
-  // getFieldStatus(field: string): string {
-  //   return !this.consultas.get(field).dirty
-  //     ? 'basic'
-  //     : this.consultas.get(field).invalid
+  // getFieldStatus(i: number, field: string): string {
+  //   if (!this.consultas) {
+  //     return;
+  //   }
+
+  //   return this.consultas[i].get(field).valid
+  //     ? 'success'
+  //     : this.consultas[i].get(field).dirty
   //     ? 'danger'
-  //     : 'success';
+  //     : 'basic';
   // }
 }

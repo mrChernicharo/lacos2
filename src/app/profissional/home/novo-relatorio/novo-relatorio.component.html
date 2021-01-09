@@ -8,7 +8,7 @@
           <span>selecione a data</span>
           <nb-calendar
             [date]="date"
-            (dateChange)="handleDateChange($event)"
+            (dateChange)="handleCalendarDateChanges($event)"
           ></nb-calendar>
           <h4 class="selected-date">{{ date | date }}</h4>
           <button nbButton status="success" [disabled]="!date" nbStepperNext>
@@ -42,8 +42,15 @@
             <nb-select
               formControlName="nomePaciente"
               size="small"
-              status="basic"
+              [status]="
+                consulta.get('nomePaciente').valid
+                  ? 'success'
+                  : consulta.get('nomePaciente').dirty
+                  ? 'danger'
+                  : 'basic'
+              "
             >
+              <!-- [status]="getFieldStatus(i, 'nomePaciente')" -->
               <nb-option
                 *ngFor="let cliente of clientes"
                 [value]="cliente.nome"
@@ -56,7 +63,18 @@
           <!-- <nb-form-field> -->
           <div class="select-wrapper">
             <nb-select-label>Horário</nb-select-label>
-            <nb-select formControlName="horario" status="basic" size="small">
+            <nb-select
+              formControlName="horario"
+              status="basic"
+              size="small"
+              [status]="
+                consulta.get('horario').valid
+                  ? 'success'
+                  : consulta.get('horario').dirty
+                  ? 'danger'
+                  : 'basic'
+              "
+            >
               <!-- [status]="getFieldStatus('horario')" -->
               <nb-option *ngFor="let hora of horarios" [value]="hora">
                 {{ hora }}
@@ -71,7 +89,13 @@
               formControlName="modalidade"
               [selected]="modalidades[0]"
               size="small"
-              status="basic"
+              [status]="
+                consulta.get('modalidade').valid
+                  ? 'success'
+                  : consulta.get('modalidade').dirty
+                  ? 'danger'
+                  : 'basic'
+              "
             >
               <!-- [status]="getFieldStatus('modalidade')" -->
               <nb-option

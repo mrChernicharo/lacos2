@@ -13,7 +13,7 @@ export class CalendarFormComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  handleDateChange(event) {
+  handleCalendarDateChanges(event) {
     console.log(event);
   }
 }
