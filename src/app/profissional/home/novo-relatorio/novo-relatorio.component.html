@@ -1,28 +1,77 @@
-<p>novo-relatorio works!</p>
+<!-- <p>novo-relatorio works!</p> -->
 <nb-card>
   <nb-card-body>
     <nb-stepper #stepper>
       <nb-step label="Selecione a Data" [stepControl]="calendarForm">
         <!-- <app-calendar-form></app-calendar-form> -->
-        <ng-container>
-          <form>
-            <span>selecione a data</span>
-            <nb-calendar
-              [date]="date"
-              (dateChange)="handleDateChange($event)"
-            ></nb-calendar>
-            <h4 class="selected-date">{{ date | date }}</h4>
-            <button nbButton status="success" [disabled]="!date" nbStepperNext>
-              Próximo
-            </button>
-          </form>
-        </ng-container>
+        <form [formGroup]="calendarForm">
+          <span>selecione a data</span>
+          <nb-calendar
+            [date]="date"
+            (dateChange)="handleDateChange($event)"
+          ></nb-calendar>
+          <h4 class="selected-date">{{ date | date }}</h4>
+          <!-- <input readonly nbInput [value]="date" formControlName="date" /> -->
+          <button nbButton status="success" [disabled]="!date" nbStepperNext>
+            <nb-icon icon="arrow-right"></nb-icon>
+            Próximo
+          </button>
+        </form>
       </nb-step>
 
       <nb-step label="Relatório" [stepControl]="reportForm">
-        <!-- <app-report-form></app-report-form> -->
+        <div *ngFor="let consulta of getConsultasControls(); let i = index">
+          <!-- [formGroup]="consultaForm" -->
+          <!-- <nb-form-field> -->
+          <button *ngIf="i > 0" nbButton (click)="removeConsulta(i)">
+            <nb-icon icon="close-outline"></nb-icon>
+          </button>
+
+          <nb-select-label>Paciente</nb-select-label>
+          <nb-select nbInput>
+            <!-- <nb-option *ngFor="let consulta of reportForm"></nb-option> -->
+          </nb-select>
+          <!-- </nb-form-field> -->
+
+          <!-- <nb-form-field> -->
+          <nb-select-label>Horário</nb-select-label>
+          <nb-select nbInput>
+            <!-- <nb-option *ngFor="let consulta of reportForm"></nb-option> -->
+          </nb-select>
+          <!-- </nb-form-field> -->
+
+          <!-- <nb-form-field> -->
+          <nb-select-label>Modalidade</nb-select-label>
+          <nb-select nbInput>
+            <!-- <nb-option *ngFor="let consulta of reportForm"></nb-option> -->
+          </nb-select>
+          <!-- </nb-form-field> -->
+
+          <button nbButton (click)="addConsulta()">
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+        </div>
+
         <button nbButton nbStepperPrevious>
-          <nb-icon icon="arrow-back-outline"></nb-icon> Voltar
+          <nb-icon icon="arrow-back-outline"></nb-icon>
+          Voltar
+        </button>
+
+        <button nbButton status="success" nbStepperNext>
+          <nb-icon icon="arrow-right"></nb-icon>
+          Próximo
+        </button>
+      </nb-step>
+
+      <nb-step label="Revisão" [stepControl]="calendarForm">
+        <button nbButton nbStepperPrevious>
+          <nb-icon icon="arrow-back-outline"></nb-icon>
+          Voltar
+        </button>
+
+        <button nbButton status="success" nbStepperNext>
+          <nb-icon icon="arrow-right"></nb-icon>
+          Próximo
         </button>
       </nb-step>
     </nb-stepper>
