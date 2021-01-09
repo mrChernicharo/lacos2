@@ -1,1 +1,16 @@
 <p>novo-relatorio works!</p>
+<nb-card>
+  <nb-card-body>
+    <nb-stepper #stepper>
+      <nb-step label="Selecione a Data" [stepControl]="calendarForm">
+        <app-calendar-form></app-calendar-form>
+      </nb-step>
+    </nb-stepper>
+
+    <nb-stepper #stepper>
+      <nb-step label="Relatório" [stepControl]="reportForm">
+        <app-report-form></app-report-form>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>

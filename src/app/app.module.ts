@@ -21,6 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import {
   NbAccordionModule,
+  NbActionsModule,
   NbButtonModule,
   NbCalendarModule,
   NbCardModule,
@@ -32,25 +33,31 @@ import {
   NbLayoutModule,
   NbOptionModule,
   NbSelectModule,
+  NbStepperModule,
   NbTableModule,
   NbThemeModule,
 } from '@nebular/theme';
+import { CalendarFormComponent } from './profissional/home/novo-relatorio/calendar-form/calendar-form.component';
+import { ReportFormComponent } from './profissional/home/novo-relatorio/report-form/report-form.component';
 
 const nbModules = [
-  NbLayoutModule,
   NbEvaIconsModule,
+  NbAccordionModule,
+  NbActionsModule,
+  NbButtonModule,
+  NbCalendarModule,
   NbCardModule,
+  NbDatepickerModule,
+  NbDialogModule,
   NbFormFieldModule,
   NbIconModule,
   NbInputModule,
-  NbButtonModule,
-  NbDatepickerModule,
-  NbCalendarModule,
-  NbSelectModule,
-  NbAccordionModule,
-  NbDialogModule,
-  NbTableModule,
+  NbLayoutModule,
   NbOptionModule,
+  NbSelectModule,
+  NbStepperModule,
+  NbTableModule,
+  NbThemeModule,
 ];
 
 @NgModule({
@@ -62,6 +69,8 @@ const nbModules = [
     NovoRelatorioComponent,
     DashboardComponent,
     AddClientesComponent,
+    CalendarFormComponent,
+    ReportFormComponent,
   ],
   imports: [
     BrowserModule,

@@ -11,8 +11,6 @@ export class ClientesService {
   addCliente(
     formData: Omit<Cliente, 'dataCadastro' | 'atualizadoEm' | 'atendimentos'>
   ) {
-    console.log(formData);
-
     const cliente = Object.assign(formData, {
       dataCadastro: new Date(),
       atualizadoEm: new Date(),
