@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { Cliente } from '../models/cliente.model';
 import { DbService } from './db.service';
 
@@ -6,6 +7,9 @@ import { DbService } from './db.service';
   providedIn: 'root',
 })
 export class ClientesService {
+  private clientesSubject$ = new BehaviorSubject<Cliente[]>([]);
+  public clientes$ = this.clientesSubject$.asObservable();
+
   constructor(private db: DbService) {}
 
   addCliente(
@@ -19,5 +23,9 @@ export class ClientesService {
 
     console.log(cliente as Cliente);
     this.db.createCliente(cliente);
+  }
+
+  getAllClientes() {
+    return this.db.fetchAllClientes();
   }
 }
