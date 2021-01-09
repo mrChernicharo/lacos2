@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -17,6 +17,7 @@ import { ReportFormComponent } from './report-form/report-form.component';
   selector: 'app-novo-relatorio',
   templateUrl: './novo-relatorio.component.html',
   styleUrls: ['./novo-relatorio.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   providers: [NbNativeDateService],
 })
 export class NovoRelatorioComponent implements OnInit {
@@ -87,4 +88,12 @@ export class NovoRelatorioComponent implements OnInit {
       this.consultas.removeAt(i);
     }
   }
+
+  // getFieldStatus(field: string): string {
+  //   return !this.consultas.get(field).dirty
+  //     ? 'basic'
+  //     : this.consultas.get(field).invalid
+  //     ? 'danger'
+  //     : 'success';
+  // }
 }

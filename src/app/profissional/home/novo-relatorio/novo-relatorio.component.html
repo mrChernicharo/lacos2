@@ -2,6 +2,7 @@
 <nb-card>
   <nb-card-body>
     <nb-stepper #stepper>
+      <!-- /*********************/ STEP #1 /*********************/ -->
       <nb-step label="Selecione a Data" [stepControl]="calendarForm">
         <!-- <app-calendar-form></app-calendar-form> -->
         <form [formGroup]="calendarForm">
@@ -19,23 +20,30 @@
         </form>
       </nb-step>
 
+      <!-- /*********************/ STEP #2 /*********************/ -->
       <nb-step label="Relatório" [stepControl]="reportForm">
-        <div *ngFor="let consulta of getConsultasControls(); let i = index">
+        <div
+          class="consulta-form"
+          *ngFor="let consulta of getConsultasControls(); let i = index"
+        >
           <!-- [formGroup]="consultaForm" -->
           <!-- <nb-form-field> -->
-          <button
-            *ngIf="i > 0"
-            nbButton
-            shape="round"
-            status="danger"
-            (click)="removeConsulta(i)"
-          >
-            <nb-icon icon="close-outline"></nb-icon>
-          </button>
+          <div class="button-wrapper">
+            <button
+              *ngIf="i > 0"
+              nbButton
+              shape="round"
+              status="danger"
+              (click)="removeConsulta(i)"
+            >
+              <nb-icon icon="close-outline"></nb-icon>
+            </button>
+          </div>
 
           <div class="select-wrapper">
             <nb-select-label>Paciente</nb-select-label>
-            <nb-select nbInput>
+            <nb-select size="small" status="basic">
+              <!-- [status]="getFieldStatus('nomePaciente')" -->
               <!-- <nb-option *ngFor="let consulta of reportForm"></nb-option> -->
             </nb-select>
           </div>
@@ -44,7 +52,8 @@
           <!-- <nb-form-field> -->
           <div class="select-wrapper">
             <nb-select-label>Horário</nb-select-label>
-            <nb-select nbInput>
+            <nb-select status="basic" size="small">
+              <!-- [status]="getFieldStatus('horario')" -->
               <nb-option *ngFor="let hora of horarios" [value]="hora">
                 {{ hora }}
               </nb-option>
@@ -54,7 +63,8 @@
           <div class="select-wrapper">
             <!-- <nb-form-field> -->
             <nb-select-label>Modalidade</nb-select-label>
-            <nb-select nbInput [selected]="modalidades[0]">
+            <nb-select [selected]="modalidades[0]" size="small" status="basic">
+              <!-- [status]="getFieldStatus('modalidade')" -->
               <nb-option
                 *ngFor="let modalidade of modalidades"
                 [value]="modalidade"
@@ -64,15 +74,16 @@
             </nb-select>
             <!-- </nb-form-field> -->
           </div>
-
-          <button
-            nbButton
-            shape="round"
-            status="success"
-            (click)="addConsulta()"
-          >
-            <nb-icon icon="plus-outline"></nb-icon>
-          </button>
+          <div class="button-wrapper">
+            <button
+              nbButton
+              shape="round"
+              status="success"
+              (click)="addConsulta()"
+            >
+              <nb-icon icon="plus-outline"></nb-icon>
+            </button>
+          </div>
         </div>
 
         <button nbButton nbStepperPrevious>
@@ -86,6 +97,7 @@
         </button>
       </nb-step>
 
+      <!-- /*********************/ STEP #3 /*********************/ -->
       <nb-step label="Revisão" [stepControl]="calendarForm">
         <button nbButton nbStepperPrevious>
           <nb-icon icon="arrow-back-outline"></nb-icon>

@@ -2,8 +2,32 @@ h4.selected-date {
   margin: 12px auto;
 }
 
-.select-wrapper {
+nb-calendar {
+  nb-card {
+    transform: scale(0.85) translate(-29px, -29px);
+    margin-bottom: -52px !important;
+  }
+}
+
+.consulta-form {
+  border: 1px solid green;
   display: flex;
-  border: 1px solid grey;
-  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+
+  .select-wrapper {
+    display: flex;
+    border: 1px solid grey;
+    flex-direction: column;
+    width: 212px;
+
+    nb-select {
+      padding: 1px;
+      // width: 100px;
+      //   .select-button {
+      //     width: 196px !important;
+      //     min-width: 196px !important;
+      // }
+    }
+  }
 }
