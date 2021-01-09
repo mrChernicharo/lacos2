@@ -1,6 +1,13 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import {
+  COMPILER_OPTIONS,
+  CUSTOM_ELEMENTS_SCHEMA,
+  LOCALE_ID,
+  NgModule,
+} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -31,14 +38,18 @@ import {
   NbIconModule,
   NbInputModule,
   NbLayoutModule,
+  NbNativeDateService,
   NbOptionModule,
   NbSelectModule,
   NbStepperModule,
   NbTableModule,
   NbThemeModule,
+  NB_TIME_PICKER_CONFIG,
 } from '@nebular/theme';
 import { CalendarFormComponent } from './profissional/home/novo-relatorio/calendar-form/calendar-form.component';
 import { ReportFormComponent } from './profissional/home/novo-relatorio/report-form/report-form.component';
+
+registerLocaleData(localePt);
 
 const nbModules = [
   NbEvaIconsModule,
@@ -48,6 +59,7 @@ const nbModules = [
   NbCalendarModule,
   NbCardModule,
   NbDatepickerModule,
+  // NbNativeDateService,
   NbDialogModule,
   NbFormFieldModule,
   NbIconModule,
@@ -84,7 +96,12 @@ const nbModules = [
     AngularFireAuthModule,
     ...nbModules,
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
+
+    // { provide: NB_TIME_PICKER_CONFIG, useValue: {} },
+  ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}

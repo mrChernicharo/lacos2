@@ -3,14 +3,27 @@
   <nb-card-body>
     <nb-stepper #stepper>
       <nb-step label="Selecione a Data" [stepControl]="calendarForm">
-        <app-calendar-form></app-calendar-form>
-      </nb-step>
-    </nb-stepper>
+        <!-- <app-calendar-form></app-calendar-form> -->
+        <ng-container>
+          <form>
+            <h4>selecione a data</h4>
+            <h4>{{ date | date }}</h4>
+            <nb-calendar [(date)]="date"></nb-calendar>
 
-    <nb-stepper #stepper>
+            <!-- <nb-form-field> -->
+            <!-- <input nbInput /> -->
+            <!-- <input [nbDatepicker]="datepicker" />
+              <nb-datepicker #datepicker></nb-datepicker> -->
+            <!-- </nb-form-field> -->
+          </form>
+        </ng-container>
+      </nb-step>
+
       <nb-step label="Relatório" [stepControl]="reportForm">
-        <app-report-form></app-report-form>
+        <!-- <app-report-form></app-report-form> -->
       </nb-step>
     </nb-stepper>
   </nb-card-body>
 </nb-card>
+<!-- <input [nbDatepicker]="datepicker" />
+<nb-datepicker #datepicker></nb-datepicker> -->
