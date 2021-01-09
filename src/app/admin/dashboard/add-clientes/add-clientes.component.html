@@ -6,13 +6,26 @@
     <nb-card-body>
       <form [formGroup]="clienteForm">
         <nb-form-field>
-          <label for="input-nome">Nome</label>
+          <label for="input-nome">Nome*</label>
           <input
             formControlName="nome"
             type="text"
             id="input-nome"
             placeholder="fulano"
             nbInput
+            [status]="getFieldStatus('nome')"
+          />
+        </nb-form-field>
+
+        <nb-form-field>
+          <label for="input-telefone">Telefone*</label>
+          <input
+            formControlName="telefone"
+            type="text"
+            id="input-telefone"
+            placeholder="2199887..."
+            nbInput
+            [status]="getFieldStatus('telefone')"
           />
         </nb-form-field>
 
@@ -24,27 +37,30 @@
             id="input-email"
             placeholder="nome@email.com"
             nbInput
+            [status]="getFieldStatus('email')"
           />
         </nb-form-field>
 
         <nb-form-field>
-          <label for="input-telefone">Telefone</label>
+          <label for="input-endereco">Endereço</label>
           <input
-            formControlName="telefone"
+            formControlName="endereco"
             type="text"
-            id="input-telefone"
-            placeholder="21xxx..."
+            id="input-endereco"
+            placeholder="rua ... número, complemento - bairro"
             nbInput
+            [status]="getFieldStatus('endereco')"
           />
         </nb-form-field>
 
         <nb-form-field>
           <div class="select-wrapper">
-            <nb-select-label for="selcet-origem">Origem</nb-select-label>
+            <nb-select-label for="selcet-origem">Origem*</nb-select-label>
             <nb-select
               formControlName="origem"
               id="selcet-origem"
               [selected]="origens[0]"
+              [status]="getFieldStatus('origem')"
             >
               <nb-option *ngFor="let origem of origens" [value]="origem">
                 {{ origem }}
@@ -52,6 +68,8 @@
             </nb-select>
           </div>
         </nb-form-field>
+
+        <p><strong>*</strong> Campos obrigatórios</p>
 
         <button
           nbButton
