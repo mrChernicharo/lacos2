@@ -52,12 +52,15 @@
             >
               <!-- [status]="getFieldStatus(i, 'nomePaciente')" -->
               <nb-option
-                *ngFor="let cliente of clientes"
-                [value]="cliente.nome"
-                >{{ cliente.nome }}</nb-option
+                *ngFor="let cliente of clientes; let c = index"
+                [value]="cliente.nome + ' ' + cliente.origem"
               >
+                {{ cliente.nome }}
+                <span style="display: none;">{{ cliente.origem }}</span>
+              </nb-option>
             </nb-select>
           </div>
+
           <!-- </nb-form-field> -->
 
           <!-- <nb-form-field> -->
@@ -126,6 +129,7 @@
 
         <button
           nbButton
+          [disabled]="reportForm.invalid"
           status="success"
           (click)="handleFormData($event)"
           nbStepperNext
@@ -137,11 +141,18 @@
 
       <!-- /*********************/ STEP #3 /*********************/ -->
       <nb-step label="revisao" [stepControl]="revisionTable">
-        <ng-template #revisao>
-          <div>
-            step number three
-          </div>
-        </ng-template>
+        <div class="list-container">
+          <nb-list *ngIf="finalFormData">
+            <nb-list-item *ngFor="let item of finalFormData.consultas">
+              <p>{{ item.nomePaciente }} |</p>
+              <p>{{ item.origem }} |</p>
+              <p>{{ item.horario }} |</p>
+              <p>{{ item.modalidade }}</p>
+            </nb-list-item>
+          </nb-list>
+          step number three
+        </div>
+
         <button nbButton nbStepperPrevious>
           <nb-icon icon="arrow-back-outline"></nb-icon>
           Voltar

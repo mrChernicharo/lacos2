@@ -8,6 +8,7 @@ export class Consulta {
     public idProfissional: string,
     public nomePaciente: string,
     public idPaciente: string,
+    public origem: string,
     public modalidade: 'presencial' | 'online' | 'externa',
     public dataConsulta: Date | IServerTimestamp,
     public dataCriacao: Date | IServerTimestamp,
