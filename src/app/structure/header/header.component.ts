@@ -26,10 +26,12 @@ export class HeaderComponent implements OnInit {
         {
           title: 'Novo Relatório',
           icon: 'plus-outline',
+          link: 'profissional/novo-relatorio',
         },
         {
           title: 'Logout',
           icon: 'power-outline',
+          link: 'auth',
         },
       ],
     },
@@ -52,9 +54,19 @@ export class HeaderComponent implements OnInit {
       filter(
         (state: any) => state.__proto__.constructor.name === 'NavigationStart'
       ),
+      tap((state) => {
+        console.log(state);
+      }),
       map((state: NavigationStart) => {
+        return state.url;
+      }),
+      tap((url) => {
+        console.log(url);
+      }),
+      map((url) => {
         // console.log(state.url.split('/'));
-        return state.url.split('/').pop().replace('-', ' ');
+        const currentPage = url.split('/').pop().replace('-', ' ');
+        return currentPage;
       })
     );
   }

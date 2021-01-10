@@ -1,7 +1,11 @@
 <ng-container *ngIf="routerState$ | async as routerState">
   <div class="left-column">
     <div class="menu-container">
-      <nb-menu class="header-menu" [items]="menuItems"></nb-menu>
+      <nb-menu
+        class="header-menu"
+        [autoCollapse]="true"
+        [items]="menuItems"
+      ></nb-menu>
     </div>
 
     <img class="lacos-logo" [src]="lacosIcon" />
