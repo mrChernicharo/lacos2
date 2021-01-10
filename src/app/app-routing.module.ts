@@ -16,6 +16,7 @@ const routes: Routes = [
       {
         path: 'novo-relatorio',
         component: NovoRelatorioComponent,
+        // data: clientes
       },
     ],
   },

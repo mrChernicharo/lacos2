@@ -26,6 +26,8 @@ import {
   IReportForm,
   RelatoriosService,
 } from 'src/app/services/relatorios.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-novo-relatorio',
@@ -42,14 +44,20 @@ export class NovoRelatorioComponent implements OnInit {
   consultaForm: FormGroup;
   revisionTable: any;
 
-  @Input() clientes: Cliente[];
+  clientes: Cliente[];
   horarios = HORARIOS;
   modalidades = MODALIDADES;
   finalFormData: IReportForm;
+  routerData$: any;
 
   // @ViewChild('nomeField')
 
-  constructor(private fb: FormBuilder, private r: Renderer2) {} // @Inject('reportForm') public reportForm: ReportFormComponent // @Inject('calendarForm') public calendarForm: CalendarFormComponent,
+  constructor(
+    private fb: FormBuilder,
+    private r: Renderer2,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {} // @Inject('reportForm') public reportForm: ReportFormComponent // @Inject('calendarForm') public calendarForm: CalendarFormComponent,
 
   get consultas() {
     return this.reportForm.get('consultas') as FormArray;
@@ -60,6 +68,13 @@ export class NovoRelatorioComponent implements OnInit {
       date: new FormControl('', Validators.required),
     });
     console.log(this.clientes);
+
+    this.route.data.pipe(
+      tap((routeData) => {
+        this.clientes = routeData['clientes'] as Cliente[];
+      })
+    );
+    // console.log(this.router.routerState.snapshot);
 
     this.createReportForm();
     this.addConsulta();
