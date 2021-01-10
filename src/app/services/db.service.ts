@@ -2,11 +2,25 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { map, shareReplay } from 'rxjs/operators';
 import { Cliente } from '../models/cliente.model';
+import { Consulta } from '../models/consulta.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DbService {
+  async storeConsultas(consultas: Consulta[]) {
+    console.log(consultas);
+    try {
+      await consultas.forEach((consulta) => {
+        this.db
+          .collection('consultas')
+          .add(consulta)
+          .then((response) => console.log(response));
+      });
+    } catch {
+      throw new Error('erro');
+    }
+  }
   constructor(private db: AngularFirestore) {}
 
   async createCliente(cliente: Cliente) {

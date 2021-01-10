@@ -15,7 +15,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { NbNativeDateService } from '@nebular/theme';
-import { HORARIOS, MODALIDADES } from 'src/app/services/consultas.service';
+import {
+  ConsultasService,
+  HORARIOS,
+  MODALIDADES,
+} from 'src/app/services/consultas.service';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 
 import { CalendarFormComponent } from './calendar-form/calendar-form.component';
@@ -24,8 +28,8 @@ import { Cliente } from 'src/app/models/cliente.model';
 import { Consulta } from 'src/app/models/consulta.model';
 import {
   IReportForm,
-  RelatoriosService,
-} from 'src/app/services/relatorios.service';
+  IReportFormConsulta,
+} from 'src/app/services/consultas.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
 
@@ -57,6 +61,7 @@ export class NovoRelatorioComponent implements OnInit {
     private fb: FormBuilder,
     private r: Renderer2,
     private router: Router,
+    private consultaService: ConsultasService,
     private route: ActivatedRoute
   ) {} // @Inject('reportForm') public reportForm: ReportFormComponent // @Inject('calendarForm') public calendarForm: CalendarFormComponent,
 
@@ -157,7 +162,7 @@ export class NovoRelatorioComponent implements OnInit {
     selectElChild.textContent = ftext;
   }
 
-  filterModalidades(consultas: Consulta[]) {
+  filterModalidades(consultas: IReportFormConsulta[]) {
     let obj = new Object();
 
     consultas.forEach((consulta, i) => {
@@ -168,5 +173,10 @@ export class NovoRelatorioComponent implements OnInit {
     });
     console.log(obj);
     return obj;
+  }
+  submitReport() {
+    console.log('submit!');
+    console.log(this.finalFormData);
+    this.consultaService.saveConsultas(this.finalFormData);
   }
 }

@@ -1,10 +1,60 @@
 import { Injectable } from '@angular/core';
+import { Consulta } from '../models/consulta.model';
+import { DbService } from './db.service';
+
+export type IReportFormConsulta = Pick<
+  Consulta,
+  'horario' | 'modalidade' | 'origem' | 'nomePaciente'
+>;
+
+export interface IReportForm {
+  consultas: IReportFormConsulta[];
+  dataRelatorio: Date;
+  dataAtualizacao: Date;
+  dataCriacao: Date;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConsultasService {
-  constructor() {}
+  constructor(private db: DbService) {}
+
+  saveConsultas(finalFormData: IReportForm) {
+    console.log(finalFormData);
+
+    const newConsultas = finalFormData.consultas.map((item) => {
+      // new Consulta(
+      const newConsulta: Consulta = {
+        id: '',
+        horario: item.horario,
+        nomeProfissional: '',
+        idProfissional: '',
+        nomePaciente: item.nomePaciente,
+        idPaciente: '',
+        origem: item.origem,
+        modalidade: item.modalidade,
+        dataConsulta: new Date(
+          finalFormData.dataRelatorio.getFullYear(),
+          finalFormData.dataRelatorio.getMonth(),
+          finalFormData.dataRelatorio.getDate(),
+          +item.horario.substr(0, 2),
+          +item.horario.substr(3, 2),
+          0
+        ),
+        dataCriacao: finalFormData.dataCriacao,
+        dataAtualizacao: finalFormData.dataAtualizacao,
+      };
+
+      return newConsulta;
+      // );
+    });
+    this.db.storeConsultas(newConsultas);
+
+    // finalFormData.consultas.map((consulta) => {
+    // console.log()
+    // });
+  }
 }
 export const MODALIDADES: string[] = ['online', 'presencial', 'externa'];
 export const HORARIOS: string[] = [

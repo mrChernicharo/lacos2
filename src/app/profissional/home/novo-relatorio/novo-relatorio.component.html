@@ -1,7 +1,7 @@
 <!-- <p>novo-relatorio works!</p> -->
 <nb-card>
   <nb-card-body>
-    <nb-stepper #stepper>
+    <nb-stepper #stepper [linear]="false">
       <!-- /*********************/ STEP #1 /*********************/ -->
       <nb-step label="Data" [stepControl]="calendarForm">
         <div class="instruction">selecione a data</div>
@@ -155,9 +155,13 @@
 
         <div class="report-info">
           <div>
-            Dia {{ date | date: "EEEE, ' dia ' d ' de ' MMMM ' de ' y" }}
+            <nb-icon icon="clipboard-outline"></nb-icon>
+            {{ date | date: "EEEE, ' dia ' d ' de ' MMMM ' de ' y" }}
           </div>
-          <div>{{ consultas.length }} consultas</div>
+          <div>
+            {{ consultas.length }}
+            {{ consultas.length === 1 ? " consulta" : " consultas" }}
+          </div>
           <div *ngFor="let modalidade of modalidadesCountObj | keyvalue">
             {{ modalidade.key }} {{ modalidade.value }}
           </div>
@@ -191,7 +195,12 @@
           Voltar
         </button>
 
-        <button nbButton status="success" nbStepperNext>
+        <button
+          nbButton
+          status="success"
+          nbStepperNext
+          (click)="submitReport()"
+        >
           <nb-icon icon="checkmark-outline"></nb-icon>
           Concluir
         </button>
