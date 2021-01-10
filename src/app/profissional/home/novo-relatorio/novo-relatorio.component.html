@@ -11,7 +11,7 @@
             [date]="date"
             (dateChange)="handleCalendarDateChanges($event)"
           ></nb-calendar>
-          <h4 class="selected-date">{{ date | date }}</h4>
+          <h4 class="selected-date">{{ date | date: "fullDate" }}</h4>
           <button nbButton status="success" [disabled]="!date" nbStepperNext>
             <nb-icon icon="arrow-right"></nb-icon>
             Próximo
@@ -21,7 +21,10 @@
 
       <!-- /*********************/ STEP #2 /*********************/ -->
       <nb-step label="Relatório" [stepControl]="reportForm">
-        <div class="instruction">preencha o relatório</div>
+        <div class="instruction">
+          preencha o relatório de
+          {{ date | date: "EEEE, ' dia 'd/M/y" }}
+        </div>
         <div
           class="consulta-form"
           [formGroup]="consulta"
@@ -149,6 +152,16 @@
       <!-- /*********************/ STEP #3 /*********************/ -->
       <nb-step label="revisao" [stepControl]="revisionTable">
         <div class="instruction">confira tudo e envie</div>
+
+        <div class="report-info">
+          <div>
+            Dia {{ date | date: "EEEE, ' dia ' d ' de ' MMMM ' de ' y" }}
+          </div>
+          <div>{{ consultas.length }} consultas</div>
+          <div *ngFor="let modalidade of modalidadesCountObj | keyvalue">
+            {{ modalidade.key }} {{ modalidade.value }}
+          </div>
+        </div>
 
         <div class="list-container">
           <nb-list *ngIf="finalFormData">

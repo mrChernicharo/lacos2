@@ -49,6 +49,7 @@ export class NovoRelatorioComponent implements OnInit {
   modalidades = MODALIDADES;
   finalFormData: IReportForm;
   routerData$: any;
+  modalidadesCountObj: Object;
 
   // @ViewChild('nomeField')
 
@@ -98,6 +99,9 @@ export class NovoRelatorioComponent implements OnInit {
       (a, b) => +a.horario.replace(':', '') - +b.horario.replace(':', '')
     );
     console.log(this.finalFormData);
+    this.modalidadesCountObj = this.filterModalidades(
+      this.finalFormData.consultas
+    );
   }
 
   createReportForm() {
@@ -150,25 +154,19 @@ export class NovoRelatorioComponent implements OnInit {
     let arrText = event.split(' ');
     arrText.pop();
     let ftext = arrText.join(' ');
-
-    console.log((selectElChild.textContent = ftext));
-  }
-  setOrigemConsulta() {
-    // this.consultas[i].get('origem').setValue('teste');
-    // this.finalFormData.consultas.forEach((consulta) => {
-    //   // this.clientes.find(cliente => cliente.nome === '')
-    // });
+    selectElChild.textContent = ftext;
   }
 
-  // getFieldStatus(i: number, field: string): string {
-  //   if (!this.consultas) {
-  //     return;
-  //   }
+  filterModalidades(consultas: Consulta[]) {
+    let obj = new Object();
 
-  //   return this.consultas[i].get(field).valid
-  //     ? 'success'
-  //     : this.consultas[i].get(field).dirty
-  //     ? 'danger'
-  //     : 'basic';
-  // }
+    consultas.forEach((consulta, i) => {
+      if (!obj.hasOwnProperty(consulta.modalidade)) {
+        obj[consulta.modalidade] = 0;
+      }
+      obj[consulta.modalidade] += 1;
+    });
+    console.log(obj);
+    return obj;
+  }
 }
