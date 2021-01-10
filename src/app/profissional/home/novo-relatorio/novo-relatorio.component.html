@@ -33,9 +33,9 @@
           <!-- <div class="consulta-number">
             <span></span>
           </div> -->
+          <!-- *ngIf="i !== 0" -->
           <div class="button-wrapper">
             <button
-              *ngIf="i !== 0"
               nbButton
               shape="round"
               status="danger"
@@ -120,6 +120,7 @@
             </nb-select>
             <!-- </nb-form-field> -->
           </div>
+
           <div *ngIf="i + 1 === consultas.length" class="button-wrapper">
             <button
               nbButton
@@ -130,6 +131,18 @@
               <nb-icon icon="plus-outline"></nb-icon>
             </button>
           </div>
+        </div>
+
+        <div *ngIf="consultas.length === 0" class="button-wrapper no-consultas">
+          <button
+            nbButton
+            shape="round"
+            status="success"
+            (click)="addConsulta()"
+          >
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+          <span style="color: #01a26c;"> criar consulta</span>
         </div>
 
         <button nbButton nbStepperPrevious>

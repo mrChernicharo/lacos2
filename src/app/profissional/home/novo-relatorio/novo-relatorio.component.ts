@@ -148,9 +148,9 @@ export class NovoRelatorioComponent implements OnInit {
   }
   removeConsulta(i) {
     console.log('remove ' + i);
-    if (this.consultas.length > 1) {
-      this.consultas.removeAt(i);
-    }
+    // if (this.consultas.length > 1) {
+    this.consultas.removeAt(i);
+    // }
   }
   trimPacienteName(event: string, i: number) {
     // console.log(event);

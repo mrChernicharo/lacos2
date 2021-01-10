@@ -2,6 +2,10 @@
   <div class="left-column">
     <img class="lacos-logo" [src]="lacosIcon" />
 
+    <button nbButton shape="round" size="small" appearance="ghost">
+      <nb-icon icon="menu-outline"></nb-icon>
+    </button>
+
     <!--  -->
     <div class="action-block" [ngSwitch]="true">
       <div *ngSwitchDefault></div>
@@ -23,6 +27,7 @@
         <button
           nbButton
           size="small"
+          shape="round"
           appearance="ghost"
           (click)="goToPage(routerState)"
         >

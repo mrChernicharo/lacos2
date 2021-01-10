@@ -2,7 +2,6 @@ import { IServerTimestamp } from './cliente.model';
 
 export class Consulta {
   constructor(
-    public uid: string,
     public horario: string,
     public nomeProfissional: string,
     public idProfissional: string,
