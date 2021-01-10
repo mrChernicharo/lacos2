@@ -1,10 +1,20 @@
 <ng-container *ngIf="routerState$ | async as routerState">
   <div class="left-column">
+    <div class="menu-container">
+      <nb-menu class="header-menu" [items]="menuItems"></nb-menu>
+    </div>
+
     <img class="lacos-logo" [src]="lacosIcon" />
 
-    <button nbButton shape="round" size="small" appearance="ghost">
+    <!-- <button
+      nbButton
+      shape="round"
+      size="small"
+      appearance="ghost"
+      (click)="onMenuToggle()"
+    >
       <nb-icon icon="menu-outline"></nb-icon>
-    </button>
+    </button> -->
 
     <!--  -->
     <div class="action-block" [ngSwitch]="true">

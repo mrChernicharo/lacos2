@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
 import { appIcons } from '../../../assets/app-icons';
 import { Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
+import { NbMenuItem, NbMenuService } from '@nebular/theme';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+  // encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent implements OnInit {
   defaultUserIcon = appIcons.curlyGuy;
@@ -15,8 +17,33 @@ export class HeaderComponent implements OnInit {
 
   routerState$: Observable<string>;
 
+  menuItems: NbMenuItem[] = [
+    {
+      title: 'Menu',
+      icon: 'menu-outline',
+      expanded: false,
+      children: [
+        {
+          title: 'Novo Relatório',
+          icon: 'plus-outline',
+        },
+        {
+          title: 'Logout',
+          icon: 'power-outline',
+        },
+      ],
+    },
+    // {
+    //   title: 'Shopping Bag',
+    // },
+    // {
+    //   title: 'Orders',
+    // },
+  ];
+
   constructor(
     private router: Router,
+    // private menuService: NbMenuService,
     private activatedRoute: ActivatedRoute // private routeSnapshot: ActivatedRouteSnapshot
   ) {}
 
@@ -47,5 +74,9 @@ export class HeaderComponent implements OnInit {
       case 'clientes':
         return this.router.navigate(['admin']);
     }
+  }
+
+  onMenuToggle() {
+    this.menuItems[0].expanded = !this.menuItems[0].expanded;
   }
 }
