@@ -42,6 +42,8 @@
             <nb-select
               formControlName="nomePaciente"
               size="small"
+              [id]="'nomePaciente-' + i"
+              (selectedChange)="trimPacienteName($event, i)"
               [status]="
                 consulta.get('nomePaciente').valid
                   ? 'success'

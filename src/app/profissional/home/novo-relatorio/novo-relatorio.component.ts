@@ -3,6 +3,7 @@ import {
   Inject,
   Input,
   OnInit,
+  Renderer2,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
@@ -48,7 +49,7 @@ export class NovoRelatorioComponent implements OnInit {
 
   // @ViewChild('nomeField')
 
-  constructor(private fb: FormBuilder) {} // @Inject('reportForm') public reportForm: ReportFormComponent // @Inject('calendarForm') public calendarForm: CalendarFormComponent,
+  constructor(private fb: FormBuilder, private r: Renderer2) {} // @Inject('reportForm') public reportForm: ReportFormComponent // @Inject('calendarForm') public calendarForm: CalendarFormComponent,
 
   get consultas() {
     return this.reportForm.get('consultas') as FormArray;
@@ -65,20 +66,16 @@ export class NovoRelatorioComponent implements OnInit {
   }
 
   handleFormData(event) {
-    // console.log(this.calendarForm.value);
     this.finalFormData = this.reportForm.value as IReportForm;
     this.consultas.controls.forEach((consulta, i) => {
       console.log(consulta);
       const origemConsulta = (consulta.get('nomePaciente').value as string)
         .split(' ')
         .pop();
-      // console.log(origem);
       this.finalFormData.consultas[i].origem = origemConsulta;
 
       let actualName = this.finalFormData.consultas[i].nomePaciente.split(' ');
       actualName.pop();
-      // actualName.join(' ')
-      // this.consultas[i].get('origem').setValue(origem);
       this.finalFormData.consultas[i].nomePaciente = actualName.join(' ');
     });
     console.log(this.finalFormData);
@@ -127,7 +124,16 @@ export class NovoRelatorioComponent implements OnInit {
       this.consultas.removeAt(i);
     }
   }
+  trimPacienteName(event: string, i: number) {
+    // console.log(event);
+    const selectElChild = document.querySelector(`#nomePaciente-${i}`)
+      .firstElementChild as HTMLButtonElement;
+    let arrText = event.split(' ');
+    arrText.pop();
+    let ftext = arrText.join(' ');
 
+    console.log((selectElChild.textContent = ftext));
+  }
   setOrigemConsulta() {
     // this.consultas[i].get('origem').setValue('teste');
     // this.finalFormData.consultas.forEach((consulta) => {
