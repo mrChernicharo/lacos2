@@ -89,7 +89,7 @@ export class NovoRelatorioComponent implements OnInit {
         .pop();
       this.finalFormData.consultas[i].origem = origemConsulta;
 
-      let actualName = this.finalFormData.consultas[i].nomePaciente.split(' ');
+      let actualName = consulta.get('nomePaciente').value.split(' ');
       actualName.pop();
       this.finalFormData.consultas[i].nomePaciente = actualName.join(' ');
     });
