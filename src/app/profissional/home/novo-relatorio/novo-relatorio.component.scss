@@ -55,3 +55,20 @@ nb-calendar {
     }
   }
 }
+nb-list-item.list-row {
+  padding: 0 !important;
+
+  .li {
+    height: 36px;
+    border: 1px solid blue;
+    margin-left: 4px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+//ajusta padding dos steps sem mexer no calendário
+nb-card-body:not([ng-reflect-ng-switch="date"]) {
+  // border: 1px solid red;
+  padding: 16px 8px !important;
+}

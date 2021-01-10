@@ -3,10 +3,11 @@
   <nb-card-body>
     <nb-stepper #stepper>
       <!-- /*********************/ STEP #1 /*********************/ -->
-      <nb-step label="Selecione a Data" [stepControl]="calendarForm">
+      <nb-step label="Data" [stepControl]="calendarForm">
         <form [formGroup]="calendarForm">
           <span>selecione a data</span>
           <nb-calendar
+            class="calendar"
             [date]="date"
             (dateChange)="handleCalendarDateChanges($event)"
           ></nb-calendar>
@@ -148,11 +149,22 @@
       <nb-step label="revisao" [stepControl]="revisionTable">
         <div class="list-container">
           <nb-list *ngIf="finalFormData">
-            <nb-list-item *ngFor="let item of finalFormData.consultas">
-              <p>{{ item.nomePaciente }} |</p>
-              <p>{{ item.origem }} |</p>
-              <p>{{ item.horario }} |</p>
-              <p>{{ item.modalidade }}</p>
+            <nb-list-item
+              class="list-row"
+              *ngFor="let item of finalFormData.consultas"
+            >
+              <div class="li">
+                <nb-icon icon="star"></nb-icon>{{ item.horario }}
+              </div>
+              <div class="li">
+                <nb-icon icon="star"></nb-icon>{{ item.nomePaciente }}
+              </div>
+              <div class="li">
+                <nb-icon icon="star"></nb-icon>{{ item.modalidade }}
+              </div>
+              <div class="li">
+                <nb-icon icon="star"></nb-icon>{{ item.origem }}
+              </div>
             </nb-list-item>
           </nb-list>
           step number three
@@ -164,8 +176,8 @@
         </button>
 
         <button nbButton status="success" nbStepperNext>
-          <nb-icon icon="arrow-right"></nb-icon>
-          Próximo
+          <nb-icon icon="checkmark-outline"></nb-icon>
+          Concluir
         </button>
       </nb-step>
     </nb-stepper>
