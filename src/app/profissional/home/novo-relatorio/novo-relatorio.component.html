@@ -25,9 +25,12 @@
           [formGroup]="consulta"
           *ngFor="let consulta of getConsultasControls(); let i = index"
         >
+          <!-- <div class="consulta-number">
+            <span></span>
+          </div> -->
           <div class="button-wrapper">
             <button
-              *ngIf="i > 0"
+              *ngIf="i !== 0"
               nbButton
               shape="round"
               status="danger"
@@ -37,8 +40,8 @@
             </button>
           </div>
 
-          <div class="select-wrapper">
-            <nb-select-label>Paciente</nb-select-label>
+          <div class="select-wrapper nome-paciente">
+            <nb-select-label>Paciente {{ i + 1 }}</nb-select-label>
             <nb-select
               formControlName="nomePaciente"
               size="small"
@@ -54,7 +57,7 @@
             >
               <!-- [status]="getFieldStatus(i, 'nomePaciente')" -->
               <nb-option
-                *ngFor="let cliente of clientes; let c = index"
+                *ngFor="let cliente of clientes"
                 [value]="cliente.nome + ' ' + cliente.origem"
               >
                 {{ cliente.nome }}
@@ -66,7 +69,7 @@
           <!-- </nb-form-field> -->
 
           <!-- <nb-form-field> -->
-          <div class="select-wrapper">
+          <div class="select-wrapper horario">
             <nb-select-label>Horário</nb-select-label>
             <nb-select
               formControlName="horario"
@@ -87,7 +90,7 @@
             </nb-select>
             <!-- </nb-form-field> -->
           </div>
-          <div class="select-wrapper">
+          <div class="select-wrapper modalidade">
             <!-- <nb-form-field> -->
             <nb-select-label>Modalidade</nb-select-label>
             <nb-select
@@ -112,7 +115,7 @@
             </nb-select>
             <!-- </nb-form-field> -->
           </div>
-          <div class="button-wrapper">
+          <div *ngIf="i + 1 === consultas.length" class="button-wrapper">
             <button
               nbButton
               shape="round"

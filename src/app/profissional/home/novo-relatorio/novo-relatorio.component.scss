@@ -19,15 +19,39 @@ nb-calendar {
     display: flex;
     // border: 1px solid grey;
     flex-direction: column;
-    width: 212px;
 
-    nb-select {
-      padding: 1px;
-      // width: 100px;
-      //   .select-button {
-      //     width: 196px !important;
-      //     min-width: 196px !important;
-      // }
+    &.nome-paciente {
+      width: 214px;
+      margin-left: 2px;
+      nb-select {
+        button {
+          width: 212px !important;
+          min-width: 212px !important;
+          max-width: 212px !important;
+        }
+      }
+    }
+
+    &.horario {
+      width: 92px;
+      nb-select {
+        button {
+          width: 90px !important;
+          min-width: 90px !important;
+          max-width: 90px !important;
+        }
+      }
+    }
+
+    &.modalidade {
+      width: 110px;
+      nb-select {
+        button {
+          width: 108px !important;
+          min-width: 108px !important;
+          max-width: 108px !important;
+        }
+      }
     }
   }
 }
