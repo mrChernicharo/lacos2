@@ -14,6 +14,7 @@ nb-calendar {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
+  margin: 6px 0;
 
   .select-wrapper {
     display: flex;
@@ -60,10 +61,19 @@ nb-list-item.list-row {
 
   .li {
     height: 36px;
-    border: 1px solid blue;
+    // border: 1px solid blue;
     margin-left: 4px;
     display: flex;
     align-items: center;
+
+    &.nome {
+      width: 100%;
+      justify-content: center;
+    }
+
+    &.modalidade {
+      margin-right: 4px;
+    }
   }
 }
 
@@ -71,4 +81,10 @@ nb-list-item.list-row {
 nb-card-body:not([ng-reflect-ng-switch="date"]) {
   // border: 1px solid red;
   padding: 16px 8px !important;
+}
+
+.instruction {
+  font-size: 20px;
+  font-weight: 300;
+  // background: lightcoral;
 }

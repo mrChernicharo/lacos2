@@ -93,6 +93,10 @@ export class NovoRelatorioComponent implements OnInit {
       actualName.pop();
       this.finalFormData.consultas[i].nomePaciente = actualName.join(' ');
     });
+
+    this.finalFormData.consultas.sort(
+      (a, b) => +a.horario.replace(':', '') - +b.horario.replace(':', '')
+    );
     console.log(this.finalFormData);
   }
 

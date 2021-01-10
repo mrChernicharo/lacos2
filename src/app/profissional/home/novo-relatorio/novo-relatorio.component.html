@@ -4,8 +4,8 @@
     <nb-stepper #stepper>
       <!-- /*********************/ STEP #1 /*********************/ -->
       <nb-step label="Data" [stepControl]="calendarForm">
+        <div class="instruction">selecione a data</div>
         <form [formGroup]="calendarForm">
-          <span>selecione a data</span>
           <nb-calendar
             class="calendar"
             [date]="date"
@@ -21,6 +21,7 @@
 
       <!-- /*********************/ STEP #2 /*********************/ -->
       <nb-step label="Relatório" [stepControl]="reportForm">
+        <div class="instruction">preencha o relatório</div>
         <div
           class="consulta-form"
           [formGroup]="consulta"
@@ -147,6 +148,8 @@
 
       <!-- /*********************/ STEP #3 /*********************/ -->
       <nb-step label="revisao" [stepControl]="revisionTable">
+        <div class="instruction">confira tudo e envie</div>
+
         <div class="list-container">
           <nb-list *ngIf="finalFormData">
             <nb-list-item
@@ -154,16 +157,16 @@
               *ngFor="let item of finalFormData.consultas"
             >
               <div class="li">
-                <nb-icon icon="star"></nb-icon>{{ item.horario }}
+                <nb-icon icon="clock-outline"></nb-icon>&nbsp;{{ item.horario }}
+              </div>
+              <div class="li nome">
+                <nb-icon icon="person-outline"></nb-icon>{{ item.nomePaciente }}
+              </div>
+              <div class="li modalidade">
+                <nb-icon icon="pin-outline"></nb-icon>{{ item.modalidade }}
               </div>
               <div class="li">
-                <nb-icon icon="star"></nb-icon>{{ item.nomePaciente }}
-              </div>
-              <div class="li">
-                <nb-icon icon="star"></nb-icon>{{ item.modalidade }}
-              </div>
-              <div class="li">
-                <nb-icon icon="star"></nb-icon>{{ item.origem }}
+                <nb-icon icon="home-outline"></nb-icon>{{ item.origem }}
               </div>
             </nb-list-item>
           </nb-list>
