@@ -1,16 +1,23 @@
 <nb-card>
   <nb-card-header><h3>Crie sua conta</h3></nb-card-header>
   <nb-card-body>
-    <form>
+    <form [formGroup]="signupForm">
       <nb-form-field>
         <label for="input-nome">Nome</label>
-        <input type="text" id="input-nome" placeholder="nome" nbInput />
+        <input
+          formControlName="nome"
+          type="text"
+          id="input-nome"
+          placeholder="nome"
+          nbInput
+        />
       </nb-form-field>
       <br />
 
       <nb-form-field>
         <label for="input-email">Email</label>
         <input
+          formControlName="email"
           type="email"
           id="input-email"
           placeholder="nome@email.com"
@@ -21,6 +28,7 @@
       <nb-form-field>
         <label for="input-password">Password</label>
         <input
+          formControlName="password"
           type="password"
           id="input-password"
           placeholder="password"
@@ -29,9 +37,10 @@
       </nb-form-field>
 
       <br />
-      <button type="button" nbButton status="success">
-        <nb-icon icon="log-in-outline"></nb-icon>Login
+      <button type="button" nbButton status="success" (click)="submitData()">
+        <nb-icon icon="checkmark-outline"></nb-icon>Confirmar
       </button>
+
       <button type="button" nbButton status="basic">
         <a routerLink="auth/login" style="text-decoration: none;">
           <nb-icon icon="arrow-back-outline"></nb-icon>Voltar

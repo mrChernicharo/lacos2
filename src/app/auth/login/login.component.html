@@ -1,10 +1,11 @@
 <nb-card>
   <nb-card-header><h3>Login</h3></nb-card-header>
   <nb-card-body>
-    <form>
+    <form [formGroup]="loginForm">
       <nb-form-field>
         <label for="input-email">Email</label>
         <input
+          formControlName="email"
           type="email"
           id="input-email"
           placeholder="nome@email.com"
@@ -15,6 +16,7 @@
       <nb-form-field>
         <label for="input-password">Password</label>
         <input
+          formControlName="password"
           type="password"
           id="input-password"
           placeholder="password"
@@ -23,7 +25,7 @@
       </nb-form-field>
 
       <br />
-      <button type="button" nbButton status="success">
+      <button type="button" nbButton status="success" (click)="submitData()">
         <nb-icon icon="log-in-outline"></nb-icon>Login
       </button>
     </form>
