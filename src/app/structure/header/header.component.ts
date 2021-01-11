@@ -36,9 +36,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private nbMenuService: NbMenuService,
-    private headerService: HeaderService
-  ) // private menuService: NbMenuService,
-  // private activatedRoute: ActivatedRoute // private routeSnapshot: ActivatedRouteSnapshot
+    private headerService: HeaderService // private menuService: NbMenuService,
+  ) // private activatedRoute: ActivatedRoute // private routeSnapshot: ActivatedRouteSnapshot
   {}
 
   ngOnInit(): void {
@@ -61,6 +60,8 @@ export class HeaderComponent implements OnInit {
           case 'clientes':
             this.menuItems.push({ title: 'dashboard' }, { title: 'logoff' });
             break;
+          default:
+            this.menuItems.push({ title: 'logoff' });
         }
       })
     );
