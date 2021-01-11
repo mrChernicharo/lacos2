@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Cliente } from 'src/app/models/cliente.model';
 import { ClientesService } from 'src/app/services/clientes.service';
+import { HeaderService } from 'src/app/services/header.service';
 
 @Component({
   selector: 'app-home',
@@ -12,15 +13,18 @@ import { ClientesService } from 'src/app/services/clientes.service';
 })
 export class HomeComponent implements OnInit {
   clientes$: Observable<Cliente[]>;
+  currentPage$: Observable<string>;
 
   constructor(
     private clientesService: ClientesService,
+    private headerService: HeaderService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.clientes$ = this.clientesService._clientes$;
+    this.currentPage$ = this.headerService.currentPage$;
   }
 
   onActivate(event, clientes: Cliente[]) {

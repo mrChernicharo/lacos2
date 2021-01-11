@@ -5,7 +5,7 @@ import {
   // ActivatedRouteSnapshot,
   Router,
 } from '@angular/router';
-import { filter, map, tap } from 'rxjs/operators';
+import { filter, map, shareReplay, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -34,7 +34,9 @@ export class HeaderService {
         // console.log(state.url.split('/'));
         const currentPage = url.split('/').pop().replace('-', ' ');
         return currentPage;
-      })
+      }),
+      shareReplay()
+
       // tap((page) => this.currentPageSubject$.next(page))
     );
   }

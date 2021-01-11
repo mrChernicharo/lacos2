@@ -36,11 +36,11 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private nbMenuService: NbMenuService,
-    @Inject(NB_WINDOW) private window,
-    // private menuService: NbMenuService,
-    private headerService: HeaderService,
-    private activatedRoute: ActivatedRoute // private routeSnapshot: ActivatedRouteSnapshot
-  ) {}
+    private headerService: HeaderService
+  ) // @Inject(NB_WINDOW) private window,
+  // private menuService: NbMenuService,
+  // private activatedRoute: ActivatedRoute // private routeSnapshot: ActivatedRouteSnapshot
+  {}
 
   ngOnInit(): void {
     this.routerState$ = this.headerService.currentPage$.pipe(

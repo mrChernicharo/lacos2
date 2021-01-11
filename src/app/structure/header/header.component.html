@@ -10,23 +10,33 @@
 
     <img class="lacos-logo" [src]="lacosIcon" />
 
+    <!-- size="small" -->
     <button
       *ngIf="routerState !== 'auth'"
       nbButton
       shape="round"
-      size="small"
       appearance="ghost"
       [nbContextMenu]="menuItems"
       nbContextMenuTag="context-menu"
     >
       <nb-icon icon="menu-outline"></nb-icon>
     </button>
+  </div>
 
-    <!--  -->
+  <div class="page-title">
+    <span>{{ routerState | titlecase }}</span>
+  </div>
+
+  <div class="avatar-block">
+    <img class="avatar-img" [src]="defaultUserIcon" />
+  </div>
+</ng-container>
+
+<!--
     <div class="action-block" [ngSwitch]="true">
       <div *ngSwitchDefault></div>
-      <!-- shape="round" -->
-      <!--
+      <-- shape="round" -->
+<!--
       <div *ngSwitchCase="routerState === 'profissional'">
         <button
           nbButton
@@ -74,14 +84,5 @@
         </button>
       </div>
 
-    --></div>
-  </div>
-
-  <div class="page-title">
-    <span>{{ routerState | titlecase }}</span>
-  </div>
-
-  <div class="avatar-block">
-    <img class="avatar-img" [src]="defaultUserIcon" />
-  </div>
-</ng-container>
+    </div>
+  -->

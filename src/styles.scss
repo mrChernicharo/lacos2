@@ -29,6 +29,10 @@ body {
     }
   }
 }
+
+nb-context-menu.nb-overlay-bottom-end {
+  transform: translate(-30px, -10px);
+}
 // nb-menu {
 //   // position: fixed;
 //   background: #fff;
