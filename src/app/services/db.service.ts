@@ -3,6 +3,7 @@ import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { map, shareReplay } from 'rxjs/operators';
 import { Cliente } from '../models/cliente.model';
 import { Consulta } from '../models/consulta.model';
+import { UserAuthData } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -55,5 +56,29 @@ export class DbService {
           });
         })
       );
+  }
+
+  async createUser(user: UserAuthData) {
+    console.log('createUser');
+    delete user.token;
+    delete user.isAuth;
+
+    try {
+      await this.db
+        .collection('users')
+        .add(user)
+        .then(async (doc: DocumentReference<UserAuthData>) => {
+          //
+          await this.db
+            .doc(`users/${doc.id}`)
+            .update({ id: doc.id })
+            .then((response) => {
+              //log
+              console.log({ id: doc.id, ...doc });
+            });
+        });
+    } catch {
+      throw new Error('não foi possível salvar o user');
+    }
   }
 }

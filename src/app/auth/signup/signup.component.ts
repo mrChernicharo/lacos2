@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -13,6 +14,8 @@ export class SignupComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
+    // this.authService.subscribe(data => console.log(data))
+
     this.signupForm = new FormGroup({
       nome: new FormControl('teste', Validators.required),
       email: new FormControl('teste@teste.com', Validators.required),
@@ -29,5 +32,12 @@ export class SignupComponent implements OnInit {
       this.signupForm.value['email'],
       this.signupForm.value['password']
     );
+    // )
+    // .pipe(
+    //   tap((response) => console.log(response.user)),
+    //   tap()
+    // )
+    // .subscribe((data) => console.log(data))
+    // .unsubscribe();
   }
 }

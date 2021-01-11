@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { HeaderService } from '../services/header.service';
 
@@ -20,6 +21,8 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     this.router.navigate(['auth/login']);
-    this.authState$ = this.authService.authState$;
+    // this.authState$ = this.authService.authState$.pipe(
+    //   tap((authState) => console.log(authState)),
+    // );
   }
 }
