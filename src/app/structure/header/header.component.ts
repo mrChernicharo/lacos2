@@ -15,6 +15,7 @@ import {
   NbMenuService,
   NB_WINDOW,
 } from '@nebular/theme';
+import { HeaderService } from 'src/app/services/header.service';
 
 @Component({
   selector: 'app-header',
@@ -37,28 +38,12 @@ export class HeaderComponent implements OnInit {
     private nbMenuService: NbMenuService,
     @Inject(NB_WINDOW) private window,
     // private menuService: NbMenuService,
+    private headerService: HeaderService,
     private activatedRoute: ActivatedRoute // private routeSnapshot: ActivatedRouteSnapshot
   ) {}
 
   ngOnInit(): void {
-    this.routerState$ = this.router.events.pipe(
-      filter(
-        (state: any) => state.__proto__.constructor.name === 'NavigationStart'
-      ),
-      tap((state) => {
-        console.log(state);
-      }),
-      map((state: NavigationStart) => {
-        return state.url;
-      }),
-      tap((url) => {
-        console.log(url);
-      }),
-      map((url) => {
-        // console.log(state.url.split('/'));
-        const currentPage = url.split('/').pop().replace('-', ' ');
-        return currentPage;
-      }),
+    this.routerState$ = this.headerService.currentPage$.pipe(
       tap((page) => {
         this.menuItems.length = 0;
         switch (page) {
