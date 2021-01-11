@@ -1,0 +1,15 @@
+// mat-tab-body-content.ng-trigger-translateTab {
+//   border: 1px solid green !important;
+// }
+mat-card.mat-focus-indicator.ng-star-inserted {
+  // border: 1px solid red !important;
+  max-width: 430px;
+  margin: 28px auto;
+  padding: 20px 24px 14px;
+  border-radius: 12px;
+  background: linear-gradient(170deg, white, transparent);
+}
+.mat-form-field-prefix,
+.mat-form-field-suffix {
+  display: contents;
+}

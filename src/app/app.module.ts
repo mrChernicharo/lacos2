@@ -4,7 +4,10 @@ import {
   LOCALE_ID,
   NgModule,
 } from '@angular/core';
+
 import { BrowserModule } from '@angular/platform-browser';
+import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
 
@@ -51,9 +54,19 @@ import {
   NbThemeModule,
   NB_TIME_PICKER_CONFIG,
 } from '@nebular/theme';
+
 import { CustomDatePipe } from './pipes/custom-date.pipe';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+// import { } from '@angular/material/t'
+
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 registerLocaleData(localePt);
 
@@ -81,6 +94,15 @@ const nbModules = [
   NbThemeModule,
 ];
 
+const matModules = [
+  MatButtonModule,
+  MatCardModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatSnackBarModule,
+];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -106,6 +128,7 @@ const nbModules = [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
+    NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig),
     ...nbModules,
   ],
   providers: [

@@ -3,8 +3,22 @@
 </ng-container>
 <nb-layout-column>
   <!--  -->
-  <router-outlet></router-outlet>
+  <!-- <router-outlet></router-outlet> -->
   <!--  -->
+
+  <ngx-auth-firebaseui
+    [registerButtonText]="'crie uma conta'"
+    [registerTabText]="'crie uma conta'"
+    [forgotPasswordButtonText]="'esqueci a senha'"
+    [emailErrorPatternText]="'formato inválido'"
+    [signInTabText]="'login'"
+    [signInCardTitleText]="'Login'"
+    [registerCardTitleText]="'Crie sua conta'"
+    [nameText]="'nome'"
+    [guestEnabled]="false"
+    [providers]="[providers.EmailAndPassword, providers.Google]"
+    [appearance]="'outline'"
+  ></ngx-auth-firebaseui>
 </nb-layout-column>
 
 <a routerLink="/profissional">Profissional</a>
