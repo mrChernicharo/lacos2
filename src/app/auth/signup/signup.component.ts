@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -11,7 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     // this.authService.subscribe(data => console.log(data))
@@ -39,5 +40,9 @@ export class SignupComponent implements OnInit {
     // )
     // .subscribe((data) => console.log(data))
     // .unsubscribe();
+  }
+
+  goBack() {
+    this.router.navigate(['auth/login']);
   }
 }

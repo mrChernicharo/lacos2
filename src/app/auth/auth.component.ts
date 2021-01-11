@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { AuthService } from '../services/auth.service';
+import { AuthService, UserAuthData } from '../services/auth.service';
 import { HeaderService } from '../services/header.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { HeaderService } from '../services/header.service';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnInit {
-  authState$: Observable<any>;
+  authState$: Observable<UserAuthData>;
 
   constructor(
     private router: Router,
@@ -21,8 +21,10 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     this.router.navigate(['auth/login']);
-    // this.authState$ = this.authService.authState$.pipe(
-    //   tap((authState) => console.log(authState)),
-    // );
+    this.authState$ = this.authService.authState$.pipe(
+      tap((user) => {
+        console.log(user);
+      })
+    );
   }
 }

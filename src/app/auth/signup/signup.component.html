@@ -41,10 +41,10 @@
         <nb-icon icon="checkmark-outline"></nb-icon>Confirmar
       </button>
 
-      <button type="button" nbButton status="basic">
-        <a routerLink="auth/login" style="text-decoration: none;">
-          <nb-icon icon="arrow-back-outline"></nb-icon>Voltar
-        </a>
+      <button type="button" nbButton status="basic" (click)="goBack()">
+        <!-- <a routerLink="auth/login" style="text-decoration: none;"> -->
+        <nb-icon icon="arrow-back-outline"></nb-icon>Voltar
+        <!-- </a> -->
       </button>
     </form>
   </nb-card-body>

@@ -41,8 +41,7 @@ export class AuthService {
       .pipe(
         take(1),
         shareReplay(),
-        catchError((err) => throwError(err)),
-        tap((data) => console.log(data)),
+        // tap((data) => console.log(data)),
         map((data) => {
           const newUser: UserAuthData = {
             id: null,
@@ -59,6 +58,7 @@ export class AuthService {
         }),
         tap((user) => this.db.createUser(user)),
         tap((user) => this.authStateSubject$.next(user)),
+        catchError((err) => throwError(err)),
         finalize(() => console.log('completed signup!'))
       )
       .subscribe();
