@@ -22,8 +22,6 @@ import {
 } from 'src/app/services/consultas.service';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 
-import { CalendarFormComponent } from './calendar-form/calendar-form.component';
-import { ReportFormComponent } from './report-form/report-form.component';
 import { Cliente } from 'src/app/models/cliente.model';
 import { Consulta } from 'src/app/models/consulta.model';
 import {

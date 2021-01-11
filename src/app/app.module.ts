@@ -51,8 +51,6 @@ import {
   NbThemeModule,
   NB_TIME_PICKER_CONFIG,
 } from '@nebular/theme';
-import { CalendarFormComponent } from './profissional/home/novo-relatorio/calendar-form/calendar-form.component';
-import { ReportFormComponent } from './profissional/home/novo-relatorio/report-form/report-form.component';
 import { CustomDatePipe } from './pipes/custom-date.pipe';
 
 registerLocaleData(localePt);
@@ -90,8 +88,6 @@ const nbModules = [
     NovoRelatorioComponent,
     DashboardComponent,
     AddClientesComponent,
-    CalendarFormComponent,
-    ReportFormComponent,
     CustomDatePipe,
   ],
   imports: [
