@@ -29,11 +29,11 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  onActivate(event, clientes: Cliente[]) {
-    event['clientes'] = clientes;
+  onActivate(routerData, clientes: Cliente[]) {
+    routerData['clientes'] = clientes;
   }
 
-  onDeactivate(event) {
-    console.log(event);
+  onDeactivate(routerData) {
+    console.log(routerData);
   }
 }

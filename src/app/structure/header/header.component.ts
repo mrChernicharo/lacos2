@@ -37,8 +37,7 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private nbMenuService: NbMenuService,
     private headerService: HeaderService
-  ) // @Inject(NB_WINDOW) private window,
-  // private menuService: NbMenuService,
+  ) // private menuService: NbMenuService,
   // private activatedRoute: ActivatedRoute // private routeSnapshot: ActivatedRouteSnapshot
   {}
 
@@ -94,44 +93,4 @@ export class HeaderComponent implements OnInit {
         return this.router.navigate(['auth']);
     }
   }
-
-  // open() {
-  //   this.contextMenu.show();
-  // }
-
-  // close() {
-  //   this.contextMenu.hide();
-  // }
-
-  // onMenuToggle() {
-  //   this.menuItems[0].expanded = !this.menuItems[0].expanded;
-  // }
 }
-
-// menuItems: NbMenuItem[] = [
-// [
-// {
-// title: 'Menu',
-// icon: 'menu-outline',
-// expanded: false,
-// },
-// children: [
-// {
-// title: 'Novo Relatório',
-// icon: 'plus-outline',
-// link: 'profissional/novo-relatorio',
-// },
-// {
-// title: 'Logout',
-// icon: 'power-outline',
-// link: 'auth',
-// },
-// ],
-// },
-// {
-//   title: 'Shopping Bag',
-// },
-// {
-//   title: 'Orders',
-// },
-// ];
