@@ -1,8 +1,18 @@
-<ng-container *ngIf="clientes$ | async as clientes">
-  <p>home works!</p>
-  <router-outlet
-    (activate)="onActivate($event, clientes)"
-    (deactivate)="onDeactivate($event)"
-  ></router-outlet>
-  <!-- <app-novo-relatorio [clientes]="clientes"></app-novo-relatorio> -->
-</ng-container>
+<div *ngIf="currentPage$ | async as currentPage" class="page-container">
+  <ng-container *ngIf="clientes$ | async as clientes">
+    <ng-container *ngIf="currentPage === 'profissional'">
+      <p>relatórios</p>
+      <p>consultas</p>
+      <p>datas</p>
+      <p>pacientes</p>
+    </ng-container>
+
+    <ng-container *ngIf="currentPage === 'novo relatorio'">
+      <router-outlet
+        (activate)="onActivate($event, clientes)"
+        (deactivate)="onDeactivate($event)"
+      ></router-outlet>
+    </ng-container>
+    <!-- <app-novo-relatorio [clientes]="clientes"></app-novo-relatorio> -->
+  </ng-container>
+</div>

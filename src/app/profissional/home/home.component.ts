@@ -24,7 +24,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.clientes$ = this.clientesService._clientes$;
-    this.currentPage$ = this.headerService.currentPage$;
+    this.currentPage$ = this.headerService.currentPage$.pipe(
+      tap((page) => console.log(page))
+    );
   }
 
   onActivate(event, clientes: Cliente[]) {
