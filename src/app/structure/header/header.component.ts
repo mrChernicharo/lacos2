@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
 import { appIcons } from '../../../assets/app-icons';
 import { Observable } from 'rxjs';
@@ -7,6 +13,7 @@ import {
   NbContextMenuDirective,
   NbMenuItem,
   NbMenuService,
+  NB_WINDOW,
 } from '@nebular/theme';
 
 @Component({
@@ -27,6 +34,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private nbMenuService: NbMenuService,
+    @Inject(NB_WINDOW) private window,
     // private menuService: NbMenuService,
     private activatedRoute: ActivatedRoute // private routeSnapshot: ActivatedRouteSnapshot
   ) {}
@@ -55,7 +64,7 @@ export class HeaderComponent implements OnInit {
         switch (page) {
           case 'profissional':
             this.menuItems.push(
-              { title: 'novo-relatorio' },
+              { title: 'novo relatorio' },
               { title: 'logoff' }
             );
             break;
@@ -71,22 +80,33 @@ export class HeaderComponent implements OnInit {
         }
       })
     );
+
+    this.nbMenuService
+      .onItemClick()
+      .pipe(
+        filter(({ tag }) => tag === 'context-menu'),
+        map(({ item: { title } }) => title)
+      )
+      .subscribe((title) => this.goToPage(title));
   }
 
   goToPage(page: string) {
     console.log(page);
     switch (page) {
-      case 'profissional':
+      case 'novo relatorio':
         return this.router.navigate(['profissional', 'novo-relatorio']);
 
-      case 'admin':
+      case 'clientes':
         return this.router.navigate(['admin', 'clientes']);
 
-      case 'novo relatorio':
+      case 'home':
         return this.router.navigate(['profissional']);
 
-      case 'clientes':
+      case 'dashboard':
         return this.router.navigate(['admin']);
+
+      case 'logoff':
+        return this.router.navigate(['auth']);
     }
   }
 

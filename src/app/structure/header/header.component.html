@@ -17,6 +17,7 @@
       size="small"
       appearance="ghost"
       [nbContextMenu]="menuItems"
+      nbContextMenuTag="context-menu"
     >
       <nb-icon icon="menu-outline"></nb-icon>
     </button>
@@ -25,7 +26,7 @@
     <div class="action-block" [ngSwitch]="true">
       <div *ngSwitchDefault></div>
       <!-- shape="round" -->
-
+      <!--
       <div *ngSwitchCase="routerState === 'profissional'">
         <button
           nbButton
@@ -72,7 +73,8 @@
           <nb-icon icon="arrow-back-outline"></nb-icon>
         </button>
       </div>
-    </div>
+
+    --></div>
   </div>
 
   <div class="page-title">
