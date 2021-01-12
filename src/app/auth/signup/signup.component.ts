@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
-
+  @Output() goToLogin = new EventEmitter();
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
@@ -43,6 +43,7 @@ export class SignupComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['auth/login']);
+    // this.router.navigate(['auth/login']);
+    this.goToLogin.emit();
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
-import { map, shareReplay } from 'rxjs/operators';
+import { map, shareReplay, take, tap } from 'rxjs/operators';
 import { Cliente } from '../models/cliente.model';
 import { Consulta } from '../models/consulta.model';
 import { UserAuthData } from './auth.service';
@@ -78,7 +78,18 @@ export class DbService {
             });
         });
     } catch {
-      throw new Error('não foi possível salvar o user');
+      throw new Error('não foi possível salvar os dados do usuário');
     }
+  }
+
+  checkUserExists(user: UserAuthData) {
+    return this.db
+      .collection('users', (ref) => ref.where('email', '==', user.email))
+      .snapshotChanges()
+      .pipe(
+        take(1),
+        map((snaps) => snaps.length > 0),
+        tap((bool) => console.log(`email in use? ${bool}`))
+      );
   }
 }

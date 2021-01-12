@@ -1,26 +1,63 @@
-<ng-container *ngIf="authState$ | async">
-  usuario logado
-</ng-container>
+<ng-container *ngIf="authState$ | async"> usuario logado </ng-container>
 <nb-layout-column>
   <!--  -->
   <!-- <router-outlet></router-outlet> -->
+  <nb-flip-card [showToggleButton]="false" [flipped]="flipped">
+    <nb-card-front>
+      <nb-card>
+        <app-login (goToSignup)="flipCard()"></app-login>
+      </nb-card>
+    </nb-card-front>
+    <nb-card-back>
+      hello
+      <nb-card>
+        <app-signup (goToLogin)="flipCard()"></app-signup>
+      </nb-card>
+    </nb-card-back>
+  </nb-flip-card>
   <!--  -->
-
-  <ngx-auth-firebaseui
-    [registerButtonText]="'crie uma conta'"
-    [registerTabText]="'crie uma conta'"
-    [forgotPasswordButtonText]="'esqueci a senha'"
-    [emailErrorPatternText]="'formato inválido'"
-    [signInTabText]="'login'"
-    [signInCardTitleText]="'Login'"
-    [registerCardTitleText]="'Crie sua conta'"
-    [nameText]="'nome'"
-    [guestEnabled]="false"
-    [providers]="[providers.EmailAndPassword, providers.Google]"
-    [appearance]="'outline'"
-  ></ngx-auth-firebaseui>
 </nb-layout-column>
 
 <a routerLink="/profissional">Profissional</a>
 <br />
 <a routerLink="/admin">Admin</a>
+
+<!-- <ngx-auth-firebaseui
+    [registerButtonText]="'Crie uma conta'"
+    [registerTabText]="'Crie uma conta'"
+    [forgotPasswordButtonText]="'Esqueci minha senha'"
+    [signInTabText]="'login'"
+    [signInCardTitleText]="'Login'"
+    [registerCardTitleText]="'Crie sua conta'"
+    [nameText]="'nome'"
+    [emailErrorPatternText]="'formato inválido'"
+    [verifyEmailTitleText]="'Confirme seu endereço de email'"
+    [verifyEmailConfirmationText]="confirmationText"
+    [verifyEmailGoBackText]="'Voltar'"
+    [sendNewVerificationEmailText]="'Enviar novo email de confirmação'"
+    [signOutText]="'Logoff'"
+    [goBackURL]="'/auth'"
+    [messageOnEmailConfirmationSuccess]="
+      'Um novo email de confirmação foi enviado. Verifique sua caixa de entrada'
+    "
+    [guestEnabled]="false"
+    [providers]="[providers.EmailAndPassword, providers.Google]"
+    [appearance]="'outline'"
+    [resetPasswordTabText]="'Recuperação de senha'"
+    [resetPasswordInputText]="'digite o seu email'"
+    [resetPasswordErrorRequiredText]="
+      'O email é necessário para recuperar de senha!'
+    "
+    [resetPasswordErrorPatternText]="
+      'Por favor insira um endereço de email válido'
+    "
+    [resetPasswordActionButtonText]="'Solicitar nova senha'"
+    [resetPasswordInstructionsText]="
+      'Solicitação enviada. Cheque seu email e siga as instruções.'
+    "
+    [min]="6"
+    [max]="16"
+    (onStrengthChanged)="onStrengthChanged($event)"
+    (onSuccess)="onSuccess($event)"
+    (onError)="onError($event)"
+  ></ngx-auth-firebaseui> -->

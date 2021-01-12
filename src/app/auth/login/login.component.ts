@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
@@ -11,7 +17,9 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
-  login$: Subscription;
+  @Output() goToSignup = new EventEmitter();
+  // login$: Subscription;
+  // @Output() goToLogin = new EventEmitter();
 
   constructor(private router: Router, private authService: AuthService) {}
 
@@ -26,8 +34,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   navigateToSignup() {
-    this.router.navigate(['auth/signup']);
+    // this.router.navigate(['auth/signup']);
+    this.goToSignup.emit('event');
   }
+
   submitData() {
     this.authService.login(
       this.loginForm.value['email'],
