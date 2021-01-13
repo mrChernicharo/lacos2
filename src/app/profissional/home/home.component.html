@@ -1,10 +1,11 @@
 <div *ngIf="currentPage$ | async as currentPage" class="page-container">
   <!-- <ng-container *ngIf="clientes$ | async as clientes"> -->
   <ng-container *ngIf="currentPage === 'profissional'">
-    <p>relatórios</p>
-    <p>consultas</p>
     <p>datas</p>
+    <p>relatórios</p>
     <p>pacientes</p>
+    <p>consultas</p>
+    <pre *ngFor="let consulta of consultas">{{ consulta | json }}</pre>
   </ng-container>
 
   <ng-container *ngIf="currentPage === 'novo relatorio'">

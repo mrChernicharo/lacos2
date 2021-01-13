@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Cliente } from 'src/app/models/cliente.model';
+import { Consulta } from 'src/app/models/consulta.model';
+import { AppUser } from 'src/app/services/auth.service';
 import { ClientesService } from 'src/app/services/clientes.service';
 import { HeaderService } from 'src/app/services/header.service';
 
@@ -13,6 +15,9 @@ import { HeaderService } from 'src/app/services/header.service';
 export class DashboardComponent implements OnInit {
   clientes$: Observable<Cliente[]>;
   currentPage$: Observable<string>;
+  user: AppUser;
+  consultas: Consulta[];
+  clientes: Cliente[];
 
   constructor(
     private clientesService: ClientesService,
@@ -20,7 +25,7 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.clientes$ = this.clientesService._clientes$;
+    // this.clientes$ = this.clientesService._clientes$;
     this.currentPage$ = this.headerService.currentPage$.pipe(
       tap((page) => console.log(page))
     );

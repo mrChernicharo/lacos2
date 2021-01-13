@@ -49,16 +49,18 @@ export class DbService {
   fetchUserConsultas(user: AppUser) {
     console.log('FETCH USER CONSULTAS');
     console.log(user);
-    return of([{}] as Consulta[]);
-    // return this.db
-    // .collection('consultas', ref => ref.where())
-    // .snapshotChanges()
-    // .pipe(
-    //   map((snaps) => {
-    //     return snaps.map((snap) => snap.payload.doc.data() as Consulta);
-    //   }),
-    //   tap((consultas) => console.log(consultas))
-    // );
+    // return of([{}] as Consulta[]);
+    return this.db
+      .collection('consultas', (ref) =>
+        ref.where('idProfissional', '==', user.id)
+      )
+      .snapshotChanges()
+      .pipe(
+        map((snaps) => {
+          return snaps.map((snap) => snap.payload.doc.data() as Consulta);
+        }),
+        tap((consultas) => console.log(consultas))
+      );
   }
 
   async createCliente(cliente: Cliente) {

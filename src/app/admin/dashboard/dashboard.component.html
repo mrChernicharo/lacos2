@@ -1,10 +1,9 @@
 <div *ngIf="currentPage$ | async as currentPage" class="page-container">
-  <ng-container *ngIf="clientes$ | async as clientes">
-    <ng-container *ngIf="currentPage === 'admin'">
-      dashboard
-    </ng-container>
-    <ng-container *ngIf="currentPage === 'clientes'">
-      <router-outlet></router-outlet>
-    </ng-container>
+  <ng-container *ngIf="currentPage === 'admin'">
+    dashboard
+    <pre *ngFor="let consulta of consultas">{{ consulta | json }}</pre>
+  </ng-container>
+  <ng-container *ngIf="currentPage === 'clientes'">
+    <router-outlet></router-outlet>
   </ng-container>
 </div>

@@ -31,10 +31,6 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.router);
-    console.log(this.route);
-    console.log(this);
-
     this.currentPage$ = this.headerService.currentPage$.pipe(
       tap((page) => console.log(page))
     );

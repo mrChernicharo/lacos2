@@ -9,27 +9,25 @@
 
   <nb-layout-column>
     <div class="page-container">
-      <div class="user-auth-data-container" *ngIf="user$ | async as user">
-        <pre>{{ user | json }}</pre>
-
-        <!-- <button (click)="authService.signOut()">Sign Out</button> -->
-        <!-- <ng-template #login>
-          <button (click)="authService.googleSignin()">Login com Google</button>
-        </ng-template> -->
-
-        <!-- ROUTER OUTLET -->
-      </div>
       <ng-container *ngIf="clientes$ | async as clientes">
         <ng-container *ngIf="consultas$ | async as consultas">
+          <!-- ///// -->
+          <!-- ROUTER OUTLET -->
           <router-outlet
             *ngIf="user$ | async as user; else login"
             (activate)="onActivate($event, user, clientes, consultas)"
             (deactivate)="onDeactivate($event)"
           ></router-outlet>
+          <!-- ///// -->
         </ng-container>
         <ng-template #login><app-auth></app-auth></ng-template>
-        <!-- ///// -->
       </ng-container>
+
+      <div class="user-auth-data-container" *ngIf="user$ | async as user">
+        <pre>{{ user | json }}</pre>
+        <p>criado em {{ user.dataCriacao | date: "short" }}</p>
+        <p>último acesso em {{ user.ultimoAcesso | date: "short" }}</p>
+      </div>
     </div>
   </nb-layout-column>
 
@@ -38,4 +36,8 @@
   </nb-layout-footer>
 </nb-layout>
 
+<!-- <button (click)="authService.signOut()">Sign Out</button> -->
+<!-- <ng-template #login>
+  <button (click)="authService.googleSignin()">Login com Google</button>
+</ng-template> -->
 <!-- <div *ngFor="let consulta of consultas">{{ consulta.horario }}</div> -->
