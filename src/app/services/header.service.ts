@@ -19,7 +19,7 @@ export class HeaderService {
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {
     this.currentPage$ = this.router.events.pipe(
       filter(
-        (state: any) => state.__proto__.constructor.name === 'NavigationStart'
+        (state: any) => state.__proto__.constructor.name === 'NavigationEnd'
       ),
       tap((state) => {
         console.log(state);

@@ -25,6 +25,7 @@ export class AuthComponent implements OnInit {
   themes = Theme;
   uiConfig: NgxAuthFirebaseUIConfig;
   flipped = false;
+  user$;
 
   // flipped$ = new BehaviorSubject<boolean>(false);
   constructor(
@@ -37,16 +38,9 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.themes.MINI_FAB);
-    // this.flipped$.pipe(tap((state) => console.log(state)));
-    // this.uiConfig.toastMessageOnAuthSuccess = true;
-    // this.uiConfig.toastMessageOnAuthError = true;
-
-    // this.router.navigate(['auth/login']);
-    // this.authState$ = this.authService.authState$.pipe(
-    //   tap((user) => {
-    //     console.log(user);
-    //   })
-    // );
+    this.user$ = this.authService.user$.pipe(
+      tap((user: AppUser) => this.redirectUser(user?.role))
+    );
   }
   onGoogleLogin() {
     this.authService.googleSignin();
@@ -56,28 +50,46 @@ export class AuthComponent implements OnInit {
     this.flipped = !this.flipped;
   }
 
+  redirectUser(role: string) {
+    role === 'admin'
+      ? this.router.navigate(['admin'])
+      : this.router.navigate(['profissional']);
+  }
+
   onStrengthChanged(event) {
     console.log(event);
   }
 
-  onSuccess(event) {
-    console.log(event);
-    console.log('onSuccess');
-    const userData: AppUser = {
-      id: null,
-      nome: event.displayName,
-      email: event.email,
-      token: event.refreshToken,
-      avatarImg: event.photoURL,
-      role: 'profissional',
-      dataCriacao: new Date(),
-      ultimoAcesso: new Date(),
-    };
-    // this.authService.handleAuthSuccess(userData);
-  }
-  onError(event) {
-    console.log(event);
-  }
+  // this.flipped$.pipe(tap((state) => console.log(state)));
+  // this.uiConfig.toastMessageOnAuthSuccess = true;
+  // this.uiConfig.toastMessageOnAuthError = true;
+
+  // this.router.navigate(['auth/login']);
+  // this.authState$ = this.authService.authState$.pipe(
+  //   tap((user) => {
+  //     console.log(user);
+  //   })
+  // );
+  //
+  //
+  // onSuccess(event) {
+  //   console.log(event);
+  //   console.log('onSuccess');
+  //   const userData: AppUser = {
+  //     id: null,
+  //     nome: event.displayName,
+  //     email: event.email,
+  //     token: event.refreshToken,
+  //     avatarImg: event.photoURL,
+  //     role: 'profissional',
+  //     dataCriacao: new Date(),
+  //     ultimoAcesso: new Date(),
+  //   };
+  //   // this.authService.handleAuthSuccess(userData);
+  // }
+  // onError(event) {
+  //   console.log(event);
+  // }
 }
 // confirmationText =
 //   "Um e-mail de confirmação foi enviado. Verifique sua caixa de entrada e clique no link 'Confirmar meu email' para confirmar seu endereço de e-mail.";

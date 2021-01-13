@@ -110,12 +110,6 @@ export class AuthService {
 
   signup(nome: string, email: string, password: string) {}
 
-  // redirectUser(role: string) {
-  //   role === 'admin'
-  //     ? this.router.navigate(['profissional'])
-  //     : this.router.navigate(['admin']);
-  // }
-
   // handleAuthSuccess(user: AppUser) {
   //   this.db
   //     .checkUserExists(user)
