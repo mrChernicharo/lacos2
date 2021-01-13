@@ -56,8 +56,10 @@ export class NovoRelatorioComponent implements OnInit {
   consultaForm: FormGroup;
   revisionTable: any;
 
-  clientes: Cliente[];
-  // user: any;
+  @Input() clientes: Cliente[];
+  @Input() user: AppUser;
+  @Input() userConsultas: Consulta[];
+
   horarios = HORARIOS;
   modalidades = MODALIDADES;
   finalFormData: IReportForm;
@@ -84,13 +86,14 @@ export class NovoRelatorioComponent implements OnInit {
     });
     // console.log(this.clientes);
 
-    this.route.data.pipe(
-      tap((routeData) => {
-        // this.clientes = routeData['clientes'] as Cliente[];
-        // this.user = routeData['user'] as AppUser;
-        console.log(routeData);
-      })
-    );
+    // this.route.data.pipe(
+    //   tap((routeData) => {
+    //     console.log(routeData);
+    //     this.clientes = routeData['clientes'] as Cliente[];
+    //     this.user = routeData['user'] as AppUser;
+    //     this.userConsultas = routeData['consultas'] as Consulta[];
+    //   })
+    // );
     // console.log(this.router.routerState.snapshot);
 
     this.createReportForm();
@@ -189,6 +192,6 @@ export class NovoRelatorioComponent implements OnInit {
   submitReport() {
     console.log('submit!');
     console.log(this.finalFormData);
-    this.consultaService.saveConsultas(this.finalFormData);
+    this.consultaService.saveConsultas(this.finalFormData, this.user);
   }
 }

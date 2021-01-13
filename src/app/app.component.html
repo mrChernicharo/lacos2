@@ -23,11 +23,10 @@
         <ng-container *ngIf="consultas$ | async as consultas">
           <router-outlet
             *ngIf="user$ | async as user; else login"
-            (activate)="onActivate($event, user, clientes)"
+            (activate)="onActivate($event, user, clientes, consultas)"
             (deactivate)="onDeactivate($event)"
           ></router-outlet>
         </ng-container>
-
         <ng-template #login><app-auth></app-auth></ng-template>
         <!-- ///// -->
       </ng-container>

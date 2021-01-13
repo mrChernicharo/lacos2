@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Consulta } from '../models/consulta.model';
-import { AuthService } from './auth.service';
+import { AppUser, AuthService } from './auth.service';
 import { DbService } from './db.service';
 import {
   IReportForm,
@@ -16,16 +16,17 @@ export class ConsultasService {
 
   constructor(private db: DbService, public authService: AuthService) {}
 
-  saveConsultas(finalFormData: IReportForm) {
+  saveConsultas(finalFormData: IReportForm, user: AppUser) {
     console.log(finalFormData);
+    console.log(user);
 
     const newConsultas = finalFormData.consultas.map((item) => {
       // new Consulta(
       const newConsulta: Consulta = {
         id: '',
         horario: item.horario,
-        nomeProfissional: '',
-        idProfissional: '',
+        nomeProfissional: user.nome,
+        idProfissional: user.id,
         nomePaciente: item.nomePaciente,
         idPaciente: '',
         origem: item.origem,

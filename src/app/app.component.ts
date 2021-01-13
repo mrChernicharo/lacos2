@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.user$ = this.authService.user$ as Observable<AppUser>;
     this.clientes$ = this.clientesService._clientes$;
+    this.consultas$;
 
     this.user$
       .pipe(
