@@ -1,27 +1,32 @@
 <nb-layout class="app-container">
   <nb-layout-header class="header-container" fixed>
-    <app-header></app-header>
+    <app-header>
+      <ng-container *ngIf="user$ | async as user">
+        <span class="user-name"> {{ user.nome }}</span>
+      </ng-container>
+    </app-header>
   </nb-layout-header>
 
   <nb-layout-column>
     <div class="page-container">
-      <div
-        class="auth-state-container"
-        *ngIf="authService.user$ | async as user; else login"
-      >
-        <pre>{{ user | json }}</pre>
-
-        <!-- <button (click)="authService.signOut()">Sign Out</button> -->
-      </div>
-      <ng-template #login>
+      <!-- <ng-template #login>
         <button (click)="authService.googleSignin()">Login com Google</button>
-      </ng-template>
+      </ng-template> -->
 
       <!-- ROUTER OUTLET -->
       <router-outlet></router-outlet>
       <!-- ///// -->
     </div>
   </nb-layout-column>
+
+  <div
+    class="user-auth-data-container"
+    *ngIf="authService.user$ | async as user"
+  >
+    <pre>{{ user | json }}</pre>
+
+    <!-- <button (click)="authService.signOut()">Sign Out</button> -->
+  </div>
 
   <nb-layout-footer fixed>
     <!-- Insert footer here -->

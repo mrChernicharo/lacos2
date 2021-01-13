@@ -1,15 +1,5 @@
 <ng-container *ngIf="routerState$ | async as routerState">
   <div class="left-column">
-    <!-- <div class="menu-container">
-      <nb-menu
-        class="header-menu"
-        [autoCollapse]="true"
-        [items]="menuItems"
-      ></nb-menu>
-    </div> -->
-
-    <img class="lacos-logo" [src]="lacosIcon" />
-
     <!-- size="small" -->
     <button
       *ngIf="!routerState.match('auth')"
@@ -23,15 +13,24 @@
     </button>
   </div>
 
+  <img class="lacos-logo" [src]="lacosIcon" />
+
   <div class="page-title">
     <span>{{ routerState | titlecase }}</span>
   </div>
 
+  <ng-content></ng-content>
   <div class="avatar-block">
     <img class="avatar-img" [src]="defaultUserIcon" />
   </div>
 </ng-container>
-
+<!-- <div class="menu-container">
+      <nb-menu
+        class="header-menu"
+        [autoCollapse]="true"
+        [items]="menuItems"
+      ></nb-menu>
+    </div> -->
 <!--
     <div class="action-block" [ngSwitch]="true">
       <div *ngSwitchDefault></div>

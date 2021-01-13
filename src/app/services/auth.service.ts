@@ -79,7 +79,7 @@ export class AuthService {
     return this.updateUserData(credential.user, true);
   }
 
-  async updateUserData(user, googleSignin = false) {
+  async updateUserData(user, isGoogleSignin = false, isCreateAccount = false) {
     console.log('UPDATE USER DATA');
     console.log(user);
 
@@ -96,13 +96,18 @@ export class AuthService {
       ultimoAcesso: user.metadata.b,
     };
 
-    if (googleSignin) {
+    if (isGoogleSignin) {
       return userRef.set(userData, {
         mergeFields: ['id', 'nome', 'token', 'avatarImg', 'ultimoAcesso'],
       }); // update only changing fields, so..it changes only the 1st time...or maybe if user changes it`s profile pic on google..
     }
-
-    return userRef.set(userData);
+    if (isCreateAccount) {
+      return userRef.set(userData);
+    } else {
+      return userRef.set(userData, {
+        mergeFields: ['id', 'token', 'avatarImg', 'ultimoAcesso'],
+      });
+    }
   }
 
   signOut() {
@@ -126,7 +131,11 @@ export class AuthService {
       .createUserWithEmailAndPassword(email, password)
       .then((respData) => {
         console.log(respData);
-        this.updateUserData({ ...respData.user, displayName: nome });
+        this.updateUserData(
+          { ...respData.user, displayName: nome },
+          false, // isGoogle X
+          true // isCreateAccount ✔︎
+        );
       });
   }
 

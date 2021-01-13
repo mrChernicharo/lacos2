@@ -16,7 +16,7 @@ import {
   NB_WINDOW,
 } from '@nebular/theme';
 import { HeaderService } from 'src/app/services/header.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AppUser, AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -31,6 +31,7 @@ export class HeaderComponent implements OnInit {
   lacosIcon = appIcons.lacos;
 
   routerState$: Observable<string>;
+  user$: Observable<AppUser>;
 
   menuItems = [];
 
@@ -44,7 +45,8 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.routerState$ = this.headerService.currentPage$.pipe(
       tap((page) => {
-        this.menuItems.length = 0;
+        this.menuItems.length = 0; // reset menu items array
+        // reposition them according to page
         switch (page) {
           case 'profissional':
             this.menuItems.push(
