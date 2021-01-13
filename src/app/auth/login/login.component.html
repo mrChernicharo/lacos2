@@ -39,19 +39,10 @@
       ghost
       (click)="navigateToSignup()"
     >
-      <!-- <nb-icon icon="arrow-left-outline"></nb-icon> -->
       Criar conta
     </button>
   </nb-card-body>
-  <nb-card-footer>
-    <p>Ou entre com</p>
-
-    <button nbButton status="primary" shape="round">
-      <nb-icon icon="google"></nb-icon>
-    </button>
-
-    <button nbButton status="primary" shape="round">
-      <nb-icon icon="facebook"></nb-icon>
-    </button>
-  </nb-card-footer>
+  <ng-content></ng-content>
 </nb-card>
+
+<!-- <nb-icon icon="arrow-left-outline"></nb-icon> -->

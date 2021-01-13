@@ -48,6 +48,9 @@ export class AuthComponent implements OnInit {
     //   })
     // );
   }
+  onGoogleLogin() {
+    this.authService.googleSignin();
+  }
 
   flipCard() {
     this.flipped = !this.flipped;

@@ -7,13 +7,13 @@ import {
   Router,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, take, tap } from 'rxjs/operators';
-import { AuthService } from './auth.service';
+import { take, map, tap } from 'rxjs/operators';
+import { AppUser, AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class AdminGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(
@@ -25,12 +25,12 @@ export class AuthGuard implements CanActivate {
     | boolean
     | UrlTree {
     return this.authService.user$.pipe(
-      take(1), ///complete
-      map((user) => !!user), // map to boolean
-      tap((loggedIn) => {
-        if (!loggedIn) {
-          console.log('ACCESS DENIED!');
-          this.router.navigate(['/auth']);
+      take(1),
+      map((user: any) => user.role === 'admin'),
+      tap((isAdmin) => {
+        if (!isAdmin) {
+          console.log('ACCESS DENIED! YOU`RE NOT AN ADMIN!');
+          this.router.navigate(['/profissional']);
         }
       })
     );

@@ -48,6 +48,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     // });
     // .unsubscribe();
   }
+
+  onGoogleLogin() {}
   ngOnDestroy() {
     // this.login$.unsubscribe();
   }

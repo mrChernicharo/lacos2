@@ -5,13 +5,47 @@
   <nb-flip-card [showToggleButton]="false" [flipped]="flipped">
     <nb-card-front>
       <nb-card>
-        <app-login (goToSignup)="flipCard()"></app-login>
+        <app-login (goToSignup)="flipCard()">
+          <nb-card-footer>
+            <p>Ou entre com</p>
+
+            <button
+              nbButton
+              status="primary"
+              shape="round"
+              (click)="onGoogleLogin()"
+            >
+              <nb-icon icon="google"></nb-icon>
+            </button>
+
+            <!-- <button nbButton status="primary" shape="round" >
+              <nb-icon icon="facebook"></nb-icon>
+            </button> -->
+          </nb-card-footer>
+        </app-login>
       </nb-card>
     </nb-card-front>
     <nb-card-back>
       hello
       <nb-card>
-        <app-signup (goToLogin)="flipCard()"></app-signup>
+        <app-signup (goToLogin)="flipCard()">
+          <nb-card-footer>
+            <p>Ou entre com</p>
+
+            <button
+              nbButton
+              status="primary"
+              shape="round"
+              (click)="onGoogleLogin()"
+            >
+              <nb-icon icon="google"></nb-icon>
+            </button>
+
+            <!-- <button nbButton status="primary" shape="round" >
+              <nb-icon icon="facebook"></nb-icon>
+            </button> -->
+          </nb-card-footer>
+        </app-signup>
       </nb-card>
     </nb-card-back>
   </nb-flip-card>

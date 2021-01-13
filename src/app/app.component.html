@@ -11,13 +11,15 @@
       >
         <pre>{{ user | json }}</pre>
 
-        <button (click)="authService.signOut()">Sign Out</button>
+        <!-- <button (click)="authService.signOut()">Sign Out</button> -->
       </div>
       <ng-template #login>
         <button (click)="authService.googleSignin()">Login com Google</button>
       </ng-template>
 
+      <!-- ROUTER OUTLET -->
       <router-outlet></router-outlet>
+      <!-- ///// -->
     </div>
   </nb-layout-column>
 

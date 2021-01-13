@@ -41,7 +41,7 @@ export class AuthService {
   private authStateSubject$ = new BehaviorSubject<AppUser>(null);
   authState$ = this.authStateSubject$.asObservable();
 
-  user$: Observable<FireUser>;
+  user$: Observable<FireUser | AppUser>;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -49,6 +49,8 @@ export class AuthService {
     private db: DbService
   ) {
     this.user$ = this.afAuth.authState.pipe(
+      // quando não logado, os dados vem brutos do firebase
+      // quando vc já tem conta, os dados já foram processados e ao invés de FireUser, temos um obj AppUser
       tap((authUser) => {
         console.log('1. authService constructor -> ANGULAR FIRE AUTH STATE');
         console.log(authUser);
@@ -70,7 +72,7 @@ export class AuthService {
     const provider = new firebase.auth.GoogleAuthProvider();
     const credential = await this.afAuth.signInWithPopup(provider);
 
-    console.log('GOOGLE SIGNIN');
+    console.log('GOOGLE SIGNIN () => provider & credential');
     console.log(provider);
     console.log(credential);
 
@@ -79,6 +81,7 @@ export class AuthService {
 
   async updateUserData(user) {
     console.log('UPDATE USER DATA');
+    console.log(user);
 
     const userRef: AngularFirestoreDocument<any> = this.db.getUserDoc(user);
     console.log(userRef);
@@ -89,17 +92,13 @@ export class AuthService {
       token: user.refreshToken,
       avatarImg: user.photoURL,
       role: 'profissional',
-      dataCriacao: new Date(),
-      ultimoAcesso: new Date(),
+      dataCriacao: user.metadata.a, // miliseconds
+      ultimoAcesso: user.metadata.b,
     };
 
-    return userRef.set(userData, { merge: true }); // update only changing fields
-  }
-
-  redirectUser(role: string) {
-    role === 'admin'
-      ? this.router.navigate(['profissional'])
-      : this.router.navigate(['admin']);
+    return userRef.set(userData, {
+      mergeFields: ['id', 'nome', 'token', 'avatarImg', 'ultimoAcesso'],
+    }); // update only changing fields, so..it changes only the 1st time...or maybe if user changes it`s profile pic on google..
   }
 
   signOut() {
@@ -110,6 +109,13 @@ export class AuthService {
   login(email: string, password: string) {}
 
   signup(nome: string, email: string, password: string) {}
+
+  // redirectUser(role: string) {
+  //   role === 'admin'
+  //     ? this.router.navigate(['profissional'])
+  //     : this.router.navigate(['admin']);
+  // }
+
   // handleAuthSuccess(user: AppUser) {
   //   this.db
   //     .checkUserExists(user)

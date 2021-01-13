@@ -7,6 +7,8 @@ import { AuthComponent } from './auth/auth.component';
 // import { SignupComponent } from './auth/signup/signup.component';
 import { HomeComponent } from './profissional/home/home.component';
 import { NovoRelatorioComponent } from './profissional/home/novo-relatorio/novo-relatorio.component';
+import { AdminGuard } from './guards/admin.guard';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/auth', pathMatch: 'full' },
@@ -17,6 +19,7 @@ const routes: Routes = [
   {
     path: 'profissional',
     component: HomeComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'novo-relatorio',
@@ -28,6 +31,7 @@ const routes: Routes = [
   {
     path: 'admin',
     component: DashboardComponent,
+    canActivate: [AuthGuard, AdminGuard],
     children: [{ path: 'clientes', component: AddClientesComponent }],
   },
   { path: '**', component: AuthComponent },
