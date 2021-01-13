@@ -28,7 +28,7 @@ export class ConsultasService {
         nomeProfissional: user.nome,
         idProfissional: user.id,
         nomePaciente: item.nomePaciente,
-        idPaciente: '',
+        idPaciente: item.idPaciente,
         origem: item.origem,
         modalidade: item.modalidade,
         dataConsulta: new Date(

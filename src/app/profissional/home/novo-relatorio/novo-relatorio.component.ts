@@ -31,7 +31,7 @@ import { AppUser } from 'src/app/services/auth.service';
 
 export type IReportFormConsulta = Pick<
   Consulta,
-  'horario' | 'modalidade' | 'origem' | 'nomePaciente'
+  'idPaciente' | 'horario' | 'modalidade' | 'origem' | 'nomePaciente'
 >;
 
 export interface IReportForm {
@@ -105,14 +105,25 @@ export class NovoRelatorioComponent implements OnInit {
     //
     this.consultas.controls.forEach((consulta, i) => {
       console.log(consulta);
-      const origemConsulta = (consulta.get('nomePaciente').value as string)
-        .split(' ')
-        .pop();
-      this.finalFormData.consultas[i].origem = origemConsulta;
+      const pacienteInfo = (consulta.get('nomePaciente').value as string).split(
+        ' '
+      ); // nome origem id
+      console.log(pacienteInfo);
 
-      let actualName = consulta.get('nomePaciente').value.split(' ');
-      actualName.pop();
-      this.finalFormData.consultas[i].nomePaciente = actualName.join(' ');
+      const idPaciente = pacienteInfo.pop();
+      const origemConsulta = pacienteInfo.pop();
+
+      // const origemConsulta = (consulta.get('nomePaciente').value as string)
+      //   .split(' ')
+      //   .pop();
+
+      // const idPaciente = (consulta.get('nomePaciente').value as string)
+      //   .split(' ')
+      //   .pop();
+
+      this.finalFormData.consultas[i].idPaciente = idPaciente;
+      this.finalFormData.consultas[i].origem = origemConsulta;
+      this.finalFormData.consultas[i].nomePaciente = pacienteInfo.join(' ');
     });
 
     this.finalFormData.consultas.sort(
@@ -138,7 +149,7 @@ export class NovoRelatorioComponent implements OnInit {
   newConultaForm() {
     return this.fb.group({
       nomePaciente: new FormControl('', Validators.required),
-      // idPaciente: new FormControl(''),
+      idPaciente: new FormControl(''),
       origem: new FormControl(''),
       modalidade: new FormControl('', Validators.required),
       horario: new FormControl('', [
@@ -168,10 +179,12 @@ export class NovoRelatorioComponent implements OnInit {
     // }
   }
   trimPacienteName(event: string, i: number) {
-    // console.log(event);
+    console.log(event);
+    console.log(event);
     const selectElChild = document.querySelector(`#nomePaciente-${i}`)
       .firstElementChild as HTMLButtonElement;
     let arrText = event.split(' ');
+    arrText.pop();
     arrText.pop();
     let ftext = arrText.join(' ');
     selectElChild.textContent = ftext;

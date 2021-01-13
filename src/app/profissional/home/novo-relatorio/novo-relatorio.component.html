@@ -63,7 +63,7 @@
               <!-- [status]="getFieldStatus(i, 'nomePaciente')" -->
               <nb-option
                 *ngFor="let cliente of clientes"
-                [value]="cliente.nome + ' ' + cliente.origem"
+                [value]="cliente.nome + ' ' + cliente.origem + ' ' + cliente.id"
               >
                 {{ cliente.nome }}
                 <span style="display: none">{{ cliente.origem }}</span>
