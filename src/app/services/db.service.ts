@@ -88,7 +88,7 @@ export class DbService {
 
   getFireUser(user): Observable<any> {
     const fireUserDoc = this.db
-      .doc(`users/${user.uid}`)
+      .doc(`users/${user.uid || user.id}`)
       .valueChanges()
       .pipe(
         tap((data) => {
@@ -102,7 +102,7 @@ export class DbService {
   }
 
   getUserDoc(user) {
-    return this.db.doc(`users/${user.uid}`);
+    return this.db.doc(`users/${user.uid || user.id}`);
   }
 
   // checkUserExists(user: AppUser) {

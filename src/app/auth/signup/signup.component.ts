@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
   @Output() goToLogin = new EventEmitter();
+  // @Output() login = new EventEmitter()
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
@@ -33,6 +34,7 @@ export class SignupComponent implements OnInit {
       this.signupForm.value['email'],
       this.signupForm.value['password']
     );
+
     // )
     // .pipe(
     //   tap((response) => console.log(response.user)),

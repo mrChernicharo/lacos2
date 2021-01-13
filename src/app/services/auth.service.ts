@@ -76,10 +76,10 @@ export class AuthService {
     console.log(provider);
     console.log(credential);
 
-    return this.updateUserData(credential.user);
+    return this.updateUserData(credential.user, true);
   }
 
-  async updateUserData(user) {
+  async updateUserData(user, googleSignin = false) {
     console.log('UPDATE USER DATA');
     console.log(user);
 
@@ -96,9 +96,13 @@ export class AuthService {
       ultimoAcesso: user.metadata.b,
     };
 
-    return userRef.set(userData, {
-      mergeFields: ['id', 'nome', 'token', 'avatarImg', 'ultimoAcesso'],
-    }); // update only changing fields, so..it changes only the 1st time...or maybe if user changes it`s profile pic on google..
+    if (googleSignin) {
+      return userRef.set(userData, {
+        mergeFields: ['id', 'nome', 'token', 'avatarImg', 'ultimoAcesso'],
+      }); // update only changing fields, so..it changes only the 1st time...or maybe if user changes it`s profile pic on google..
+    }
+
+    return userRef.set(userData);
   }
 
   signOut() {
@@ -106,9 +110,25 @@ export class AuthService {
     this.router.navigate(['/auth']);
   }
 
-  login(email: string, password: string) {}
+  login(email: string, password: string) {
+    console.log('1 SIGN IN WITH EMAIL AND PASSWORD, PASSWORD: ' + password);
+    this.afAuth.signInWithEmailAndPassword(email, password).then((respData) => {
+      console.log(respData);
+      this.updateUserData(respData.user);
+    });
+  }
 
-  signup(nome: string, email: string, password: string) {}
+  signup(nome: string, email: string, password: string) {
+    console.log(
+      '1 CREATE ACCOUNT WITH EMAIL AND PASSWORD, PASSWORD: ' + password
+    );
+    this.afAuth
+      .createUserWithEmailAndPassword(email, password)
+      .then((respData) => {
+        console.log(respData);
+        this.updateUserData({ ...respData.user, displayName: nome });
+      });
+  }
 
   // handleAuthSuccess(user: AppUser) {
   //   this.db
