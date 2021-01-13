@@ -29,11 +29,11 @@ export class AppComponent implements OnInit {
         // delay(1000),
         tap((user) => {
           if (user) {
-            console.log('QUERO SABER AS CONSULTAS DO USER');
+            // console.log('QUERO SABER AS CONSULTAS DO USER');
             console.log(user);
+            this.consultas$ = this.consultasService.fetchUserConsultas(user);
           }
           // if (user) {
-          //   this.consultasService.fetchUserConsultas(user);
           // }
         })
       )

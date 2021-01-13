@@ -1,3 +1,4 @@
+import { nullSafeIsEquivalent } from '@angular/compiler/src/output/output_ast';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestoreDocument } from '@angular/fire/firestore';
@@ -107,6 +108,7 @@ export class AuthService {
     }
     if (isCreateAccount) {
       return userRef.set(userData);
+      //
     } else {
       return userRef.set(userData, {
         mergeFields: ['id', 'token', 'avatarImg', 'ultimoAcesso'],
@@ -115,8 +117,10 @@ export class AuthService {
   }
 
   signOut() {
-    this.afAuth.signOut();
-    this.router.navigate(['/auth']);
+    this.afAuth.signOut().then(() => {
+      this.router.navigate(['/auth']);
+    });
+    // this.user$ = of(null)
   }
 
   login(email: string, password: string) {

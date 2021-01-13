@@ -7,7 +7,7 @@ import { AppUser } from './auth.service';
 import firebase from 'firebase/app';
 
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -29,11 +29,24 @@ export class DbService {
     }
   }
 
-  // console.log('FETCH ALL CONSULTAS')
+  fetchAllConsultas() {
+    console.log('FETCH ALL CONSULTAS');
+    // return of([{}] as Consulta[]);
+    return this.db
+      .collection('consultas')
+      .snapshotChanges()
+      .pipe(
+        map((snaps) => {
+          return snaps.map((snap) => snap.payload.doc.data() as Consulta);
+        }),
+        tap((consultas) => console.log(consultas))
+      );
+  }
 
   fetchUserConsultas(user: AppUser) {
     console.log('FETCH USER CONSULTAS');
     console.log(user);
+    return of([{}] as Consulta[]);
   }
 
   async createCliente(cliente: Cliente) {

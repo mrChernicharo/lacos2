@@ -54,12 +54,11 @@ export class ConsultasService {
   // this.consultas = this.db.fetchUserConsultas(user)
 
   fetchUserConsultas(userData) {
-    console.log(userData);
-    console.log('FETCH USER CONSULTAS');
-    return of([{}] as Consulta[]);
-    // user.role === 'admin'
-    //   ? this.db.fetchAllClientes()
-    //   : this.db.fetchUserConsultas(user);
+    // console.log(userData);
+    // console.log('FETCH USER CONSULTAS');
+    return userData.role === 'admin'
+      ? this.db.fetchAllConsultas()
+      : this.db.fetchUserConsultas(userData);
   }
 }
 export const MODALIDADES: string[] = ['online', 'presencial', 'externa'];

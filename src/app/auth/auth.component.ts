@@ -42,7 +42,11 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.themes.MINI_FAB);
     this.user$ = this.authService.user$.pipe(
-      tap((user: AppUser) => this.redirectUser(user?.role))
+      tap((user: AppUser) => {
+        if (user) {
+          this.redirectUser(user.role);
+        }
+      })
     );
   }
   onGoogleLogin() {
