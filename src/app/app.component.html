@@ -9,6 +9,11 @@
 
   <nb-layout-column>
     <div class="page-container">
+      <div class="user-auth-data-container" *ngIf="user$ | async as user">
+        <pre>{{ user | json }}</pre>
+
+        <!-- <button (click)="authService.signOut()">Sign Out</button> -->
+      </div>
       <!-- <ng-template #login>
         <button (click)="authService.googleSignin()">Login com Google</button>
       </ng-template> -->
@@ -19,16 +24,11 @@
     </div>
   </nb-layout-column>
 
-  <div
-    class="user-auth-data-container"
-    *ngIf="authService.user$ | async as user"
-  >
-    <pre>{{ user | json }}</pre>
-
-    <!-- <button (click)="authService.signOut()">Sign Out</button> -->
-  </div>
-
   <nb-layout-footer fixed>
     <!-- Insert footer here -->
   </nb-layout-footer>
 </nb-layout>
+
+<ng-container *ngIf="consultas$ | async as consultas">
+  <!-- <div *ngFor="let consulta of consultas">{{ consulta.horario }}</div> -->
+</ng-container>

@@ -39,7 +39,7 @@
               nbButton
               shape="round"
               status="danger"
-              (click)="removeConsulta(i)"
+              (click)="removeConsultaFormGroup(i)"
             >
               <nb-icon icon="close-outline"></nb-icon>
             </button>
@@ -66,7 +66,7 @@
                 [value]="cliente.nome + ' ' + cliente.origem"
               >
                 {{ cliente.nome }}
-                <span style="display: none;">{{ cliente.origem }}</span>
+                <span style="display: none">{{ cliente.origem }}</span>
               </nb-option>
             </nb-select>
           </div>
@@ -126,7 +126,7 @@
               nbButton
               shape="round"
               status="success"
-              (click)="addConsulta()"
+              (click)="addConsultaFormGroup()"
             >
               <nb-icon icon="plus-outline"></nb-icon>
             </button>
@@ -138,11 +138,11 @@
             nbButton
             shape="round"
             status="success"
-            (click)="addConsulta()"
+            (click)="addConsultaFormGroup()"
           >
             <nb-icon icon="plus-outline"></nb-icon>
           </button>
-          <span style="color: #01a26c;"> criar consulta</span>
+          <span style="color: #01a26c"> criar consulta</span>
         </div>
 
         <button nbButton nbStepperPrevious>

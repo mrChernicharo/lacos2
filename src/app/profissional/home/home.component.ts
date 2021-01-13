@@ -32,10 +32,10 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.clientes$ = this.clientesService._clientes$;
     this.consultas$ = this.consultasService.consultas$;
-    this.user$ = this.authService.user$ as Observable<AppUser>;
-    this.user$.pipe(
-      tap((user) => this.consultasService.fetchUserConsultas(user))
-    );
+    // this.user$ = this.authService.user$ as Observable<AppUser>;
+    // this.user$.pipe(
+    //   tap((user) => this.consultasService.fetchUserConsultas(user))
+    // );
 
     this.currentPage$ = this.headerService.currentPage$.pipe(
       tap((page) => console.log(page))

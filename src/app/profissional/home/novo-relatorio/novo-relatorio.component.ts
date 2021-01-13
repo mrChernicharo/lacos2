@@ -24,12 +24,21 @@ import { RxwebValidators } from '@rxweb/reactive-form-validators';
 
 import { Cliente } from 'src/app/models/cliente.model';
 import { Consulta } from 'src/app/models/consulta.model';
-import {
-  IReportForm,
-  IReportFormConsulta,
-} from 'src/app/services/consultas.service';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
+
+export type IReportFormConsulta = Pick<
+  Consulta,
+  'horario' | 'modalidade' | 'origem' | 'nomePaciente'
+>;
+
+export interface IReportForm {
+  consultas: IReportFormConsulta[];
+  dataRelatorio: Date;
+  dataAtualizacao: Date;
+  dataCriacao: Date;
+}
 
 @Component({
   selector: 'app-novo-relatorio',
@@ -71,7 +80,7 @@ export class NovoRelatorioComponent implements OnInit {
     this.calendarForm = new FormGroup({
       date: new FormControl('', Validators.required),
     });
-    console.log(this.clientes);
+    // console.log(this.clientes);
 
     this.route.data.pipe(
       tap((routeData) => {
@@ -81,11 +90,12 @@ export class NovoRelatorioComponent implements OnInit {
     // console.log(this.router.routerState.snapshot);
 
     this.createReportForm();
-    this.addConsulta();
+    this.addConsultaFormGroup();
   }
 
   handleFormData(event) {
     this.finalFormData = this.reportForm.value as IReportForm;
+    //
     this.consultas.controls.forEach((consulta, i) => {
       console.log(consulta);
       const origemConsulta = (consulta.get('nomePaciente').value as string)
@@ -141,10 +151,10 @@ export class NovoRelatorioComponent implements OnInit {
     return this.consultas.controls;
   }
 
-  addConsulta() {
+  addConsultaFormGroup() {
     this.consultas.push(this.newConultaForm());
   }
-  removeConsulta(i) {
+  removeConsultaFormGroup(i) {
     console.log('remove ' + i);
     // if (this.consultas.length > 1) {
     this.consultas.removeAt(i);

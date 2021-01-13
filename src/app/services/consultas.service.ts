@@ -2,18 +2,11 @@ import { Injectable } from '@angular/core';
 import { Consulta } from '../models/consulta.model';
 import { AuthService } from './auth.service';
 import { DbService } from './db.service';
-
-export type IReportFormConsulta = Pick<
-  Consulta,
-  'horario' | 'modalidade' | 'origem' | 'nomePaciente'
->;
-
-export interface IReportForm {
-  consultas: IReportFormConsulta[];
-  dataRelatorio: Date;
-  dataAtualizacao: Date;
-  dataCriacao: Date;
-}
+import {
+  IReportForm,
+  IReportFormConsulta,
+} from 'src/app/profissional/home/novo-relatorio/novo-relatorio.component';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -60,10 +53,13 @@ export class ConsultasService {
   }
   // this.consultas = this.db.fetchUserConsultas(user)
 
-  fetchUserConsultas(user) {
-    user.role === 'admin'
-      ? this.db.fetchAllClientes()
-      : this.db.fetchUserConsultas(user);
+  fetchUserConsultas(userData) {
+    console.log(userData);
+    console.log('FETCH USER CONSULTAS');
+    return of([{}] as Consulta[]);
+    // user.role === 'admin'
+    //   ? this.db.fetchAllClientes()
+    //   : this.db.fetchUserConsultas(user);
   }
 }
 export const MODALIDADES: string[] = ['online', 'presencial', 'externa'];

@@ -99,8 +99,8 @@ export class DbService {
       .valueChanges()
       .pipe(
         tap((data) => {
-          console.log('3. RESULTADO DA QUERY');
-          console.log(data);
+          // console.log('3. RESULTADO DA QUERY');
+          // console.log(data);
         })
       );
 

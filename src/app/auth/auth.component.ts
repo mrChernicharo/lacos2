@@ -12,6 +12,7 @@ import {
 import { tap } from 'rxjs/operators';
 import { AuthService, AppUser } from '../services/auth.service';
 import { HeaderService } from '../services/header.service';
+import { ConsultasService } from '../services/consultas.service';
 
 @Component({
   selector: 'app-auth',
@@ -26,11 +27,13 @@ export class AuthComponent implements OnInit {
   uiConfig: NgxAuthFirebaseUIConfig;
   flipped = false;
   user$;
+  userConsultas$;
 
   // flipped$ = new BehaviorSubject<boolean>(false);
   constructor(
     private router: Router,
     private authService: AuthService,
+    private consultasService: ConsultasService,
     private afAuth: AngularFireAuth,
     private headerService: HeaderService,
     private authProcess: AuthProcessService
