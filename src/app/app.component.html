@@ -5,6 +5,18 @@
 
   <nb-layout-column>
     <div class="page-container">
+      <div
+        class="auth-state-container"
+        *ngIf="authService.user$ | async as user; else login"
+      >
+        <pre>{{ user | json }}</pre>
+
+        <button (click)="authService.signOut()">Sign Out</button>
+      </div>
+      <ng-template #login>
+        <button (click)="authService.googleSignin()">Login com Google</button>
+      </ng-template>
+
       <router-outlet></router-outlet>
     </div>
   </nb-layout-column>

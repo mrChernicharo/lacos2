@@ -3,12 +3,18 @@ import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { map, shareReplay, take, tap } from 'rxjs/operators';
 import { Cliente } from '../models/cliente.model';
 import { Consulta } from '../models/consulta.model';
-import { UserAuthData } from './auth.service';
+import { AppUser } from './auth.service';
+import firebase from 'firebase/app';
+
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DbService {
+  constructor(private db: AngularFirestore, private aFAuth: AngularFireAuth) {}
+
   async storeConsultas(consultas: Consulta[]) {
     console.log(consultas);
     try {
@@ -22,7 +28,6 @@ export class DbService {
       throw new Error('erro');
     }
   }
-  constructor(private db: AngularFirestore) {}
 
   async createCliente(cliente: Cliente) {
     try {
@@ -58,16 +63,15 @@ export class DbService {
       );
   }
 
-  async createUser(user: UserAuthData) {
+  async createUser(user: AppUser) {
     console.log('createUser');
     delete user.token;
-    delete user.isAuth;
 
     try {
       await this.db
         .collection('users')
         .add(user)
-        .then(async (doc: DocumentReference<UserAuthData>) => {
+        .then(async (doc: DocumentReference<AppUser>) => {
           //
           await this.db
             .doc(`users/${doc.id}`)
@@ -82,14 +86,33 @@ export class DbService {
     }
   }
 
-  checkUserExists(user: UserAuthData) {
-    return this.db
-      .collection('users', (ref) => ref.where('email', '==', user.email))
-      .snapshotChanges()
+  getFireUser(user): Observable<any> {
+    const fireUserDoc = this.db
+      .doc(`users/${user.uid}`)
+      .valueChanges()
       .pipe(
-        take(1),
-        map((snaps) => snaps.length > 0),
-        tap((bool) => console.log(`email in use? ${bool}`))
+        tap((data) => {
+          console.log('3. RESULTADO DA QUERY');
+          console.log(data);
+        })
       );
+
+    console.log(fireUserDoc);
+    return fireUserDoc;
   }
+
+  getUserDoc(user) {
+    return this.db.doc(`users/${user.uid}`);
+  }
+
+  // checkUserExists(user: AppUser) {
+  //   return this.db
+  //     .collection('users', (ref) => ref.where('email', '==', user.email))
+  //     .snapshotChanges()
+  //     .pipe(
+  //       take(1),
+  //       map((snaps) => snaps.length > 0),
+  //       tap((bool) => console.log(`email in use? ${bool}`))
+  //     );
+  // }
 }

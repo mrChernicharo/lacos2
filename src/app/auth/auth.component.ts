@@ -10,7 +10,7 @@ import {
 } from 'ngx-auth-firebaseui';
 
 import { tap } from 'rxjs/operators';
-import { AuthService, UserAuthData } from '../services/auth.service';
+import { AuthService, AppUser } from '../services/auth.service';
 import { HeaderService } from '../services/header.service';
 
 @Component({
@@ -20,7 +20,7 @@ import { HeaderService } from '../services/header.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class AuthComponent implements OnInit {
-  authState$ = new BehaviorSubject<UserAuthData>(null);
+  authState$ = new BehaviorSubject<AppUser>(null);
   providers = AuthProvider;
   themes = Theme;
   uiConfig: NgxAuthFirebaseUIConfig;
@@ -60,18 +60,17 @@ export class AuthComponent implements OnInit {
   onSuccess(event) {
     console.log(event);
     console.log('onSuccess');
-    const userData: UserAuthData = {
+    const userData: AppUser = {
       id: null,
       nome: event.displayName,
       email: event.email,
-      dataCriacao: new Date(),
-      isAuth: true,
-      role: 'profissional',
-      ultimoAcesso: new Date(),
       token: event.refreshToken,
       avatarImg: event.photoURL,
+      role: 'profissional',
+      dataCriacao: new Date(),
+      ultimoAcesso: new Date(),
     };
-    this.authService.handleAuthSuccess(userData);
+    // this.authService.handleAuthSuccess(userData);
   }
   onError(event) {
     console.log(event);

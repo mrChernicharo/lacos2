@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import firebase from 'firebase/app';
 import { BehaviorSubject, from, Observable, of, throwError } from 'rxjs';
 import {
   catchError,
@@ -14,48 +16,84 @@ import {
 } from 'rxjs/operators';
 import { DbService } from './db.service';
 
-export interface UserAuthData {
+export interface AppUser {
   id: string;
   nome: string;
   email: string;
   dataCriacao: Date;
   ultimoAcesso: Date;
   role: 'profissional' | 'admin' | 'cliente';
-  isAuth: boolean;
   token: string;
   avatarImg: string;
+}
+
+export interface FireUser {
+  uid: string;
+  email: string;
+  displayName: string;
+  photoUrl?: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private authStateSubject$ = new BehaviorSubject<UserAuthData>(null);
+  private authStateSubject$ = new BehaviorSubject<AppUser>(null);
   authState$ = this.authStateSubject$.asObservable();
+
+  user$: Observable<FireUser>;
 
   constructor(
     private afAuth: AngularFireAuth,
     private router: Router,
     private db: DbService
   ) {
-    // this.authState$.pipe(startWith([]));
+    this.user$ = this.afAuth.authState.pipe(
+      tap((authUser) => {
+        console.log('1. authService constructor -> ANGULAR FIRE AUTH STATE');
+        console.log(authUser);
+      }),
+      switchMap((authUser) => {
+        if (authUser) {
+          console.log('2. ANGULAR FIRE AUTH STATE == TRUE -> VÁ AO BANCO');
+          return this.db.getFireUser(authUser);
+        } else {
+          console.log('2. ANGULAR FIRE AUTH STATE == NULL');
+          return of(null);
+        }
+      }),
+      finalize(() => console.log('user$ observable completada'))
+    );
   }
 
-  handleAuthSuccess(user: UserAuthData) {
-    this.db
-      .checkUserExists(user)
-      .pipe(
-        catchError((err) => throwError(err)),
-        finalize(() => () => {
-          console.log('complete!');
-          this.redirectUser(user.role);
-        })
-      )
-      .subscribe((exists) => {
-        if (!exists) {
-          this.db.createUser(user);
-        }
-      });
+  async googleSignin() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    const credential = await this.afAuth.signInWithPopup(provider);
+
+    console.log('GOOGLE SIGNIN');
+    console.log(provider);
+    console.log(credential);
+
+    return this.updateUserData(credential.user);
+  }
+
+  async updateUserData(user) {
+    console.log('UPDATE USER DATA');
+
+    const userRef: AngularFirestoreDocument<any> = this.db.getUserDoc(user);
+    console.log(userRef);
+    const userData: AppUser = {
+      id: user.uid,
+      nome: user.displayName,
+      email: user.email,
+      token: user.refreshToken,
+      avatarImg: user.photoURL,
+      role: 'profissional',
+      dataCriacao: new Date(),
+      ultimoAcesso: new Date(),
+    };
+
+    return userRef.set(userData, { merge: true }); // update only changing fields
   }
 
   redirectUser(role: string) {
@@ -64,9 +102,30 @@ export class AuthService {
       : this.router.navigate(['admin']);
   }
 
-  login(email: string, password: string) {}
-  signup(nome: string, email: string, password: string) {}
+  signOut() {
+    this.afAuth.signOut();
+    this.router.navigate(['/auth']);
+  }
 
+  login(email: string, password: string) {}
+
+  signup(nome: string, email: string, password: string) {}
+  // handleAuthSuccess(user: AppUser) {
+  //   this.db
+  //     .checkUserExists(user)
+  //     .pipe(
+  //       catchError((err) => throwError(err)),
+  //       finalize(() => () => {
+  //         console.log('complete!');
+  //         this.redirectUser(user.role);
+  //       })
+  //     )
+  //     .subscribe((exists) => {
+  //       if (!exists) {
+  //         this.db.createUser(user);
+  //       }
+  //     });
+  // }
   // signup(nome: string, email: string, password: string) {
   //   from(this.afAuth.createUserWithEmailAndPassword(email, password))
   //     .pipe(
@@ -74,7 +133,7 @@ export class AuthService {
   //       shareReplay(),
   //       // tap((data) => console.log(data)),
   //       map((data) => {
-  //         const newUser: UserAuthData = {
+  //         const newUser: AppUser = {
   //           id: null,
   //           nome: nome,
   //           email: data.user.email,
