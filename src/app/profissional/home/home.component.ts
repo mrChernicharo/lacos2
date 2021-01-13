@@ -17,11 +17,9 @@ import { HeaderService } from 'src/app/services/header.service';
 export class HomeComponent implements OnInit {
   clientes$: Observable<Cliente[]>;
   currentPage$: Observable<string>;
-  // consultas$: Observable<Consulta[]>;
-  user;
-  consultas;
-  clientes;
-  // user$: Observable<AppUser>;
+  user: AppUser;
+  consultas: Consulta[];
+  clientes: Cliente[];
 
   constructor(
     private clientesService: ClientesService,
@@ -33,30 +31,12 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.user = this.route.data['user'];
-    // this.route.data.subscribe((value) => console.log(value));
-    // this.route.data.subscribe((data) => console.log(data));
     console.log(this.router);
     console.log(this.route);
     console.log(this);
-
-    // this.consultas$ = this.consultasService.consultas$;
-    // this.user$ = this.authService.user$ as Observable<AppUser>;
-    // this.user$.pipe(
-    //   tap((user) => this.consultasService.fetchUserConsultas(user))
-    // );
 
     this.currentPage$ = this.headerService.currentPage$.pipe(
       tap((page) => console.log(page))
     );
   }
-
-  // onActivate(routerData, clientes: Cliente[]) {
-  //   // routerData['clientes'] = clientes;
-  //   // routerData['user'] = this.user;
-  // }
-
-  // onDeactivate(routerData) {
-  //   console.log(routerData);
-  // }
 }

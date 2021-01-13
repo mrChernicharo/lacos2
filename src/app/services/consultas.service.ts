@@ -23,13 +23,13 @@ export class ConsultasService {
     const newConsultas = finalFormData.consultas.map((item) => {
       // new Consulta(
       const newConsulta: Consulta = {
-        id: '',
-        horario: item.horario,
         nomeProfissional: user.nome,
         idProfissional: user.id,
-        nomePaciente: item.nomePaciente,
+        idConsulta: '',
         idPaciente: item.idPaciente,
+        nomePaciente: item.nomePaciente,
         origem: item.origem,
+        horario: item.horario,
         modalidade: item.modalidade,
         dataConsulta: new Date(
           finalFormData.dataRelatorio.getFullYear(),

@@ -12,6 +12,6 @@ export class Consulta {
     public dataConsulta: Date | IServerTimestamp,
     public dataCriacao: Date | IServerTimestamp,
     public dataAtualizacao: Date | IServerTimestamp,
-    public id?: string
+    public idConsulta?: string
   ) {}
 }

@@ -24,7 +24,7 @@ export class DbService {
           .add(consulta)
           .then((doc) => {
             console.log(doc);
-            this.db.doc(`consultas/${doc.id}`).update({ id: doc.id });
+            this.db.doc(`consultas/${doc.id}`).update({ idConsulta: doc.id });
           });
       });
     } catch {
