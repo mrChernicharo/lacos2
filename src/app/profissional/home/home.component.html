@@ -5,21 +5,19 @@
     <p>relatórios</p>
     <p>pacientes</p>
     <p>consultas</p>
-    <pre *ngFor="let consulta of consultas">{{ consulta | json }}</pre>
+    <pre *ngFor="let consulta of consultas"
+      >{{ consulta.nomePaciente }} {{ consulta.horario }} {{
+        consulta.dataConsulta["seconds"] * 1000 | date: "shortDate"
+      }}</pre
+    >
+    <!-- consulta.dataConsulta | timestampSeconds: "dd/mm/yy" -->
   </ng-container>
 
   <ng-container *ngIf="currentPage === 'novo relatorio'">
-    <!-- <router-outlet
-        (activate)="onActivate($event, clientes)"
-        (deactivate)="onDeactivate($event)"
-      ></router-outlet> -->
-    <!-- <app-add-clientes [clientes]="clientes" [user]="user"></app-add-clientes> -->
     <app-novo-relatorio
       [clientes]="clientes"
       [user]="user"
       [userConsultas]="consultas"
     ></app-novo-relatorio>
   </ng-container>
-  <!-- <app-novo-relatorio [clientes]="clientes"></app-novo-relatorio> -->
-  <!-- </ng-container> -->
 </div>

@@ -55,21 +55,23 @@ export class AuthService {
       // quando não logado, os dados vem brutos do firebase
       // quando vc já tem conta, os dados já foram processados e ao invés de FireUser, temos um obj AppUser
       tap((authUser) => {
-        console.log('1. authService constructor -> ANGULAR FIRE AUTH STATE');
-        console.log(authUser);
+        // console.log('1. authService constructor -> ANGULAR FIRE AUTH STATE');
+        // console.log(authUser);
       }),
       switchMap((authUser) => {
         if (authUser) {
-          console.log('2. ANGULAR FIRE AUTH STATE == TRUE -> VÁ AO BANCO');
+          // console.log('2. ANGULAR FIRE AUTH STATE == TRUE -> VÁ AO BANCO');
           return this.db.getFireUser(authUser);
         } else {
-          console.log('2. ANGULAR FIRE AUTH STATE == NULL');
+          // console.log('2. ANGULAR FIRE AUTH STATE == NULL');
           return of(null);
         }
       }),
       // distinctUntilChanged(),
       // shareReplay(),
-      finalize(() => console.log('user$ observable completada'))
+      finalize(() => {
+        // console.log('user$ observable completada')
+      })
     );
   }
 
@@ -77,16 +79,16 @@ export class AuthService {
     const provider = new firebase.auth.GoogleAuthProvider();
     const credential = await this.afAuth.signInWithPopup(provider);
 
-    console.log('GOOGLE SIGNIN () => provider & credential');
-    console.log(provider);
-    console.log(credential);
+    // console.log('GOOGLE SIGNIN () => provider & credential');
+    // console.log(provider);
+    // console.log(credential);
 
     return this.updateUserData(credential.user, true);
   }
 
   async updateUserData(user, isGoogleSignin = false, isCreateAccount = false) {
-    console.log('UPDATE USER DATA');
-    console.log(user);
+    // console.log('UPDATE USER DATA');
+    // console.log(user);
 
     const userRef: AngularFirestoreDocument<any> = this.db.getUserDoc(user);
     console.log(userRef);
@@ -97,7 +99,7 @@ export class AuthService {
       token: user.refreshToken,
       avatarImg: user.photoURL,
       role: 'profissional',
-      dataCriacao: user.metadata.a, // miliseconds
+      dataCriacao: user.metadata.a, // Seconds
       ultimoAcesso: user.metadata.b,
     };
 
@@ -124,21 +126,22 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    console.log('1 SIGN IN WITH EMAIL AND PASSWORD, PASSWORD: ' + password);
+    // console.log('1 SIGN IN WITH EMAIL AND PASSWORD, PASSWORD: ' + password);
     this.afAuth.signInWithEmailAndPassword(email, password).then((respData) => {
-      console.log(respData);
+      // console.log(respData);
       this.updateUserData(respData.user);
     });
   }
 
   signup(nome: string, email: string, password: string) {
-    console.log(
-      '1 CREATE ACCOUNT WITH EMAIL AND PASSWORD, PASSWORD: ' + password
-    );
+    console
+      .log
+      // '1 CREATE ACCOUNT WITH EMAIL AND PASSWORD, PASSWORD: ' + password
+      ();
     this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((respData) => {
-        console.log(respData);
+        // console.log(respData);
         this.updateUserData(
           { ...respData.user, displayName: nome },
           false, // isGoogle X

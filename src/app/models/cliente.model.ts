@@ -1,4 +1,5 @@
 export type IOrigem = 'clínica' | 'flamengo' | 'vale' | 'cpII';
+
 export type IServerTimestamp = { seconds: number; nanoseconds: number };
 
 export class Cliente {

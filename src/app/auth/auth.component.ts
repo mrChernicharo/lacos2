@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
-  AuthProcessService,
   AuthProvider,
   NgxAuthFirebaseUIConfig,
   Theme,
@@ -11,8 +9,6 @@ import {
 
 import { tap } from 'rxjs/operators';
 import { AuthService, AppUser } from '../services/auth.service';
-import { HeaderService } from '../services/header.service';
-import { ConsultasService } from '../services/consultas.service';
 
 @Component({
   selector: 'app-auth',
@@ -26,21 +22,13 @@ export class AuthComponent implements OnInit {
   themes = Theme;
   uiConfig: NgxAuthFirebaseUIConfig;
   flipped = false;
-  user$;
+  user$: Observable<AppUser>;
   userConsultas$;
 
-  // flipped$ = new BehaviorSubject<boolean>(false);
-  constructor(
-    private router: Router,
-    private authService: AuthService,
-    private consultasService: ConsultasService,
-    private afAuth: AngularFireAuth,
-    private headerService: HeaderService,
-    private authProcess: AuthProcessService
-  ) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
-    console.log(this.themes.MINI_FAB);
+    // console.log(this.themes.MINI_FAB);
     this.user$ = this.authService.user$.pipe(
       tap((user: AppUser) => {
         if (user) {
@@ -49,6 +37,7 @@ export class AuthComponent implements OnInit {
       })
     );
   }
+
   onGoogleLogin() {
     this.authService.googleSignin();
   }
@@ -63,38 +52,7 @@ export class AuthComponent implements OnInit {
       : this.router.navigate(['profissional']);
   }
 
-  onStrengthChanged(event) {
-    console.log(event);
-  }
-
-  // this.flipped$.pipe(tap((state) => console.log(state)));
-  // this.uiConfig.toastMessageOnAuthSuccess = true;
-  // this.uiConfig.toastMessageOnAuthError = true;
-
-  // this.router.navigate(['auth/login']);
-  // this.authState$ = this.authService.authState$.pipe(
-  //   tap((user) => {
-  //     console.log(user);
-  //   })
-  // );
-  //
-  //
-  // onSuccess(event) {
-  //   console.log(event);
-  //   console.log('onSuccess');
-  //   const userData: AppUser = {
-  //     id: null,
-  //     nome: event.displayName,
-  //     email: event.email,
-  //     token: event.refreshToken,
-  //     avatarImg: event.photoURL,
-  //     role: 'profissional',
-  //     dataCriacao: new Date(),
-  //     ultimoAcesso: new Date(),
-  //   };
-  //   // this.authService.handleAuthSuccess(userData);
-  // }
-  // onError(event) {
+  // onStrengthChanged(event) {
   //   console.log(event);
   // }
 }

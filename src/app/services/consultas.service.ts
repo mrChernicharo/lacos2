@@ -17,8 +17,8 @@ export class ConsultasService {
   constructor(private db: DbService, public authService: AuthService) {}
 
   saveConsultas(finalFormData: IReportForm, user: AppUser) {
-    console.log(finalFormData);
-    console.log(user);
+    // console.log(finalFormData);
+    // console.log(user);
 
     const newConsultas = finalFormData.consultas.map((item) => {
       // new Consulta(

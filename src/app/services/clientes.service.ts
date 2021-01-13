@@ -13,9 +13,11 @@ export class ClientesService {
   _clientes$: Observable<Cliente[]>;
 
   constructor(private db: DbService) {
-    this._clientes$ = this.db
-      .fetchAllClientes()
-      .pipe(tap((data) => console.log(data)));
+    this._clientes$ = this.db.fetchAllClientes().pipe(
+      tap((data) => {
+        // console.log(data);
+      })
+    );
   }
 
   addCliente(
@@ -27,7 +29,7 @@ export class ClientesService {
       atendimentos: 0,
     });
 
-    console.log(cliente as Cliente);
+    // console.log(cliente as Cliente);
     this.db.createCliente(cliente);
   }
 

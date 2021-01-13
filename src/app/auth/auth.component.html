@@ -1,7 +1,5 @@
 <ng-container *ngIf="user$ | async"> usuario logado </ng-container>
 <nb-layout-column>
-  <!--  -->
-  <!-- <router-outlet></router-outlet> -->
   <nb-flip-card [showToggleButton]="false" [flipped]="flipped">
     <nb-card-front>
       <nb-card>
@@ -17,16 +15,12 @@
             >
               <nb-icon icon="google"></nb-icon>
             </button>
-
-            <!-- <button nbButton status="primary" shape="round" >
-              <nb-icon icon="facebook"></nb-icon>
-            </button> -->
           </nb-card-footer>
         </app-login>
       </nb-card>
     </nb-card-front>
+    <!--  -->
     <nb-card-back>
-      hello
       <nb-card>
         <app-signup (goToLogin)="flipCard()">
           <nb-card-footer>
@@ -40,16 +34,12 @@
             >
               <nb-icon icon="google"></nb-icon>
             </button>
-
-            <!-- <button nbButton status="primary" shape="round" >
-              <nb-icon icon="facebook"></nb-icon>
-            </button> -->
           </nb-card-footer>
         </app-signup>
       </nb-card>
     </nb-card-back>
+    <!--  -->
   </nb-flip-card>
-  <!--  -->
 </nb-layout-column>
 
 <a routerLink="/profissional">Profissional</a>

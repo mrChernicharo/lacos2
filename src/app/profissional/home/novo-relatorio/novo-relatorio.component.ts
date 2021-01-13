@@ -104,11 +104,11 @@ export class NovoRelatorioComponent implements OnInit {
     this.finalFormData = this.reportForm.value as IReportForm;
     //
     this.consultas.controls.forEach((consulta, i) => {
-      console.log(consulta);
+      // console.log(consulta);
       const pacienteInfo = (consulta.get('nomePaciente').value as string).split(
         ' '
       ); // nome origem id
-      console.log(pacienteInfo);
+      // console.log(pacienteInfo);
 
       const idPaciente = pacienteInfo.pop();
       const origemConsulta = pacienteInfo.pop();
@@ -129,10 +129,10 @@ export class NovoRelatorioComponent implements OnInit {
     this.finalFormData.consultas.sort(
       (a, b) => +a.horario.replace(':', '') - +b.horario.replace(':', '')
     );
-    console.log(this.finalFormData);
-    this.modalidadesCountObj = this.filterModalidades(
-      this.finalFormData.consultas
-    );
+    // console.log(this.finalFormData);
+    // this.modalidadesCountObj = this.filterModalidades(
+    //   this.finalFormData.consultas
+    // );
   }
 
   createReportForm() {
@@ -173,14 +173,13 @@ export class NovoRelatorioComponent implements OnInit {
     this.consultas.push(this.newConultaForm());
   }
   removeConsultaFormGroup(i) {
-    console.log('remove ' + i);
+    // console.log('remove ' + i);
     // if (this.consultas.length > 1) {
     this.consultas.removeAt(i);
     // }
   }
   trimPacienteName(event: string, i: number) {
-    console.log(event);
-    console.log(event);
+    // console.log(event);
     const selectElChild = document.querySelector(`#nomePaciente-${i}`)
       .firstElementChild as HTMLButtonElement;
     let arrText = event.split(' ');
@@ -190,21 +189,9 @@ export class NovoRelatorioComponent implements OnInit {
     selectElChild.textContent = ftext;
   }
 
-  filterModalidades(consultas: IReportFormConsulta[]) {
-    let obj = new Object();
-
-    consultas.forEach((consulta, i) => {
-      if (!obj.hasOwnProperty(consulta.modalidade)) {
-        obj[consulta.modalidade] = 0;
-      }
-      obj[consulta.modalidade] += 1;
-    });
-    console.log(obj);
-    return obj;
-  }
   submitReport() {
-    console.log('submit!');
-    console.log(this.finalFormData);
+    // console.log('submit!');
+    // console.log(this.finalFormData);
     this.consultaService.saveConsultas(this.finalFormData, this.user);
   }
 }

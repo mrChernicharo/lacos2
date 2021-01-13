@@ -56,7 +56,6 @@ import {
   NB_TIME_PICKER_CONFIG,
 } from '@nebular/theme';
 
-import { CustomDatePipe } from './pipes/custom-date.pipe';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 
@@ -113,7 +112,6 @@ const matModules = [
     NovoRelatorioComponent,
     DashboardComponent,
     AddClientesComponent,
-    CustomDatePipe,
     LoginComponent,
     SignupComponent,
   ],

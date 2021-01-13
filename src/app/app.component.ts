@@ -28,14 +28,13 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.user$ = this.authService.user$ as Observable<AppUser>;
     this.clientes$ = this.clientesService._clientes$;
-    this.consultas$;
 
     this.user$
       .pipe(
         // delay(1000),
         tap((user) => {
           if (user) {
-            console.log('QUERO SABER AS CONSULTAS DO USER');
+            // console.log('QUERO SABER AS CONSULTAS DO USER');
             console.log(user);
             this.consultas$ = this.consultasService.fetchUserConsultas(user);
           }
@@ -50,9 +49,14 @@ export class AppComponent implements OnInit {
     routerData['user'] = user;
     routerData['clientes'] = clientes;
     routerData['consultas'] = consultas;
+
+    console.log('activate');
     console.log(routerData);
   }
-  onDeactivate(routerData) {
+  onDeactivate(routerData, user?, clientes?, consultas?) {
+    routerData['user'] = user;
+    routerData['clientes'] = clientes;
+    routerData['consultas'] = consultas;
     console.log('deactivate');
     console.log(routerData);
   }

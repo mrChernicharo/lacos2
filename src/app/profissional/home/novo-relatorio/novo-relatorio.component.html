@@ -30,10 +30,6 @@
           [formGroup]="consulta"
           *ngFor="let consulta of getConsultasControls(); let i = index"
         >
-          <!-- <div class="consulta-number">
-            <span></span>
-          </div> -->
-          <!-- *ngIf="i !== 0" -->
           <div class="button-wrapper">
             <button
               nbButton
@@ -60,7 +56,6 @@
                   : 'basic'
               "
             >
-              <!-- [status]="getFieldStatus(i, 'nomePaciente')" -->
               <nb-option
                 *ngFor="let cliente of clientes"
                 [value]="cliente.nome + ' ' + cliente.origem + ' ' + cliente.id"
@@ -71,9 +66,6 @@
             </nb-select>
           </div>
 
-          <!-- </nb-form-field> -->
-
-          <!-- <nb-form-field> -->
           <div class="select-wrapper horario">
             <nb-select-label>Horário</nb-select-label>
             <nb-select
@@ -88,12 +80,10 @@
                   : 'basic'
               "
             >
-              <!-- [status]="getFieldStatus('horario')" -->
               <nb-option *ngFor="let hora of horarios" [value]="hora">
                 {{ hora }}
               </nb-option>
             </nb-select>
-            <!-- </nb-form-field> -->
           </div>
           <div class="select-wrapper modalidade">
             <!-- <nb-form-field> -->
@@ -110,7 +100,6 @@
                   : 'basic'
               "
             >
-              <!-- [status]="getFieldStatus('modalidade')" -->
               <nb-option
                 *ngFor="let modalidade of modalidades"
                 [value]="modalidade"
@@ -118,7 +107,6 @@
                 {{ modalidade }}
               </nb-option>
             </nb-select>
-            <!-- </nb-form-field> -->
           </div>
 
           <div *ngIf="i + 1 === consultas.length" class="button-wrapper">

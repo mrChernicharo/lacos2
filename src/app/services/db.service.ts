@@ -16,14 +16,14 @@ export class DbService {
   constructor(private db: AngularFirestore, private aFAuth: AngularFireAuth) {}
 
   async storeConsultas(consultas: Consulta[]) {
-    console.log(consultas);
+    // console.log(consultas);
     try {
       consultas.forEach((consulta) => {
         this.db
           .collection('consultas')
           .add(consulta)
           .then((doc) => {
-            console.log(doc);
+            // console.log(doc);
             this.db.doc(`consultas/${doc.id}`).update({ idConsulta: doc.id });
           });
       });
@@ -33,7 +33,7 @@ export class DbService {
   }
 
   fetchAllConsultas() {
-    console.log('FETCH ALL CONSULTAS');
+    // console.log('FETCH ALL CONSULTAS');
     // return of([{}] as Consulta[]);
     return this.db
       .collection('consultas')
@@ -42,13 +42,15 @@ export class DbService {
         map((snaps) => {
           return snaps.map((snap) => snap.payload.doc.data() as Consulta);
         }),
-        tap((consultas) => console.log(consultas))
+        tap((consultas) => {
+          // console.log(consultas)
+        })
       );
   }
 
   fetchUserConsultas(user: AppUser) {
-    console.log('FETCH USER CONSULTAS');
-    console.log(user);
+    // console.log('FETCH USER CONSULTAS');
+    // console.log(user);
     // return of([{}] as Consulta[]);
     return this.db
       .collection('consultas', (ref) =>
@@ -59,7 +61,9 @@ export class DbService {
         map((snaps) => {
           return snaps.map((snap) => snap.payload.doc.data() as Consulta);
         }),
-        tap((consultas) => console.log(consultas))
+        tap((consultas) => {
+          //  console.log(consultas)
+        })
       );
   }
 
@@ -75,7 +79,7 @@ export class DbService {
             .update({ id: doc.id })
             .then((response) => {
               //log
-              console.log({ id: doc.id, ...doc });
+              // console.log({ id: doc.id, ...doc });
             });
         });
     } catch {
@@ -98,7 +102,7 @@ export class DbService {
   }
 
   async createUser(user: AppUser) {
-    console.log('createUser');
+    // console.log('createUser');
     delete user.token;
 
     try {
@@ -112,7 +116,7 @@ export class DbService {
             .update({ id: doc.id })
             .then((response) => {
               //log
-              console.log({ id: doc.id, ...doc });
+              // console.log({ id: doc.id, ...doc });
             });
         });
     } catch {
@@ -131,7 +135,7 @@ export class DbService {
         })
       );
 
-    console.log(fireUserDoc);
+    // console.log(fireUserDoc);
     return fireUserDoc;
   }
 
