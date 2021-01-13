@@ -29,6 +29,13 @@ export class DbService {
     }
   }
 
+  // console.log('FETCH ALL CONSULTAS')
+
+  fetchUserConsultas(user: AppUser) {
+    console.log('FETCH USER CONSULTAS');
+    console.log(user);
+  }
+
   async createCliente(cliente: Cliente) {
     try {
       await this.db

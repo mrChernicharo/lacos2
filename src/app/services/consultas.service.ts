@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Consulta } from '../models/consulta.model';
+import { AuthService } from './auth.service';
 import { DbService } from './db.service';
 
 export type IReportFormConsulta = Pick<
@@ -18,7 +19,9 @@ export interface IReportForm {
   providedIn: 'root',
 })
 export class ConsultasService {
-  constructor(private db: DbService) {}
+  consultas$;
+
+  constructor(private db: DbService, public authService: AuthService) {}
 
   saveConsultas(finalFormData: IReportForm) {
     console.log(finalFormData);
@@ -54,6 +57,13 @@ export class ConsultasService {
     // finalFormData.consultas.map((consulta) => {
     // console.log()
     // });
+  }
+  // this.consultas = this.db.fetchUserConsultas(user)
+
+  fetchUserConsultas(user) {
+    user.role === 'admin'
+      ? this.db.fetchAllClientes()
+      : this.db.fetchUserConsultas(user);
   }
 }
 export const MODALIDADES: string[] = ['online', 'presencial', 'externa'];

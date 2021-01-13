@@ -6,12 +6,14 @@ import firebase from 'firebase/app';
 import { BehaviorSubject, from, Observable, of, throwError } from 'rxjs';
 import {
   catchError,
+  distinctUntilChanged,
   finalize,
   map,
   shareReplay,
   startWith,
   switchMap,
   take,
+  takeUntil,
   tap,
 } from 'rxjs/operators';
 import { DbService } from './db.service';
@@ -38,8 +40,8 @@ export interface FireUser {
   providedIn: 'root',
 })
 export class AuthService {
-  private authStateSubject$ = new BehaviorSubject<AppUser>(null);
-  authState$ = this.authStateSubject$.asObservable();
+  private userSubject$ = new BehaviorSubject<AppUser>(null);
+  // authState$ = this.authStateSubject$.asObservable();
 
   user$: Observable<FireUser | AppUser>;
 
@@ -64,6 +66,8 @@ export class AuthService {
           return of(null);
         }
       }),
+      // distinctUntilChanged(),
+      // shareReplay(),
       finalize(() => console.log('user$ observable completada'))
     );
   }
