@@ -18,11 +18,14 @@ export class DbService {
   async storeConsultas(consultas: Consulta[]) {
     console.log(consultas);
     try {
-      await consultas.forEach((consulta) => {
+      consultas.forEach((consulta) => {
         this.db
           .collection('consultas')
           .add(consulta)
-          .then((response) => console.log(response));
+          .then((doc) => {
+            console.log(doc);
+            this.db.doc(`consultas/${doc.id}`).update({ id: doc.id });
+          });
       });
     } catch {
       throw new Error('erro');
@@ -47,6 +50,15 @@ export class DbService {
     console.log('FETCH USER CONSULTAS');
     console.log(user);
     return of([{}] as Consulta[]);
+    // return this.db
+    // .collection('consultas', ref => ref.where())
+    // .snapshotChanges()
+    // .pipe(
+    //   map((snaps) => {
+    //     return snaps.map((snap) => snap.payload.doc.data() as Consulta);
+    //   }),
+    //   tap((consultas) => console.log(consultas))
+    // );
   }
 
   async createCliente(cliente: Cliente) {

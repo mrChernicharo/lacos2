@@ -18,7 +18,8 @@ export class HomeComponent implements OnInit {
   clientes$: Observable<Cliente[]>;
   currentPage$: Observable<string>;
   consultas$: Observable<Consulta[]>;
-  user$: Observable<AppUser>;
+  user;
+  // user$: Observable<AppUser>;
 
   constructor(
     private clientesService: ClientesService,
@@ -30,8 +31,10 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.clientes$ = this.clientesService._clientes$;
-    this.consultas$ = this.consultasService.consultas$;
+    // this.user = this.route.data['user'];
+    // this.route.data.subscribe((value) => console.log(value['user']));
+
+    // this.consultas$ = this.consultasService.consultas$;
     // this.user$ = this.authService.user$ as Observable<AppUser>;
     // this.user$.pipe(
     //   tap((user) => this.consultasService.fetchUserConsultas(user))
@@ -43,7 +46,8 @@ export class HomeComponent implements OnInit {
   }
 
   onActivate(routerData, clientes: Cliente[]) {
-    routerData['clientes'] = clientes;
+    // routerData['clientes'] = clientes;
+    // routerData['user'] = this.user;
   }
 
   onDeactivate(routerData) {

@@ -12,7 +12,7 @@ import { of } from 'rxjs';
   providedIn: 'root',
 })
 export class ConsultasService {
-  consultas$;
+  // consultas$;
 
   constructor(private db: DbService, public authService: AuthService) {}
 

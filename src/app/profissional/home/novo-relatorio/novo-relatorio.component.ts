@@ -27,6 +27,7 @@ import { Consulta } from 'src/app/models/consulta.model';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
+import { AppUser } from 'src/app/services/auth.service';
 
 export type IReportFormConsulta = Pick<
   Consulta,
@@ -56,6 +57,7 @@ export class NovoRelatorioComponent implements OnInit {
   revisionTable: any;
 
   clientes: Cliente[];
+  // user: any;
   horarios = HORARIOS;
   modalidades = MODALIDADES;
   finalFormData: IReportForm;
@@ -84,7 +86,9 @@ export class NovoRelatorioComponent implements OnInit {
 
     this.route.data.pipe(
       tap((routeData) => {
-        this.clientes = routeData['clientes'] as Cliente[];
+        // this.clientes = routeData['clientes'] as Cliente[];
+        // this.user = routeData['user'] as AppUser;
+        console.log(routeData);
       })
     );
     // console.log(this.router.routerState.snapshot);
