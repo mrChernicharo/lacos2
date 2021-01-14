@@ -23,19 +23,19 @@
 
     <ng-container *ngIf="user$ | async as user; else login">
       <!--  -->
-      <ng-container *ngIf="user.role === 'admin'"
+      <!-- <ng-container *ngIf="user.role === 'admin'"
         ><app-dashboard></app-dashboard
       ></ng-container>
 
-      <ng-container *ngIf="user.role === 'profissional'">
-        <!-- <app-home [appData$]></app-home> -->
+      <ng-container *ngIf="user.role === 'profissional'"> -->
+      <!-- <app-home [appData$]></app-home> -->
 
-        <ng-container *ngIf="appData$ | async as appData">
-          <p>App Data chegando</p>
-          <router-outlet></router-outlet>
-        </ng-container>
+      <ng-container *ngIf="appData$ | async as appData">
+        <p>App Data chegando</p>
+        <router-outlet></router-outlet>
       </ng-container>
     </ng-container>
+    <!-- </ng-container> -->
     <ng-template #login><app-auth></app-auth></ng-template>
   </nb-layout-column>
 
