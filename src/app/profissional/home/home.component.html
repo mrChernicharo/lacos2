@@ -1,23 +1,26 @@
 <div *ngIf="currentPage$ | async as currentPage" class="page-container">
-  <!-- <ng-container *ngIf="clientes$ | async as clientes"> -->
-  <ng-container *ngIf="currentPage === 'profissional'">
-    <p>datas</p>
-    <p>relatórios</p>
-    <p>pacientes</p>
-    <p>consultas</p>
+  <ng-container *ngIf="clientes$ | async as clientes"></ng-container>
+  <div *ngIf="currentPage === 'profissional'">
     <pre *ngFor="let consulta of consultas"
       >{{ consulta.nomePaciente }} {{ consulta.horario }} {{
         consulta.dataConsulta["seconds"] * 1000 | date: "shortDate"
       }}</pre
     >
     <!-- consulta.dataConsulta | timestampSeconds: "dd/mm/yy" -->
-  </ng-container>
+  </div>
 
   <ng-container *ngIf="currentPage === 'novo relatorio'">
-    <app-novo-relatorio
+    <!-- <app-novo-relatorio
       [clientes]="clientes"
       [user]="user"
       [userConsultas]="consultas"
-    ></app-novo-relatorio>
+    ></app-novo-relatorio> -->
   </ng-container>
 </div>
+
+<ng-container *ngIf="appData$ | async as data">
+  <p>datas</p>
+  <p>relatórios</p>
+  <p>pacientes</p>
+  <p>consultas</p>
+</ng-container>

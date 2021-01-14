@@ -43,14 +43,14 @@ export class DbService {
           return snaps.map((snap) => snap.payload.doc.data() as Consulta);
         }),
         tap((consultas) => {
-          // console.log(consultas)
+          console.log(consultas);
         })
       );
   }
 
   fetchUserConsultas(user: AppUser) {
-    // console.log('FETCH USER CONSULTAS');
-    // console.log(user);
+    console.log('FETCH USER CONSULTAS');
+    console.log(user.id);
     // return of([{}] as Consulta[]);
     return this.db
       .collection('consultas', (ref) =>
@@ -58,11 +58,12 @@ export class DbService {
       )
       .snapshotChanges()
       .pipe(
+        shareReplay(),
         map((snaps) => {
           return snaps.map((snap) => snap.payload.doc.data() as Consulta);
         }),
         tap((consultas) => {
-          //  console.log(consultas)
+          console.log(consultas);
         })
       );
   }

@@ -9,11 +9,54 @@
 
   <nb-layout-column>
     <div class="page-container">
-      <!-- ///// -->
-      <!-- ROUTER OUTLET -->
-      <!-- *ngIf="user$ | async as user; else login" -->
-      <!-- <ng-container *ngIf="clientes$ | async as clientes">
-        <ng-container *ngIf="consultas$ | async as consultas">
+      <!-- <ng-container *ngIf="clientes$ | async as clientes"></ng-container> -->
+
+      <div class="user-auth-data-container" *ngIf="user$ | async as user">
+        <pre>{{ user | json }}</pre>
+        <p>criado em {{ user.dataCriacao | date: "short" }}</p>
+        <p>último acesso em {{ user.ultimoAcesso | date: "short" }}</p>
+      </div>
+      <!-- <ng-container *ngIf="consultas$ | async as consultas"
+        >consultas na área</ng-container
+      > -->
+    </div>
+
+    <ng-container *ngIf="user$ | async as user; else login">
+      <!--  -->
+      <ng-container *ngIf="user.role === 'admin'"
+        ><app-dashboard></app-dashboard
+      ></ng-container>
+
+      <ng-container *ngIf="user.role === 'profissional'">
+        <!-- <app-home [appData$]></app-home> -->
+
+        <ng-container *ngIf="appData$ | async as appData">
+          <p>App Data chegando</p>
+          <router-outlet></router-outlet>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+    <ng-template #login><app-auth></app-auth></ng-template>
+  </nb-layout-column>
+
+  <nb-layout-footer fixed>
+    <!-- Insert footer here -->
+  </nb-layout-footer>
+</nb-layout>
+<!-- *ngIf="user$ | async as user; else login" -->
+
+<!-- (activate)="onActivate($event, appData[0], appData[1], appData[2])"
+        (deactivate)="onDeactivate($event)" -->
+<!-- ///// -->
+<!-- <button (click)="authService.signOut()">Sign Out</button> -->
+<!-- <ng-template #login>
+  <button (click)="authService.googleSignin()">Login com Google</button>
+</ng-template> -->
+<!-- <div *ngFor="let consulta of consultas">{{ consulta.horario }}</div> -->
+<!-- ///// -->
+<!-- ROUTER OUTLET -->
+<!-- *ngIf="user$ | async as user; else login" -->
+<!--
           <ng-container *ngIf="user$ | async as user; else login">
 
             <router-outlet
@@ -25,38 +68,6 @@
         </ng-container>
       </ng-container> -->
 
-      <!-- ///// -->
-      <!-- <ng-template #login><app-auth></app-auth></ng-template> -->
-      <!-- <router-outlet></router-outlet> -->
-
-      <div class="user-auth-data-container" *ngIf="user$ | async as user">
-        <pre>{{ user | json }}</pre>
-        <p>criado em {{ user.dataCriacao | date: "short" }}</p>
-        <p>último acesso em {{ user.ultimoAcesso | date: "short" }}</p>
-      </div>
-    </div>
-
-    <ng-container *ngIf="appData$ | async as appData">
-      <p>App Data chegando</p>
-      <ng-container *ngIf="user$ | async as user; else login">
-        <!-- *ngIf="user$ | async as user; else login" -->
-
-        <!-- (activate)="onActivate($event, appData[0], appData[1], appData[2])"
-        (deactivate)="onDeactivate($event)" -->
-        <router-outlet></router-outlet>
-        <!-- ///// -->
-      </ng-container>
-      <ng-template #login><app-auth></app-auth></ng-template>
-    </ng-container>
-  </nb-layout-column>
-
-  <nb-layout-footer fixed>
-    <!-- Insert footer here -->
-  </nb-layout-footer>
-</nb-layout>
-
-<!-- <button (click)="authService.signOut()">Sign Out</button> -->
-<!-- <ng-template #login>
-  <button (click)="authService.googleSignin()">Login com Google</button>
-</ng-template> -->
-<!-- <div *ngFor="let consulta of consultas">{{ consulta.horario }}</div> -->
+<!-- ///// -->
+<!-- <ng-template #login><app-auth></app-auth></ng-template> -->
+<!-- <router-outlet></router-outlet> -->

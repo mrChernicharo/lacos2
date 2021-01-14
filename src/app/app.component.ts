@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, of, combineLatest } from 'rxjs';
 import { delay, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
@@ -8,23 +8,19 @@ import { AppUser, AuthService } from './services/auth.service';
 import { ClientesService } from './services/clientes.service';
 import { ConsultasService } from './services/consultas.service';
 
-// export interface AppData{
-//   user: AppUser,
-//   consultas: Consulta[],
-//   clientes: Cliente[]
-// }
+export type AppData = [AppUser, Consulta[], Cliente[]];
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   title = 'lacos2';
   user$: Observable<AppUser>;
   clientes$: Observable<Cliente[]>;
   consultas$: Observable<Consulta[]>;
-  appData$: Observable<[AppUser, Consulta[], Cliente[]]>;
+  appData$: Observable<AppData>;
 
   constructor(
     private db: AngularFirestore,
@@ -34,19 +30,25 @@ export class AppComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.user$ = this.authService.user$ as Observable<AppUser>;
+    // this.consultas$.pipe(startWith([]));
+    // this.clientes$.pipe(startWith([]));
+    // this.clientes$ = of([]);
     this.clientes$ = this.clientesService._clientes$;
-    this.consultas$ = of([]);
+    this.consultas$ = this.consultasService._consultas$.pipe(
+      tap((consultas) => console.log(consultas))
+    );
 
     this.user$
       .pipe(
         // delay(1000),
-        shareReplay(),
+        // shareReplay(),
         tap((user) => {
           if (user) {
-            // console.log('QUERO SABER AS CONSULTAS DO USER');
+            console.log('QUERO SABER AS CONSULTAS DO USER');
             console.log(user);
-            this.consultas$ = this.consultasService.fetchUserConsultas(user);
+            this.consultasService.fetchUserConsultas(user).toPromise();
           }
+
           // if (user) {
           // }
         }),
@@ -56,26 +58,26 @@ export class AppComponent implements OnInit {
             this.consultas$,
             this.clientes$
           ).pipe(tap((data) => console.log(data)));
-
-          this.appData$.subscribe();
+          // this.appData$.subscribe();
         })
       )
       .subscribe();
   }
 
-  onActivate(routerData, user, clientes, consultas) {
-    routerData['user'] = user;
-    routerData['clientes'] = clientes;
-    routerData['consultas'] = consultas;
+  ngAfterViewInit() {}
+  // onActivate(routerData, user, clientes, consultas) {
+  //   routerData['user'] = user;
+  //   routerData['clientes'] = clientes;
+  //   routerData['consultas'] = consultas;
 
-    console.log('activate');
-    console.log(routerData);
-  }
-  onDeactivate(routerData, user?, clientes?, consultas?) {
-    routerData['user'] = user;
-    routerData['clientes'] = clientes;
-    routerData['consultas'] = consultas;
-    console.log('deactivate');
-    console.log(routerData);
-  }
+  //   console.log('activate');
+  //   console.log(routerData);
+  // }
+  // onDeactivate(routerData, user?, clientes?, consultas?) {
+  //   routerData['user'] = user;
+  //   routerData['clientes'] = clientes;
+  //   routerData['consultas'] = consultas;
+  //   console.log('deactivate');
+  //   console.log(routerData);
+  // }
 }

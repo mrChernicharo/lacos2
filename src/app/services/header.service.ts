@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   ActivatedRoute,
+  NavigationEnd,
   NavigationStart,
   // ActivatedRouteSnapshot,
   Router,
@@ -22,13 +23,13 @@ export class HeaderService {
         (state: any) => state.__proto__.constructor.name === 'NavigationEnd'
       ),
       tap((state) => {
-        // console.log(state);
+        console.log(state);
       }),
-      map((state: NavigationStart) => {
+      map((state: NavigationEnd) => {
         return state.url;
       }),
       tap((url) => {
-        // console.log(url);
+        console.log(url);
       }),
       map((url) => {
         // console.log(state.url.split('/'));

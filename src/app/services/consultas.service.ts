@@ -6,13 +6,15 @@ import {
   IReportForm,
   IReportFormConsulta,
 } from 'src/app/profissional/home/novo-relatorio/novo-relatorio.component';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConsultasService {
-  // consultas$;
+  consultasSubject$ = new BehaviorSubject<Consulta[]>([]);
+  _consultas$ = this.consultasSubject$.asObservable();
 
   constructor(private db: DbService, public authService: AuthService) {}
 
@@ -55,11 +57,20 @@ export class ConsultasService {
   // this.consultas = this.db.fetchUserConsultas(user)
 
   fetchUserConsultas(userData) {
-    // console.log(userData);
+    console.log(userData);
     // console.log('FETCH USER CONSULTAS');
     return userData.role === 'admin'
-      ? this.db.fetchAllConsultas()
-      : this.db.fetchUserConsultas(userData);
+      ? this.db
+          .fetchAllConsultas()
+          .pipe(tap((data) => this.consultasSubject$.next(data)))
+      : this.db
+          .fetchUserConsultas(userData)
+          .pipe(tap((data) => this.consultasSubject$.next(data)));
+
+    // this.consultasSubject$.next()
+    // return consultas;
+
+    //
   }
 }
 export const MODALIDADES: string[] = ['online', 'presencial', 'externa'];
