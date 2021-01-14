@@ -37,11 +37,11 @@ export class AppComponent implements OnInit, AfterViewInit {
   ) {}
   ngOnInit() {
     this.user$ = this.authService.user$ as Observable<AppUser>;
-
     this.clientes$ = this.clientesService._clientes$;
-    this.consultas$ = this.consultasService._consultas$.pipe(
-      tap((consultas) => console.log(consultas))
-    );
+    this.consultas$ = this.consultasService._consultas$
+      .pipe
+      // tap((consultas) => console.log(consultas))
+      ();
 
     this.user$
       .pipe(
@@ -49,8 +49,8 @@ export class AppComponent implements OnInit, AfterViewInit {
         shareReplay(),
         tap((user) => {
           if (user) {
-            console.log('QUERO SABER AS CONSULTAS DO USER');
-            console.log(user);
+            // console.log('QUERO SABER AS CONSULTAS DO USER');
+            // console.log(user);
             this.consultasService.fetchUserConsultas(user).toPromise();
           }
         }),
@@ -61,7 +61,9 @@ export class AppComponent implements OnInit, AfterViewInit {
             this.clientes$,
           ]).pipe(
             distinctUntilChanged(),
-            tap((data) => console.log(data))
+            tap((data) => {
+              console.log(data);
+            })
           );
         })
       )

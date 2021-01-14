@@ -190,8 +190,9 @@ export class NovoRelatorioComponent implements OnInit {
   }
 
   submitReport() {
-    // console.log('submit!');
-    // console.log(this.finalFormData);
+    console.log('submit!');
+    console.log(this.finalFormData);
+    console.log(this.user);
     this.consultaService.saveConsultas(this.finalFormData, this.user);
   }
 }

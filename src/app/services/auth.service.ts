@@ -44,7 +44,8 @@ export class AuthService {
   private userSubject$ = new BehaviorSubject<AppUser>(null);
   // authState$ = this.authStateSubject$.asObservable();
 
-  user$: Observable<FireUser | AppUser>;
+  // user$: Observable<FireUser | AppUser>;
+  user$: Observable<AppUser>;
 
   constructor(
     private afAuth: AngularFireAuth,

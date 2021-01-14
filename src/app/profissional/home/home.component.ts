@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private clientesService: ClientesService,
     private consultasService: ConsultasService,
     private headerService: HeaderService,
-    private authService: AuthService,
+    public authService: AuthService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -46,7 +46,19 @@ export class HomeComponent implements OnInit, OnDestroy {
         // this.route.data.subscribe((data) => console.log(data));
       })
     );
-
+    this.clientes$ = this.clientesService._clientes$.pipe(
+      tap((data) => (this.clientes = data))
+    );
+    this.consultas$ = this.consultasService._consultas$.pipe(
+      tap((data) => (this.consultas = data))
+    );
+    // this.user$ = this.authService.user$ as Observable<AppUser>;
+    this.authService.user$.pipe(
+      tap((data) => {
+        console.log(data);
+        this.user = data as AppUser;
+      })
+    );
     // this.appData$.subscribe((data) => console.log(data));
     // this.filterModalidades(this.consultas);
   }
