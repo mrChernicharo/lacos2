@@ -72,6 +72,9 @@ export class ConsultasService {
 
     //
   }
+  _destroy() {
+    this.consultasSubject$.next([]);
+  }
 }
 export const MODALIDADES: string[] = ['online', 'presencial', 'externa'];
 export const HORARIOS: string[] = [

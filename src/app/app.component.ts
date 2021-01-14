@@ -1,7 +1,14 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, of, combineLatest } from 'rxjs';
-import { delay, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
+import {
+  delay,
+  distinctUntilChanged,
+  shareReplay,
+  startWith,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import { Cliente } from './models/cliente.model';
 import { Consulta } from './models/consulta.model';
 import { AppUser, AuthService } from './services/auth.service';
@@ -52,7 +59,10 @@ export class AppComponent implements OnInit, AfterViewInit {
             this.user$,
             this.consultas$,
             this.clientes$,
-          ]).pipe(tap((data) => console.log(data)));
+          ]).pipe(
+            distinctUntilChanged(),
+            tap((data) => console.log(data))
+          );
         })
       )
       .subscribe();

@@ -1,9 +1,10 @@
 <nb-layout class="app-container">
   <nb-layout-header class="header-container" fixed>
     <app-header>
-      <ng-container *ngIf="user$ | async as user">
+      <ng-container *ngIf="user$ | async as user; else unnamed">
         <span class="user-name"> {{ user.nome }}</span>
       </ng-container>
+      <ng-template #unnamed> Laços </ng-template>
     </app-header>
   </nb-layout-header>
 
@@ -11,11 +12,6 @@
     <div class="page-container">
       <!-- <ng-container *ngIf="clientes$ | async as clientes"></ng-container> -->
 
-      <div class="user-auth-data-container" *ngIf="user$ | async as user">
-        <pre>{{ user | json }}</pre>
-        <p>criado em {{ user.dataCriacao | date: "short" }}</p>
-        <p>último acesso em {{ user.ultimoAcesso | date: "short" }}</p>
-      </div>
       <!-- <ng-container *ngIf="consultas$ | async as consultas"
         >consultas na área</ng-container
       > -->

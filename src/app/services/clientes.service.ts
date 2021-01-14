@@ -15,7 +15,7 @@ export class ClientesService {
   constructor(private db: DbService) {
     this._clientes$ = this.db.fetchAllClientes().pipe(
       tap((data) => {
-        console.log(data);
+        // console.log(data);
         this.clientesSubject$.next(data);
       })
     );
@@ -34,7 +34,9 @@ export class ClientesService {
     this.db.createCliente(cliente);
     this.clientesSubject$.next([...this.clientesSubject$.getValue(), cliente]);
   }
-
+  _destroy() {
+    this.clientesSubject$.next([]);
+  }
   // getAllClientes() {
   // this._clientes$
   // }

@@ -63,7 +63,7 @@ export class DbService {
           return snaps.map((snap) => snap.payload.doc.data() as Consulta);
         }),
         tap((consultas) => {
-          console.log(consultas);
+          // console.log(consultas);
         })
       );
   }

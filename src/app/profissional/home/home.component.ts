@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -16,7 +16,7 @@ import { IReportFormConsulta } from './novo-relatorio/novo-relatorio.component';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   // clientes$: Observable<Cliente[]>;
   currentPage$: Observable<string>;
   user: AppUser;
@@ -50,6 +50,8 @@ export class HomeComponent implements OnInit {
     // this.appData$.subscribe((data) => console.log(data));
     // this.filterModalidades(this.consultas);
   }
+
+  ngOnDestroy() {}
 
   filterModalidades(consultas: Consulta[]) {
     // console.log(consultas);

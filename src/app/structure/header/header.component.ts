@@ -17,6 +17,8 @@ import {
 } from '@nebular/theme';
 import { HeaderService } from 'src/app/services/header.service';
 import { AppUser, AuthService } from 'src/app/services/auth.service';
+import { ConsultasService } from 'src/app/services/consultas.service';
+import { ClientesService } from 'src/app/services/clientes.service';
 
 @Component({
   selector: 'app-header',
@@ -39,7 +41,9 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private nbMenuService: NbMenuService,
     private headerService: HeaderService,
-    private authService: AuthService // private menuService: NbMenuService, // private activatedRoute: ActivatedRoute // private routeSnapshot: ActivatedRouteSnapshot
+    private authService: AuthService, // private menuService: NbMenuService, // private activatedRoute: ActivatedRoute // private routeSnapshot: ActivatedRouteSnapshot
+    private consultasService: ConsultasService,
+    private clientesService: ClientesService
   ) {}
 
   ngOnInit(): void {
@@ -94,6 +98,8 @@ export class HeaderComponent implements OnInit {
         return this.router.navigate(['admin']);
 
       case 'logoff':
+        this.clientesService._destroy();
+        this.consultasService._destroy();
         this.authService.signOut();
       // return this.router.navigate(['auth']);
     }
