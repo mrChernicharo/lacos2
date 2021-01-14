@@ -23,7 +23,7 @@ export class DbService {
           .collection('consultas')
           .add(consulta)
           .then((doc) => {
-            // console.log(doc);
+            console.log(doc);
             this.db.doc(`consultas/${doc.id}`).update({ idConsulta: doc.id });
           });
       });
