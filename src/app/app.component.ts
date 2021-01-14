@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, of, combineLatest } from 'rxjs';
-import { delay, shareReplay, switchMap, tap } from 'rxjs/operators';
+import { delay, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
 import { Cliente } from './models/cliente.model';
 import { Consulta } from './models/consulta.model';
 import { AppUser, AuthService } from './services/auth.service';
@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.user$ = this.authService.user$ as Observable<AppUser>;
     this.clientes$ = this.clientesService._clientes$;
+    this.consultas$ = of([]);
 
     this.user$
       .pipe(

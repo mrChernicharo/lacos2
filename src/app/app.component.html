@@ -9,24 +9,24 @@
 
   <nb-layout-column>
     <div class="page-container">
-      <ng-container *ngIf="clientes$ | async as clientes">
+      <!-- ///// -->
+      <!-- ROUTER OUTLET -->
+      <!-- *ngIf="user$ | async as user; else login" -->
+      <!-- <ng-container *ngIf="clientes$ | async as clientes">
         <ng-container *ngIf="consultas$ | async as consultas">
-          <!-- ///// -->
-          <!-- ROUTER OUTLET -->
           <ng-container *ngIf="user$ | async as user; else login">
-            <!-- *ngIf="user$ | async as user; else login" -->
 
             <router-outlet
               (activate)="onActivate($event, user, clientes, consultas)"
               (deactivate)="onDeactivate($event)"
             ></router-outlet>
-            <!-- ///// -->
           </ng-container>
           <ng-template #login><app-auth></app-auth></ng-template>
         </ng-container>
-        <!-- <ng-template #login><app-auth></app-auth></ng-template> -->
-      </ng-container>
+      </ng-container> -->
 
+      <!-- ///// -->
+      <!-- <ng-template #login><app-auth></app-auth></ng-template> -->
       <!-- <router-outlet></router-outlet> -->
 
       <div class="user-auth-data-container" *ngIf="user$ | async as user">
@@ -35,6 +35,19 @@
         <p>último acesso em {{ user.ultimoAcesso | date: "short" }}</p>
       </div>
     </div>
+
+    <ng-container *ngIf="appData$ | async as appData">
+      <p>App Data chegando</p>
+      <ng-container *ngIf="user$ | async as user; else login">
+        <!-- *ngIf="user$ | async as user; else login" -->
+
+        <!-- (activate)="onActivate($event, appData[0], appData[1], appData[2])"
+        (deactivate)="onDeactivate($event)" -->
+        <router-outlet></router-outlet>
+        <!-- ///// -->
+      </ng-container>
+      <ng-template #login><app-auth></app-auth></ng-template>
+    </ng-container>
   </nb-layout-column>
 
   <nb-layout-footer fixed>
