@@ -19,6 +19,7 @@ export class CustomDayCellComponent<Date>
     super(dateService);
   }
   date: Date;
+  totalConsultas: number;
   // @Input() consultas: Consulta[];
   ngOnInit(): void {
     if (this.consultasService.isBusyDay(this.date)) {
@@ -27,6 +28,11 @@ export class CustomDayCellComponent<Date>
       this.dayCellClass = false;
     }
 
+    if (this.dayCellClass) {
+      this.totalConsultas = this.consultasService.getConsultasAmountInDay(
+        this.date
+      );
+    }
     // console.log(this.consultas);
   }
 }

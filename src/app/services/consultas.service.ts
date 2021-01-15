@@ -19,6 +19,18 @@ export class ConsultasService {
 
   constructor(private db: DbService, public authService: AuthService) {}
 
+  fetchUserConsultas(userData: AppUser) {
+    console.log(userData);
+    // console.log('FETCH USER CONSULTAS');
+    return userData.role === 'admin'
+      ? this.db
+          .fetchAllConsultas()
+          .pipe(tap((data) => this.consultasSubject$.next(data)))
+      : this.db
+          .fetchUserConsultas(userData.id)
+          .pipe(tap((data) => this.consultasSubject$.next(data)));
+  }
+
   saveConsultas(finalFormData: IReportForm, user: AppUser) {
     const newConsultas = finalFormData.consultas.map((item) => {
       const newConsulta: Consulta = {
@@ -56,23 +68,11 @@ export class ConsultasService {
     this.db.storeConsultas(newConsultas);
   }
 
-  fetchUserConsultas(userData: AppUser) {
-    console.log(userData);
-    // console.log('FETCH USER CONSULTAS');
-    return userData.role === 'admin'
-      ? this.db
-          .fetchAllConsultas()
-          .pipe(tap((data) => this.consultasSubject$.next(data)))
-      : this.db
-          .fetchUserConsultas(userData.id)
-          .pipe(tap((data) => this.consultasSubject$.next(data)));
-  }
-
   getConsultasSubjectLatestValue() {
     return this.consultasSubject$.getValue();
   }
 
-  isBusyDay(date) {
+  isBusyDay(date): boolean {
     const consultas = this.consultasSubject$.getValue();
 
     const foundConsultaOnDate = consultas.find(
@@ -83,6 +83,18 @@ export class ConsultasService {
     );
 
     return !!foundConsultaOnDate;
+  }
+
+  getConsultasAmountInDay(date): number {
+    const consultas = this.consultasSubject$.getValue();
+    const total = consultas.filter(
+      (consulta) =>
+        new Date(
+          (consulta.dataConsulta as IServerTimestamp).seconds
+        ).toLocaleDateString() === new Date(date).toLocaleDateString()
+    ).length;
+
+    return total;
   }
 
   _destroy() {

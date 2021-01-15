@@ -9,6 +9,7 @@
     width: 3rem;
     height: 3rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     font-weight: bold;
@@ -19,12 +20,20 @@
   }
   .day-cell {
     pointer-events: all;
-
     border-radius: 50%;
     background: lightcoral;
+
+    span.date-number {
+      line-height: 2px;
+      margin-top: 24px;
+    }
 
     &.bounding-month {
       color: #fff !important;
     }
   }
+}
+span.total-consultas-number {
+  font-size: 10px;
+  font-weight: 300;
 }

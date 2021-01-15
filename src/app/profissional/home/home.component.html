@@ -4,6 +4,32 @@
     <ng-container *ngIf="authService.user$ | async as user">
       <ng-container *ngIf="consultas$ | async as consultas">
         <ng-container *ngIf="userClientes$ | async as clientes">
+          <div><h3>Consultas</h3></div>
+          <pre *ngFor="let consulta of consultas"
+            >{{ consulta.nomePaciente }} {{ consulta.horario }} {{
+              consulta.dataConsulta["seconds"] | date: "shortDate"
+            }}</pre
+          >
+
+          <nb-card>
+            <nb-card-header>
+              <h3>Relatórios</h3>
+              <h1 *ngIf="date; else placeholder" class="h5">
+                {{ date | date: "longDate" }}
+              </h1>
+              <ng-template #placeholder>&nbsp;</ng-template>
+            </nb-card-header>
+            <nb-card-body>
+              <nb-calendar
+                class="custom-calendar"
+                [dayCellComponent]="dayCellComponent"
+                [(date)]="date"
+                size="large"
+              >
+              </nb-calendar>
+            </nb-card-body>
+          </nb-card>
+
           <div><h3>Pacientes</h3></div>
           <div *ngFor="let cliente of clientes">
             <app-cliente-card
@@ -12,27 +38,6 @@
             ></app-cliente-card>
           </div>
         </ng-container>
-
-        <div><h3>Consultas</h3></div>
-        <pre *ngFor="let consulta of consultas"
-          >{{ consulta.nomePaciente }} {{ consulta.horario }} {{
-            consulta.dataConsulta["seconds"] | date: "shortDate"
-          }}</pre
-        >
-        <nb-card>
-          <nb-card-header>
-            <h1 class="h5">Selected date: {{ date | date }}</h1>
-          </nb-card-header>
-          <nb-card-body>
-            <nb-calendar
-              class="custom-calendar"
-              [dayCellComponent]="dayCellComponent"
-              [(date)]="date"
-              size="large"
-            >
-            </nb-calendar>
-          </nb-card-body>
-        </nb-card>
       </ng-container>
     </ng-container>
   </div>
