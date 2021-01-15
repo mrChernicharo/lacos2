@@ -6,7 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { delay, map, switchMap, tap } from 'rxjs/operators';
 import { AppData } from 'src/app/app.component';
 import { Cliente } from 'src/app/models/cliente.model';
@@ -34,8 +34,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   user$: Observable<AppUser>;
   consultas$: Observable<Consulta[]>;
   appClientes$: Observable<Cliente[]>;
-  // appData$: Observable<AppData>;
   userClientes$: Observable<Cliente[]>;
+  subs: Observable<[AppUser, Consulta[], Cliente[], Cliente[]]>;
+  // appData$: Observable<AppData>;
 
   constructor(
     public clientesService: ClientesService,
@@ -74,9 +75,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       tap((consultas) => {
         this.consultas = consultas;
       }),
-      // delay(1000),
       tap((consultas) => {
-        this.userClientes$ = this.clientesService.findUserClientes(consultas);
+        this.userClientes$ = this.clientesService.findUserClientesFromConsultas(
+          consultas
+        );
       })
     );
   }

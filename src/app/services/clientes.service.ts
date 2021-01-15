@@ -13,7 +13,6 @@ import { DbService } from './db.service';
 export class ClientesService {
   private clientesSubject$ = new BehaviorSubject<Cliente[]>([]);
   public _clientes$ = this.clientesSubject$.asObservable();
-  firstFetch = true;
 
   constructor(
     private db: DbService,
@@ -24,12 +23,8 @@ export class ClientesService {
       .pipe(
         tap((data) => {
           console.log(data);
-          // if (!this.firstFetch) {
           this.clientesSubject$.next(data);
-          // }
-          // this.firstFetch = false;
         })
-        // take(1)
       )
       .subscribe();
   }
@@ -47,7 +42,7 @@ export class ClientesService {
     this.clientesSubject$.next([...this.clientesSubject$.getValue(), cliente]);
   }
 
-  findUserClientes(consultas: Consulta[]) {
+  findUserClientesFromConsultas(consultas: Consulta[]) {
     console.log('FETCH USER  CONSULTAS');
 
     if (!consultas) return;
@@ -61,7 +56,6 @@ export class ClientesService {
     );
 
     const uniqueIds = Array.from(new Set([...pacientesIdsInAllUserConsultas]));
-    // console.log(ids);
 
     const filteredClientes = this.clientesSubject$
       .getValue()
@@ -74,7 +68,4 @@ export class ClientesService {
   _destroy() {
     this.clientesSubject$.next([]);
   }
-  // getAllClientes() {
-  // this._clientes$
-  // }
 }

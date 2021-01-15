@@ -41,6 +41,12 @@ export interface IReportForm {
   dataCriacao: Date;
 }
 
+interface ModalidadeCountObj {
+  online: number;
+  presencial: number;
+  externa: number;
+}
+
 @Component({
   selector: 'app-novo-relatorio',
   templateUrl: './novo-relatorio.component.html',
@@ -84,18 +90,6 @@ export class NovoRelatorioComponent implements OnInit {
     this.calendarForm = new FormGroup({
       date: new FormControl('', Validators.required),
     });
-    // console.log(this.clientes);
-    console.log(this.clientes);
-
-    // this.route.data.pipe(
-    //   tap((routeData) => {
-    //     console.log(routeData);
-    //     this.clientes = routeData['clientes'] as Cliente[];
-    //     this.user = routeData['user'] as AppUser;
-    //     this.userConsultas = routeData['consultas'] as Consulta[];
-    //   })
-    // );
-    // console.log(this.router.routerState.snapshot);
 
     this.createReportForm();
     this.addConsultaFormGroup();
@@ -108,19 +102,11 @@ export class NovoRelatorioComponent implements OnInit {
       // console.log(consulta);
       const pacienteInfo = (consulta.get('nomePaciente').value as string).split(
         ' '
-      ); // nome origem id
+      );
       // console.log(pacienteInfo);
 
       const idPaciente = pacienteInfo.pop();
       const origemConsulta = pacienteInfo.pop();
-
-      // const origemConsulta = (consulta.get('nomePaciente').value as string)
-      //   .split(' ')
-      //   .pop();
-
-      // const idPaciente = (consulta.get('nomePaciente').value as string)
-      //   .split(' ')
-      //   .pop();
 
       this.finalFormData.consultas[i].idPaciente = idPaciente;
       this.finalFormData.consultas[i].origem = origemConsulta;
@@ -131,9 +117,9 @@ export class NovoRelatorioComponent implements OnInit {
       (a, b) => +a.horario.replace(':', '') - +b.horario.replace(':', '')
     );
     // console.log(this.finalFormData);
-    // this.modalidadesCountObj = this.filterModalidades(
-    //   this.finalFormData.consultas
-    // );
+    this.modalidadesCountObj = this.filterModalidades(
+      this.finalFormData.consultas
+    );
   }
 
   createReportForm() {
@@ -174,10 +160,7 @@ export class NovoRelatorioComponent implements OnInit {
     this.consultas.push(this.newConultaForm());
   }
   removeConsultaFormGroup(i) {
-    // console.log('remove ' + i);
-    // if (this.consultas.length > 1) {
     this.consultas.removeAt(i);
-    // }
   }
   trimPacienteName(event: string, i: number) {
     // console.log(event);
@@ -188,6 +171,17 @@ export class NovoRelatorioComponent implements OnInit {
     arrText.pop();
     let ftext = arrText.join(' ');
     selectElChild.textContent = ftext;
+  }
+
+  filterModalidades(consultas: IReportFormConsulta[]): ModalidadeCountObj {
+    console.log(consultas);
+    return consultas.reduce(
+      (acc, consulta) => {
+        acc[consulta.modalidade] += 1;
+        return acc;
+      },
+      { online: 0, presencial: 0, externa: 0 } as ModalidadeCountObj
+    );
   }
 
   submitReport() {

@@ -19,11 +19,7 @@ export class ConsultasService {
   constructor(private db: DbService, public authService: AuthService) {}
 
   saveConsultas(finalFormData: IReportForm, user: AppUser) {
-    // console.log(finalFormData);
-    // console.log(user);
-
     const newConsultas = finalFormData.consultas.map((item) => {
-      // new Consulta(
       const newConsulta: Consulta = {
         nomeProfissional: user.nome,
         idProfissional: user.id,
@@ -46,15 +42,9 @@ export class ConsultasService {
       };
 
       return newConsulta;
-      // );
     });
     this.db.storeConsultas(newConsultas);
-
-    // finalFormData.consultas.map((consulta) => {
-    // console.log()
-    // });
   }
-  // this.consultas = this.db.fetchUserConsultas(user)
 
   fetchUserConsultas(userData: AppUser) {
     console.log(userData);
@@ -66,11 +56,6 @@ export class ConsultasService {
       : this.db
           .fetchUserConsultas(userData.id)
           .pipe(tap((data) => this.consultasSubject$.next(data)));
-
-    // this.consultasSubject$.next()
-    // return consultas;
-
-    //
   }
 
   getConsultasSubjectLatestValue() {

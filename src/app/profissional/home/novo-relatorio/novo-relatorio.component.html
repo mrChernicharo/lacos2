@@ -164,7 +164,9 @@
             {{ consultas.length === 1 ? " consulta" : " consultas" }}
           </div>
           <div *ngFor="let modalidade of modalidadesCountObj | keyvalue">
-            {{ modalidade.key }} {{ modalidade.value }}
+            <ng-container *ngIf="modalidade.value > 0">
+              {{ modalidade.key }} {{ modalidade.value }}
+            </ng-container>
           </div>
         </div>
 

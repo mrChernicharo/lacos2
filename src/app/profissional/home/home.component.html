@@ -10,6 +10,7 @@
           </div>
         </ng-container>
 
+        <div><h3>Consultas</h3></div>
         <pre *ngFor="let consulta of consultas"
           >{{ consulta.nomePaciente }} {{ consulta.horario }} {{
             consulta.dataConsulta["seconds"] * 1000 | date: "shortDate"
@@ -22,7 +23,7 @@
   <ng-container *ngIf="currentPage === 'novo relatorio'">
     <ng-container *ngIf="authService.user$ | async as user">
       <ng-container *ngIf="appClientes$ | async">
-        <p>{{ user.nome }}</p>
+        <!-- <p>{{ user.nome }}</p> -->
         <app-novo-relatorio
           [clientes]="appClientes"
           [user]="user"

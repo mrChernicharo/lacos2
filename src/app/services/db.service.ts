@@ -13,7 +13,7 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root',
 })
 export class DbService {
-  private _userConsultasStore: Consulta[];
+  // private _userConsultasStore: Consulta[];
 
   constructor(private db: AngularFirestore, private aFAuth: AngularFireAuth) {}
 
@@ -66,8 +66,8 @@ export class DbService {
           return snaps.map((snap) => snap.payload.doc.data() as Consulta);
         }),
         tap((consultas) => {
-          this._userConsultasStore = consultas;
-          console.log(this._userConsultasStore);
+          // this._userConsultasStore = consultas;
+          // console.log(this._userConsultasStore);
         })
       );
   }
