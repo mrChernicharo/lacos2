@@ -6,6 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NbCalendarDayCellComponent } from '@nebular/theme';
 import { forkJoin, Observable, of } from 'rxjs';
 import { delay, map, switchMap, tap } from 'rxjs/operators';
 import { AppData } from 'src/app/app.component';
@@ -15,6 +16,7 @@ import { AppUser, AuthService } from 'src/app/services/auth.service';
 import { ClientesService } from 'src/app/services/clientes.service';
 import { ConsultasService } from 'src/app/services/consultas.service';
 import { HeaderService } from 'src/app/services/header.service';
+import { CustomDayCellComponent } from 'src/app/shared/custom-day-cell/custom-day-cell.component';
 import { IReportFormConsulta } from './novo-relatorio/novo-relatorio.component';
 
 @Component({
@@ -36,7 +38,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   appClientes$: Observable<Cliente[]>;
   userClientes$: Observable<Cliente[]>;
   subs: Observable<[AppUser, Consulta[], Cliente[], Cliente[]]>;
+  date: Date;
   // appData$: Observable<AppData>;
+  dayCellComponent = CustomDayCellComponent;
 
   constructor(
     public clientesService: ClientesService,

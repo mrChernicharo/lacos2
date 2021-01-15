@@ -1,0 +1,13 @@
+<nb-card>
+  <div class="header">
+    <h3>{{ cliente.nome }}</h3>
+  </div>
+
+  <p>
+    atendimentos <span>{{ clienteConsultas.length }}</span>
+  </p>
+
+  <div class="" *ngFor="let consulta of clienteConsultas; let i = index">
+    <p>{{ i + 1 }} {{ consulta.dataConsulta["seconds"] | date: "short" }}</p>
+  </div>
+</nb-card>

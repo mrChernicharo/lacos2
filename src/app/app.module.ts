@@ -67,6 +67,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ClienteCardComponent } from './shared/cliente-card/cliente-card.component';
+import { CustomDayCellComponent } from './shared/custom-day-cell/custom-day-cell.component';
 
 registerLocaleData(localePt);
 
@@ -114,6 +116,8 @@ const matModules = [
     AddClientesComponent,
     LoginComponent,
     SignupComponent,
+    ClienteCardComponent,
+    CustomDayCellComponent,
   ],
   imports: [
     BrowserModule,

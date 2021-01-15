@@ -29,16 +29,25 @@ export class ConsultasService {
         origem: item.origem,
         horario: item.horario,
         modalidade: item.modalidade,
-        dataConsulta: new Date(
-          finalFormData.dataRelatorio.getFullYear(),
-          finalFormData.dataRelatorio.getMonth(),
-          finalFormData.dataRelatorio.getDate(),
-          +item.horario.substr(0, 2),
-          +item.horario.substr(3, 2),
-          0
-        ),
-        dataCriacao: finalFormData.dataCriacao,
-        dataAtualizacao: finalFormData.dataAtualizacao,
+        dataConsulta: {
+          seconds: new Date(
+            finalFormData.dataRelatorio.getFullYear(),
+            finalFormData.dataRelatorio.getMonth(),
+            finalFormData.dataRelatorio.getDate(),
+            +item.horario.substr(0, 2),
+            +item.horario.substr(3, 2),
+            0
+          ).getTime(),
+          nanoseconds: 0,
+        },
+        dataCriacao: {
+          seconds: finalFormData.dataCriacao.getTime(),
+          nanoseconds: 0,
+        },
+        dataAtualizacao: {
+          seconds: finalFormData.dataAtualizacao.getTime(),
+          nanoseconds: 0,
+        },
       };
 
       return newConsulta;
