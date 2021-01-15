@@ -3,7 +3,7 @@
     <h1>Home</h1>
     <ng-container *ngIf="authService.user$ | async as user">
       <ng-container *ngIf="consultas$ | async as consultas">
-        <ng-container *ngIf="clientes$ | async as clientes">
+        <ng-container *ngIf="userClientes$ | async as clientes">
           <div><h3>Clientes</h3></div>
           <div *ngFor="let cliente of clientes">
             {{ cliente.nome }}
@@ -21,12 +21,14 @@
 
   <ng-container *ngIf="currentPage === 'novo relatorio'">
     <ng-container *ngIf="authService.user$ | async as user">
-      <p>{{ user.nome }}</p>
-      <app-novo-relatorio
-        [clientes]="clientes"
-        [user]="user"
-        [userConsultas]="consultas"
-      ></app-novo-relatorio>
+      <ng-container *ngIf="appClientes$ | async">
+        <p>{{ user.nome }}</p>
+        <app-novo-relatorio
+          [clientes]="appClientes"
+          [user]="user"
+          [userConsultas]="consultas"
+        ></app-novo-relatorio>
+      </ng-container>
     </ng-container>
   </ng-container>
 </div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { filter, map, take, tap } from 'rxjs/operators';
 import { Cliente } from '../models/cliente.model';
 import { Consulta } from '../models/consulta.model';
@@ -14,7 +14,6 @@ export class ClientesService {
   private clientesSubject$ = new BehaviorSubject<Cliente[]>([]);
   public _clientes$ = this.clientesSubject$.asObservable();
   firstFetch = true;
-  // _clientes$: Observable<Cliente[]>;
 
   constructor(
     private db: DbService,
@@ -25,10 +24,10 @@ export class ClientesService {
       .pipe(
         tap((data) => {
           console.log(data);
-          if (!this.firstFetch) {
-            this.clientesSubject$.next(data);
-          }
-          this.firstFetch = false;
+          // if (!this.firstFetch) {
+          this.clientesSubject$.next(data);
+          // }
+          // this.firstFetch = false;
         })
         // take(1)
       )
@@ -44,7 +43,6 @@ export class ClientesService {
       atendimentos: 0,
     });
 
-    // console.log(cliente as Cliente);
     this.db.createCliente(cliente);
     this.clientesSubject$.next([...this.clientesSubject$.getValue(), cliente]);
   }
@@ -54,37 +52,23 @@ export class ClientesService {
 
     if (!consultas) return;
 
-    const consultasIds: string[] = consultas.reduce((acc, consulta) => {
-      acc.push(consulta.idPaciente);
-      return acc;
-    }, []);
+    const pacientesIdsInAllUserConsultas: string[] = consultas.reduce(
+      (acc, consulta) => {
+        acc.push(consulta.idPaciente);
+        return acc;
+      },
+      []
+    );
 
-    // console.log(consultasIds);
+    const uniqueIds = Array.from(new Set([...pacientesIdsInAllUserConsultas]));
+    // console.log(ids);
 
-    const ids = Array.from(new Set([...consultasIds]));
-
-    console.log(ids);
-
-    const allClientes = this.clientesSubject$
+    const filteredClientes = this.clientesSubject$
       .getValue()
-      .filter((cliente) => ids.includes(cliente.id));
+      .filter((cliente) => uniqueIds.includes(cliente.id));
 
-    console.log(allClientes);
-
-    this.clientesSubject$.next([...allClientes]);
-    // this._clientes$.pipe(
-    //   map((clientes) => {
-    //     console.log('Filtrando');
-    //     console.log(clientes);
-    //     return clientes.filter((cliente) => ids.includes(cliente.id));
-    //   }),
-    //   tap((clientes) => {
-    //     console.log('Filtrado');
-    //     console.log(clientes);
-    //     this.clientesSubject$.next(clientes);
-    //   })
-    // );
-    // .subscribe();
+    // this.clientesSubject$.next([...filteredClientes]);
+    return of(filteredClientes);
   }
 
   _destroy() {

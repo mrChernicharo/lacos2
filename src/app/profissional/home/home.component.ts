@@ -27,14 +27,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   currentPage$: Observable<string>;
   user: AppUser;
   consultas: Consulta[];
-  clientes: Cliente[];
+  appClientes: Cliente[];
 
   filteredConsultasCount: Object;
 
   user$: Observable<AppUser>;
   consultas$: Observable<Consulta[]>;
-  clientes$: Observable<Cliente[]>;
-  appData$: Observable<AppData>;
+  appClientes$: Observable<Cliente[]>;
+  // appData$: Observable<AppData>;
+  userClientes$: Observable<Cliente[]>;
 
   constructor(
     public clientesService: ClientesService,
@@ -48,18 +49,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.currentPage$ = this.headerService.currentPage$.pipe(
       tap((page) => {
-        // console.log(page)
+        console.log(page);
         // this.route.data.subscribe((data) => console.log(data));
       })
     );
-    this.clientes$ = this.clientesService._clientes$.pipe(
+    this.appClientes$ = this.clientesService._clientes$.pipe(
       tap((clientes) => {
-        // this.clientes = clientes;
+        this.appClientes = clientes;
+        console.log('appclientes');
         console.log(clientes);
       })
     );
 
-    this.clientes$.subscribe();
+    // this.clientes$.subscribe();
 
     this.authService.user$.pipe(
       tap((data) => {
@@ -74,7 +76,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       }),
       // delay(1000),
       tap((consultas) => {
-        this.clientesService.findUserClientes(consultas);
+        this.userClientes$ = this.clientesService.findUserClientes(consultas);
       })
     );
   }

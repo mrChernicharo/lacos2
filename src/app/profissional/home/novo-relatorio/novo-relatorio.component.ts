@@ -85,6 +85,7 @@ export class NovoRelatorioComponent implements OnInit {
       date: new FormControl('', Validators.required),
     });
     // console.log(this.clientes);
+    console.log(this.clientes);
 
     // this.route.data.pipe(
     //   tap((routeData) => {
