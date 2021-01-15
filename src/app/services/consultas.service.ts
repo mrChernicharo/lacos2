@@ -8,6 +8,7 @@ import {
 } from 'src/app/profissional/home/novo-relatorio/novo-relatorio.component';
 import { BehaviorSubject, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { IServerTimestamp } from '../models/cliente.model';
 
 @Injectable({
   providedIn: 'root',
@@ -69,6 +70,19 @@ export class ConsultasService {
 
   getConsultasSubjectLatestValue() {
     return this.consultasSubject$.getValue();
+  }
+
+  isBusyDay(date) {
+    const consultas = this.consultasSubject$.getValue();
+
+    const foundConsultaOnDate = consultas.find(
+      (consulta) =>
+        new Date(
+          (consulta.dataConsulta as IServerTimestamp).seconds
+        ).toLocaleDateString() === new Date(date).toLocaleDateString()
+    );
+
+    return !!foundConsultaOnDate;
   }
 
   _destroy() {

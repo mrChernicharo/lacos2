@@ -1,0 +1,30 @@
+// nb-calendar-picker-row {
+// background: lightblue;
+// }
+
+.custom-calendar {
+  app-custom-day-cell {
+    // background: lightseagreen;
+    pointer-events: none;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+
+    &.bounding-month {
+      color: #808080;
+    }
+  }
+  .day-cell {
+    pointer-events: all;
+
+    border-radius: 50%;
+    background: lightcoral;
+
+    &.bounding-month {
+      color: #fff !important;
+    }
+  }
+}
