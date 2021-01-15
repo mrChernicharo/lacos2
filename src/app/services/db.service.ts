@@ -13,7 +13,11 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root',
 })
 export class DbService {
+  private _userConsultasStore: Consulta[];
+
   constructor(private db: AngularFirestore, private aFAuth: AngularFireAuth) {}
+
+  //********* CONSULTAS **********//
 
   async storeConsultas(consultas: Consulta[]) {
     // console.log(consultas);
@@ -34,7 +38,6 @@ export class DbService {
 
   fetchAllConsultas() {
     // console.log('FETCH ALL CONSULTAS');
-    // return of([{}] as Consulta[]);
     return this.db
       .collection('consultas')
       .snapshotChanges()
@@ -48,13 +51,13 @@ export class DbService {
       );
   }
 
-  fetchUserConsultas(user: AppUser) {
-    console.log('FETCH USER CONSULTAS');
-    console.log(user.id);
+  fetchUserConsultas(userId: string) {
+    // console.log('FETCH USER CONSULTAS');
+    console.log(userId);
     // return of([{}] as Consulta[]);
     return this.db
       .collection('consultas', (ref) =>
-        ref.where('idProfissional', '==', user.id)
+        ref.where('idProfissional', '==', userId)
       )
       .snapshotChanges()
       .pipe(
@@ -63,10 +66,12 @@ export class DbService {
           return snaps.map((snap) => snap.payload.doc.data() as Consulta);
         }),
         tap((consultas) => {
-          // console.log(consultas);
+          this._userConsultasStore = consultas;
+          console.log(this._userConsultasStore);
         })
       );
   }
+  //********* CLIENTES **********//
 
   async createCliente(cliente: Cliente) {
     try {
@@ -102,6 +107,33 @@ export class DbService {
       );
   }
 
+  fetchUserClientes(clientesIds: string[]) {
+    console.log('DB FETCH USER ' + ' CLIENTES');
+    console.log(clientesIds);
+  }
+
+  //   const clientIds = this._userConsultasStore.reduce((acc, consulta) => {
+  //     acc.push(consulta.idPaciente);
+  //     return acc;
+  //   }, []);
+
+  //   console.log(clientIds);
+  //   const ids = new Set([...clientIds]);
+  //   console.log(ids);
+  // return this.db
+  //   .collection('clientes')
+  //   .snapshotChanges()
+  //   .pipe(
+  //     shareReplay(),
+  //     map((snaps) => {
+  //       return snaps.map((snap) => {
+  //         return snap.payload.doc.data() as Cliente;
+  //       });
+  //     })
+  //   );
+  // }
+
+  //********* USER **********//
   async createUser(user: AppUser) {
     // console.log('createUser');
     delete user.token;

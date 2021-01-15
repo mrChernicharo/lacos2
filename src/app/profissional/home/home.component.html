@@ -1,12 +1,22 @@
 <div *ngIf="currentPage$ | async as currentPage" class="page-container">
-  <ng-container *ngIf="clientes$ | async as clientes"></ng-container>
   <div *ngIf="currentPage === 'profissional'">
-    <pre *ngFor="let consulta of consultas"
-      >{{ consulta.nomePaciente }} {{ consulta.horario }} {{
-        consulta.dataConsulta["seconds"] * 1000 | date: "shortDate"
-      }}</pre
-    >
-    <!-- consulta.dataConsulta | timestampSeconds: "dd/mm/yy" -->
+    <h1>Home</h1>
+    <ng-container *ngIf="authService.user$ | async as user">
+      <ng-container *ngIf="consultas$ | async as consultas">
+        <ng-container *ngIf="clientes$ | async as clientes">
+          <div><h3>Clientes</h3></div>
+          <div *ngFor="let cliente of clientes">
+            {{ cliente.nome }}
+          </div>
+        </ng-container>
+
+        <pre *ngFor="let consulta of consultas"
+          >{{ consulta.nomePaciente }} {{ consulta.horario }} {{
+            consulta.dataConsulta["seconds"] * 1000 | date: "shortDate"
+          }}</pre
+        >
+      </ng-container>
+    </ng-container>
   </div>
 
   <ng-container *ngIf="currentPage === 'novo relatorio'">
@@ -21,9 +31,9 @@
   </ng-container>
 </div>
 
-<ng-container *ngIf="appData$ | async as data">
+<!-- <ng-container *ngIf="appData$ | async as data">
   <p>datas</p>
   <p>relatórios</p>
   <p>pacientes</p>
   <p>consultas</p>
-</ng-container>
+</ng-container> -->

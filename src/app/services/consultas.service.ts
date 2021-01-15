@@ -56,7 +56,7 @@ export class ConsultasService {
   }
   // this.consultas = this.db.fetchUserConsultas(user)
 
-  fetchUserConsultas(userData) {
+  fetchUserConsultas(userData: AppUser) {
     console.log(userData);
     // console.log('FETCH USER CONSULTAS');
     return userData.role === 'admin'
@@ -64,7 +64,7 @@ export class ConsultasService {
           .fetchAllConsultas()
           .pipe(tap((data) => this.consultasSubject$.next(data)))
       : this.db
-          .fetchUserConsultas(userData)
+          .fetchUserConsultas(userData.id)
           .pipe(tap((data) => this.consultasSubject$.next(data)));
 
     // this.consultasSubject$.next()
@@ -72,6 +72,11 @@ export class ConsultasService {
 
     //
   }
+
+  getConsultasSubjectLatestValue() {
+    return this.consultasSubject$.getValue();
+  }
+
   _destroy() {
     this.consultasSubject$.next([]);
   }

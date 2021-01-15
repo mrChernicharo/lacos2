@@ -52,6 +52,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             // console.log('QUERO SABER AS CONSULTAS DO USER');
             // console.log(user);
             this.consultasService.fetchUserConsultas(user).toPromise();
+            // this.clientesService.getUserClientes(user);
           }
         }),
         tap(() => {

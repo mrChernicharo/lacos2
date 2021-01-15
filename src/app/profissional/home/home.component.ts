@@ -1,7 +1,13 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { delay, map, switchMap, tap } from 'rxjs/operators';
 import { AppData } from 'src/app/app.component';
 import { Cliente } from 'src/app/models/cliente.model';
 import { Consulta } from 'src/app/models/consulta.model';
@@ -16,7 +22,7 @@ import { IReportFormConsulta } from './novo-relatorio/novo-relatorio.component';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   // clientes$: Observable<Cliente[]>;
   currentPage$: Observable<string>;
   user: AppUser;
@@ -31,7 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   appData$: Observable<AppData>;
 
   constructor(
-    private clientesService: ClientesService,
+    public clientesService: ClientesService,
     private consultasService: ConsultasService,
     private headerService: HeaderService,
     public authService: AuthService,
@@ -47,26 +53,37 @@ export class HomeComponent implements OnInit, OnDestroy {
       })
     );
     this.clientes$ = this.clientesService._clientes$.pipe(
-      tap((data) => (this.clientes = data))
+      tap((clientes) => {
+        // this.clientes = clientes;
+        console.log(clientes);
+      })
     );
-    this.consultas$ = this.consultasService._consultas$.pipe(
-      tap((data) => (this.consultas = data))
-    );
-    // this.user$ = this.authService.user$ as Observable<AppUser>;
+
+    this.clientes$.subscribe();
+
     this.authService.user$.pipe(
       tap((data) => {
         console.log(data);
         this.user = data as AppUser;
       })
     );
-    // this.appData$.subscribe((data) => console.log(data));
-    // this.filterModalidades(this.consultas);
+
+    this.consultas$ = this.consultasService._consultas$.pipe(
+      tap((consultas) => {
+        this.consultas = consultas;
+      }),
+      // delay(1000),
+      tap((consultas) => {
+        this.clientesService.findUserClientes(consultas);
+      })
+    );
   }
+
+  ngAfterViewInit() {}
 
   ngOnDestroy() {}
 
   filterModalidades(consultas: Consulta[]) {
-    // console.log(consultas);
     if (!consultas) return;
 
     let obj = new Object();
