@@ -1,4 +1,4 @@
-<nb-card>
+<nb-card class="component-container">
   <nb-card-header>
     <img [src]="avatarImg" alt="" srcset="" />
     <span class="title">
@@ -21,9 +21,9 @@
     >
       {{ cliente.origem }}
     </div>
-    <p>
+    <!-- <p>
       atendimentos realizados: <span>{{ clienteConsultas.length }}</span>
-    </p>
+    </p> -->
 
     <span>
       seu paciente desde
@@ -41,7 +41,10 @@
     <nb-accordion>
       <nb-accordion-item>
         <nb-accordion-item-header
-          >{{ clienteConsultas.length }} consulta</nb-accordion-item-header
+          >{{ clienteConsultas.length }}
+          {{
+            clienteConsultas.length === 1 ? "consulta" : "consultas"
+          }}</nb-accordion-item-header
         >
         <nb-accordion-item-body
           *ngFor="let consulta of clienteConsultas; let i = index"

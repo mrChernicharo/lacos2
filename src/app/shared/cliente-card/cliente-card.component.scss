@@ -1,12 +1,17 @@
 nb-card {
   width: 360px;
 
+  &:not(last-child) {
+    margin: 0 3px 0 0;
+  }
+
   nb-card-header {
     display: flex;
     align-items: center;
 
     span.title {
       font-size: 30px;
+      line-height: 29px;
     }
 
     img {

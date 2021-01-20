@@ -29,6 +29,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   currentPage$: Observable<string>;
   user: AppUser;
   consultas: Consulta[];
+  reportConsultas: Consulta[];
   appClientes: Cliente[];
 
   filteredConsultasCount: Object;
@@ -38,7 +39,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   appClientes$: Observable<Cliente[]>;
   userClientes$: Observable<Cliente[]>;
   subs: Observable<[AppUser, Consulta[], Cliente[], Cliente[]]>;
-  date: Date;
+  selectedDate: Date;
   // appData$: Observable<AppData>;
   dayCellComponent = CustomDayCellComponent;
 
@@ -52,6 +53,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.reportConsultas = [];
+
     this.currentPage$ = this.headerService.currentPage$.pipe(
       tap((page) => {
         console.log(page);
@@ -105,5 +108,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(obj);
     this.filteredConsultasCount = obj;
     return obj;
+  }
+
+  filterConsultas(date: Date) {
+    console.log(date);
+    const filteredConsultas = this.consultas
+      .filter(
+        (consulta) =>
+          new Date(consulta.dataConsulta['seconds']).toLocaleDateString(
+            'pt-BR'
+          ) === date.toLocaleDateString('pt-BR')
+      )
+      .sort(
+        (a, b) => +a.horario.replace(':', '') - +b.horario.replace(':', '')
+      );
+    this.reportConsultas = filteredConsultas;
   }
 }

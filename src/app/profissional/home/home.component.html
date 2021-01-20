@@ -5,9 +5,38 @@
       <ng-container *ngIf="consultas$ | async as consultas">
         <ng-container *ngIf="userClientes$ | async as clientes">
           <!--  -->
+          <nb-card class="relatorios">
+            <nb-card-header>
+              <div><h3>Relatórios</h3></div>
+              <h1 *ngIf="selectedDate; else placeholder" class="h5">
+                {{ selectedDate | date: "longDate" }}
+              </h1>
+              <ng-template #placeholder>&nbsp;</ng-template>
+            </nb-card-header>
+            <nb-card-body>
+              <nb-calendar
+                class="custom-calendar"
+                [dayCellComponent]="dayCellComponent"
+                [(date)]="selectedDate"
+                (dateChange)="filterConsultas($event)"
+                size="large"
+              >
+              </nb-calendar>
+
+              <div class="filterd-consultas-container">
+                <ng-container *ngIf="reportConsultas">
+                  <p *ngFor="let consulta of reportConsultas">
+                    {{ consulta.horario }} {{ consulta.nomePaciente }}
+                  </p>
+                </ng-container>
+              </div>
+            </nb-card-body>
+          </nb-card>
+
+          <div><h3>Pacientes</h3></div>
+
           <div class="clientes-container">
-            <div><h3>Pacientes</h3></div>
-            <div *ngFor="let cliente of clientes">
+            <div class="card-wrapper" *ngFor="let cliente of clientes">
               <app-cliente-card
                 [cliente]="cliente"
                 [allConsultas]="consultas"
@@ -16,30 +45,14 @@
           </div>
 
           <div><h3>Consultas</h3></div>
-          <pre *ngFor="let consulta of consultas"
-            >{{ consulta.nomePaciente }} {{ consulta.horario }} {{
-              consulta.dataConsulta["seconds"] | date: "shortDate"
-            }}</pre
-          >
 
-          <nb-card>
-            <nb-card-header>
-              <h3>Relatórios</h3>
-              <h1 *ngIf="date; else placeholder" class="h5">
-                {{ date | date: "longDate" }}
-              </h1>
-              <ng-template #placeholder>&nbsp;</ng-template>
-            </nb-card-header>
-            <nb-card-body>
-              <nb-calendar
-                class="custom-calendar"
-                [dayCellComponent]="dayCellComponent"
-                [(date)]="date"
-                size="large"
-              >
-              </nb-calendar>
-            </nb-card-body>
-          </nb-card>
+          <div class="consultas-container">
+            <pre *ngFor="let consulta of consultas"
+              >{{ consulta.nomePaciente }} {{ consulta.horario }} {{
+                consulta.dataConsulta["seconds"] | date: "shortDate"
+              }}</pre
+            >
+          </div>
         </ng-container>
       </ng-container>
     </ng-container>
