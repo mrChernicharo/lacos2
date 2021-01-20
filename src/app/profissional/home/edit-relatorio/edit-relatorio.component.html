@@ -1,5 +1,16 @@
 <div class="component-container">
-  <p *ngFor="let consulta of consultas">
-    {{ consulta.horario }} {{ consulta.nomePaciente }} {{ consulta.modalidade }}
-  </p>
+  <form [formGroup]="editForm">
+    <label>Data Relatório</label>
+    <input
+      id="data-relatorio"
+      type="text"
+      nbInput
+      [defaultValue]="reportDate | date: 'fullDate' | titlecase"
+    />
+
+    <div *ngFor="let consulta of reportConsultas">
+      {{ consulta.horario }} {{ consulta.nomePaciente }}
+      {{ consulta.modalidade }}
+    </div>
+  </form>
 </div>

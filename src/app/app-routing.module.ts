@@ -9,6 +9,7 @@ import { HomeComponent } from './profissional/home/home.component';
 import { NovoRelatorioComponent } from './profissional/home/novo-relatorio/novo-relatorio.component';
 import { AdminGuard } from './guards/admin.guard';
 import { AuthGuard } from './guards/auth.guard';
+import { EditRelatorioComponent } from './profissional/home/edit-relatorio/edit-relatorio.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/auth', pathMatch: 'full' },
@@ -26,6 +27,10 @@ const routes: Routes = [
         component: NovoRelatorioComponent,
         // data: clientes
       },
+      // {
+      //   path: 'edit-relatorio',
+      //   component: EditRelatorioComponent,
+      // },
     ],
   },
   {

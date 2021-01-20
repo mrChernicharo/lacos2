@@ -109,7 +109,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.filteredConsultasCount = obj;
     return obj;
   }
-
+  onChangeCalendarDate(date: Date) {
+    this.filterConsultas(date);
+    // this.router.navigate(['profissional/edit-relatorio']);
+  }
   filterConsultas(date: Date) {
     console.log(date);
     const filteredConsultas = this.consultas

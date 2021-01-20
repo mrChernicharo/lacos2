@@ -1,3 +1,8 @@
 .component-container {
   border: 1px solid pink;
+
+  input#data-relatorio {
+    width: 400px !important;
+    pointer-events: none;
+  }
 }

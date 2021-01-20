@@ -88,6 +88,9 @@ export class HeaderComponent implements OnInit {
       case 'novo relatorio':
         return this.router.navigate(['profissional', 'novo-relatorio']);
 
+      // case 'edit relatorio':
+      //   return this.router.navigate(['profissional', 'edit-relatorio']);
+
       case 'clientes':
         return this.router.navigate(['admin', 'clientes']);
 
