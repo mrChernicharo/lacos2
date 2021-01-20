@@ -5,4 +5,71 @@
     width: 400px !important;
     pointer-events: none;
   }
+
+  .consulta-form {
+    border: 1px solid green;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    margin: 6px 0;
+
+    .select-wrapper {
+      display: flex;
+      // border: 1px solid grey;
+      flex-direction: column;
+
+      &.nome-paciente {
+        width: 214px;
+        margin-left: 2px;
+        nb-select {
+          button {
+            width: 212px !important;
+            min-width: 212px !important;
+            max-width: 212px !important;
+          }
+        }
+      }
+
+      &.horario {
+        width: 92px;
+        nb-select {
+          button {
+            width: 90px !important;
+            min-width: 90px !important;
+            max-width: 90px !important;
+          }
+        }
+      }
+
+      &.modalidade {
+        width: 110px;
+        nb-select {
+          button {
+            width: 108px !important;
+            min-width: 108px !important;
+            max-width: 108px !important;
+          }
+        }
+      }
+    }
+  }
+
+  .button-wrapper {
+    &:not([class="add"]) {
+      margin: 0 3px 0 0;
+    }
+    &.add {
+      position: relative;
+      margin: 0 0 0 102px;
+      // border: 1px solid green;
+
+      &.no-consultas {
+        position: relative;
+
+        padding: 6px 0;
+        margin: 6px;
+        border: 1px solid red;
+      }
+    }
+  }
 }

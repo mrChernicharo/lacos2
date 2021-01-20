@@ -99,11 +99,17 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
     console.log(this.editForm);
   }
 
-  newConultaForm(consulta: Consulta) {
+  newConultaForm(consulta?: Consulta) {
     return this.fb.group({
-      nomePaciente: new FormControl(consulta.nomePaciente, Validators.required),
-      modalidade: new FormControl(consulta.modalidade, Validators.required),
-      horario: new FormControl(consulta.horario, [
+      nomePaciente: new FormControl(
+        consulta?.nomePaciente || '',
+        Validators.required
+      ),
+      modalidade: new FormControl(
+        consulta?.modalidade || '',
+        Validators.required
+      ),
+      horario: new FormControl(consulta?.horario || '', [
         Validators.required,
         RxwebValidators.unique(),
       ]),
@@ -114,5 +120,13 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
 
   getConsultasControls() {
     return this.consultaRows.controls;
+  }
+
+  addConsultaFormGroup() {
+    this.consultaRows.push(this.newConultaForm());
+  }
+
+  removeConsultaFormGroup(i) {
+    this.consultaRows.removeAt(i);
   }
 }
