@@ -28,6 +28,7 @@
                 <ng-container *ngIf="reportConsultas.length > 0; else default">
                   <app-edit-relatorio
                     [reportConsultas]="reportConsultas"
+                    [userClientes]="userClientes$ | async"
                   ></app-edit-relatorio>
                 </ng-container>
                 <ng-template #default>

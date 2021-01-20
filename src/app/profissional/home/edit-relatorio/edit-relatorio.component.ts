@@ -16,6 +16,7 @@ import {
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { defer, from, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Cliente } from 'src/app/models/cliente.model';
 import { Consulta } from 'src/app/models/consulta.model';
 import {
   ConsultasService,
@@ -30,6 +31,8 @@ import {
 })
 export class EditRelatorioComponent implements OnInit, OnChanges {
   @Input() reportConsultas: Consulta[];
+  @Input() userClientes: Cliente[];
+
   editForm: FormGroup;
   modalidades: string[];
   horarios: string[];
@@ -99,13 +102,13 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
   newConultaForm(consulta: Consulta) {
     return this.fb.group({
       nomePaciente: new FormControl(consulta.nomePaciente, Validators.required),
-      // idPaciente: new FormControl(''),
-      // origem: new FormControl(''),
       modalidade: new FormControl(consulta.modalidade, Validators.required),
       horario: new FormControl(consulta.horario, [
         Validators.required,
         RxwebValidators.unique(),
       ]),
+      // idPaciente: new FormControl(''),
+      // origem: new FormControl(''),
     });
   }
 
