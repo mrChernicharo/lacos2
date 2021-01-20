@@ -4,6 +4,17 @@
     <ng-container *ngIf="authService.user$ | async as user">
       <ng-container *ngIf="consultas$ | async as consultas">
         <ng-container *ngIf="userClientes$ | async as clientes">
+          <!--  -->
+          <div class="clientes-container">
+            <div><h3>Pacientes</h3></div>
+            <div *ngFor="let cliente of clientes">
+              <app-cliente-card
+                [cliente]="cliente"
+                [allConsultas]="consultas"
+              ></app-cliente-card>
+            </div>
+          </div>
+
           <div><h3>Consultas</h3></div>
           <pre *ngFor="let consulta of consultas"
             >{{ consulta.nomePaciente }} {{ consulta.horario }} {{
@@ -29,14 +40,6 @@
               </nb-calendar>
             </nb-card-body>
           </nb-card>
-
-          <div><h3>Pacientes</h3></div>
-          <div *ngFor="let cliente of clientes">
-            <app-cliente-card
-              [cliente]="cliente"
-              [allConsultas]="consultas"
-            ></app-cliente-card>
-          </div>
         </ng-container>
       </ng-container>
     </ng-container>

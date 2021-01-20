@@ -1,13 +1,35 @@
 <nb-card>
-  <div class="header">
-    <h3>{{ cliente.nome }}</h3>
-  </div>
+  <nb-card-header>
+    <img [src]="avatarImg" alt="" srcset="" />
+    <span class="title">
+      {{ cliente.nome }}
+    </span>
+  </nb-card-header>
 
-  <p>
-    atendimentos <span>{{ clienteConsultas.length }}</span>
-  </p>
+  <nb-card-body>
+    <div class="origin-tag tag">
+      {{ cliente.origem }}
+    </div>
+    <p>
+      atendimentos realizados: <span>{{ clienteConsultas.length }}</span>
+    </p>
 
-  <div class="" *ngFor="let consulta of clienteConsultas; let i = index">
+    <span>
+      seu paciente desde
+      {{ firstConsulta.dataConsulta["seconds"] | date: "shortDate" }}
+    </span>
+    <br />
+    <span>
+      última consulta:
+      {{ lastConsulta.dataConsulta["seconds"] | date: "shortDate" }} às
+      {{ lastConsulta.horario }}
+    </span>
+  </nb-card-body>
+
+  <div
+    class="consultas-display"
+    *ngFor="let consulta of clienteConsultas; let i = index"
+  >
     <p>{{ i + 1 }} {{ consulta.dataConsulta["seconds"] | date: "short" }}</p>
   </div>
 </nb-card>

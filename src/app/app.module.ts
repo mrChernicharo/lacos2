@@ -47,6 +47,8 @@ import {
   NbLayoutModule,
   NbListModule,
   NbMenuModule,
+  NbToastrModule,
+
   // NbNativeDateService,
   NbOptionModule,
   NbSelectModule,
