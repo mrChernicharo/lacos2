@@ -17,6 +17,11 @@ import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { defer, from, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Consulta } from 'src/app/models/consulta.model';
+import {
+  ConsultasService,
+  HORARIOS,
+  MODALIDADES,
+} from 'src/app/services/consultas.service';
 
 @Component({
   selector: 'app-edit-relatorio',
@@ -26,17 +31,23 @@ import { Consulta } from 'src/app/models/consulta.model';
 export class EditRelatorioComponent implements OnInit, OnChanges {
   @Input() reportConsultas: Consulta[];
   editForm: FormGroup;
-
+  modalidades: string[];
+  horarios: string[];
   reportDate: string;
   currentConasultas$: any;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private consultasService: ConsultasService
+  ) {}
 
   get consultaRows() {
     return this.editForm.get('consultas') as FormArray;
   }
 
   ngOnInit(): void {
+    this.horarios = HORARIOS;
+    this.modalidades = MODALIDADES;
     // this.createEditForm();
     // this.newConultaForm();
     // this.reportDate = new Date(this.reportConsultas[0].dataConsulta['seconds']);
@@ -96,5 +107,9 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
         RxwebValidators.unique(),
       ]),
     });
+  }
+
+  getConsultasControls() {
+    return this.consultaRows.controls;
   }
 }

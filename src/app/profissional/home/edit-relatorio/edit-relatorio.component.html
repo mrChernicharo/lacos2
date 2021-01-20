@@ -12,17 +12,30 @@
     <div *ngFor="let consulta of reportConsultas">
       {{ consulta.horario }} {{ consulta.nomePaciente }}
       {{ consulta.modalidade }}
+    </div>
 
+    <div
+      class="consulta-form"
+      [formGroup]="consulta"
+      *ngFor="let consulta of getConsultasControls(); let i = index"
+    >
       <nb-select-label>Horário</nb-select-label>
-      <nb-select></nb-select>
+      <nb-select formControlName="horario" status="basic" size="small">
+        <nb-option *ngFor="let hora of horarios" [value]="hora">
+          {{ hora }}
+        </nb-option>
+      </nb-select>
 
       <nb-select-label>Paciente</nb-select-label>
       <nb-select></nb-select>
 
       <nb-select-label>Modalidade</nb-select-label>
-      <nb-select></nb-select>
+      <nb-select formControlName="modalidade" size="small">
+        <nb-option *ngFor="let modalidade of modalidades" [value]="modalidade">
+          {{ modalidade }}
+        </nb-option>
+      </nb-select>
     </div>
-
     <!-- <div
     class="consulta-form"
     [formGroup]="consulta"
