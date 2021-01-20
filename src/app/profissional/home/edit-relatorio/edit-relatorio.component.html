@@ -5,12 +5,28 @@
       id="data-relatorio"
       type="text"
       nbInput
-      [defaultValue]="reportDate | date: 'fullDate' | titlecase"
+      formControlName="dataRelatorio"
     />
+    <!-- [defaultValue]="reportDate | date: 'fullDate'" -->
 
     <div *ngFor="let consulta of reportConsultas">
       {{ consulta.horario }} {{ consulta.nomePaciente }}
       {{ consulta.modalidade }}
+
+      <nb-select-label>Horário</nb-select-label>
+      <nb-select></nb-select>
+
+      <nb-select-label>Paciente</nb-select-label>
+      <nb-select></nb-select>
+
+      <nb-select-label>Modalidade</nb-select-label>
+      <nb-select></nb-select>
     </div>
+
+    <!-- <div
+    class="consulta-form"
+    [formGroup]="consulta"
+    *ngFor="let consulta of getConsultasControls(); let i = index"
+  ></div> -->
   </form>
 </div>
