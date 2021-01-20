@@ -5,7 +5,7 @@
       <ng-container *ngIf="consultas$ | async as consultas">
         <ng-container *ngIf="userClientes$ | async as clientes">
           <!--  -->
-          <nb-card class="relatorios">
+          <nb-card>
             <nb-card-header>
               <div><h3>Relatórios</h3></div>
               <h1 *ngIf="selectedDate; else placeholder" class="h5">
@@ -13,7 +13,7 @@
               </h1>
               <ng-template #placeholder>&nbsp;</ng-template>
             </nb-card-header>
-            <nb-card-body>
+            <nb-card-body class="relatorios">
               <nb-calendar
                 class="custom-calendar"
                 [dayCellComponent]="dayCellComponent"

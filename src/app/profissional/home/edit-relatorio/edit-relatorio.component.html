@@ -85,6 +85,14 @@
 
         <!-- </div> -->
       </div>
+
+      <button nbButton outline status="success" (click)="saveReportChanges()">
+        <nb-icon outline icon="edit-2-outline"></nb-icon> Salvar alterações
+      </button>
+
+      <button nbButton outline status="danger" (click)="deleteReport()">
+        <nb-icon icon="trash-outline"></nb-icon> Apagar Relatório
+      </button>
     </form>
   </ng-container>
   <div

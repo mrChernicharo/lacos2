@@ -1,8 +1,8 @@
 .page-container {
   width: 100vw;
 
-  .relatorios {
-    width: calc(100% - 21px);
+  nb-card-body.relatorios {
+    // width: calc(100% - 21px);
     display: flex;
     flex-wrap: wrap;
   }

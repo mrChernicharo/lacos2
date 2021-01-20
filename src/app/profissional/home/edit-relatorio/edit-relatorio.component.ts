@@ -5,6 +5,7 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  ViewEncapsulation,
 } from '@angular/core';
 import {
   FormArray,
@@ -35,6 +36,7 @@ const dateFormatOptions = {
   selector: 'app-edit-relatorio',
   templateUrl: './edit-relatorio.component.html',
   styleUrls: ['./edit-relatorio.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class EditRelatorioComponent implements OnInit, OnChanges {
   @Input() reportConsultas: Consulta[];
@@ -132,5 +134,13 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
 
   removeConsultaFormGroup(i) {
     this.consultaRows.removeAt(i);
+  }
+
+  saveReportChanges() {
+    console.log('save report changes!');
+  }
+
+  deleteReport() {
+    console.log('delete report!');
   }
 }

@@ -4,6 +4,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  ViewEncapsulation,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbCalendarDayCellComponent } from '@nebular/theme';

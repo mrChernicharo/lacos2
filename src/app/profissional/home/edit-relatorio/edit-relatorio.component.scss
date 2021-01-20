@@ -1,6 +1,8 @@
 .component-container {
   border: 1px solid pink;
-  width: 608px;
+  width: 556px;
+  padding: 16px;
+  border-radius: 4px;
 
   input#data-relatorio {
     width: 400px !important;
@@ -22,6 +24,7 @@
       &.nome-paciente {
         width: 214px;
         margin-left: 2px;
+        margin-right: 2px;
         nb-select {
           button {
             width: 212px !important;
@@ -43,12 +46,12 @@
       }
 
       &.modalidade {
-        width: 110px;
+        width: 122px;
         nb-select {
           button {
-            width: 108px !important;
-            min-width: 108px !important;
-            max-width: 108px !important;
+            width: 120px !important;
+            min-width: 120px !important;
+            max-width: 120px !important;
           }
         }
       }
@@ -61,7 +64,7 @@
     }
     &.add {
       position: relative;
-      margin: 0 0 0 102px;
+      margin: 0 0 0 3px;
       // border: 1px solid green;
 
       &.no-consultas {
