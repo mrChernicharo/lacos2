@@ -71,6 +71,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ClienteCardComponent } from './shared/cliente-card/cliente-card.component';
 import { CustomDayCellComponent } from './shared/custom-day-cell/custom-day-cell.component';
+import { EditRelatorioComponent } from './profissional/home/edit-relatorio/edit-relatorio.component';
 
 registerLocaleData(localePt);
 
@@ -120,6 +121,7 @@ const matModules = [
     SignupComponent,
     ClienteCardComponent,
     CustomDayCellComponent,
+    EditRelatorioComponent,
   ],
   imports: [
     BrowserModule,

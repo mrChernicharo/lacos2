@@ -25,9 +25,9 @@
 
               <div class="filterd-consultas-container">
                 <ng-container *ngIf="reportConsultas">
-                  <p *ngFor="let consulta of reportConsultas">
-                    {{ consulta.horario }} {{ consulta.nomePaciente }}
-                  </p>
+                  <app-edit-relatorio
+                    [consultas]="reportConsultas"
+                  ></app-edit-relatorio>
                 </ng-container>
               </div>
             </nb-card-body>
