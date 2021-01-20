@@ -24,6 +24,13 @@ import {
   MODALIDADES,
 } from 'src/app/services/consultas.service';
 
+const dateFormatOptions = {
+  weekday: 'long',
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+};
+
 @Component({
   selector: 'app-edit-relatorio',
   templateUrl: './edit-relatorio.component.html',
@@ -45,49 +52,45 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
   ) {}
 
   get consultaRows() {
-    return this.editForm.get('consultas') as FormArray;
+    return this.editForm?.get('consultas') as FormArray;
   }
 
   ngOnInit(): void {
     this.horarios = HORARIOS;
     this.modalidades = MODALIDADES;
-    // this.createEditForm();
-    // this.newConultaForm();
-    // this.reportDate = new Date(this.reportConsultas[0].dataConsulta['seconds']);
-    // console.log(this.reportConsultas);
   }
-  // ngAfterViewInit() {
-  //   this.currentConasultas$ = of(this.reportConsultas)
-  //     .pipe(tap((v) => console.log(v)))
-  //     .subscribe();
-  // }
+
   ngOnChanges(changes: SimpleChanges) {
     // console.log(changes);
+
     if (changes.reportConsultas) {
-      // console.log(this.reportConsultas);
       this.reportDate = new Date(
         this.reportConsultas[0].dataConsulta['seconds']
-      ).toLocaleDateString('pt-BR', {
-        weekday: 'long',
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric',
-      });
+      ).toLocaleDateString('pt-BR', dateFormatOptions);
 
-      this.createEditForm();
-      // this.newConultaForm();
-      this.fillEditForm();
+      // se clicou na mesma data, destrua, senão crie o novo editForm
+      if (
+        JSON.stringify(changes.reportConsultas.previousValue) ===
+        JSON.stringify(changes.reportConsultas.currentValue)
+      ) {
+        this.destroyEditForm();
+        changes.reportConsultas.currentValue = null;
+      } else {
+        this.createEditForm();
+        this.fillEditForm();
+      }
     }
   }
 
   createEditForm() {
     return (this.editForm = this.fb.group({
-      dataRelatorio: new FormControl(
-        this.reportDate
-        // this.reportDate.toLocaleDateString('pt-BR')
-      ),
+      dataRelatorio: new FormControl(this.reportDate),
       consultas: this.fb.array([]),
     }));
+  }
+
+  destroyEditForm() {
+    return (this.editForm = undefined);
   }
 
   fillEditForm() {
@@ -95,8 +98,6 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
       const consultaRow = this.newConultaForm(consulta);
       this.consultaRows.push(consultaRow);
     });
-
-    console.log(this.editForm);
   }
 
   newConultaForm(consulta?: Consulta) {
@@ -119,11 +120,14 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
   }
 
   getConsultasControls() {
-    return this.consultaRows.controls;
+    if (this.consultaRows) {
+      return this.consultaRows.controls;
+    }
   }
 
   addConsultaFormGroup() {
     this.consultaRows.push(this.newConultaForm());
+    // this.destroyEditForm();
   }
 
   removeConsultaFormGroup(i) {

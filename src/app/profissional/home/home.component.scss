@@ -3,6 +3,8 @@
 
   .relatorios {
     width: calc(100% - 21px);
+    display: flex;
+    flex-wrap: wrap;
   }
 
   .clientes-container {

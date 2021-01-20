@@ -17,13 +17,13 @@
               <nb-calendar
                 class="custom-calendar"
                 [dayCellComponent]="dayCellComponent"
-                [(date)]="selectedDate"
                 (dateChange)="onChangeCalendarDate($event)"
                 size="large"
+                [(date)]="selectedDate"
               >
               </nb-calendar>
 
-              <div class="filterd-consultas-container">
+              <div class="filtered-consultas-container">
                 <!-- <ng-container *ngIf="currentPage === 'edit relatorio'"> -->
                 <ng-container *ngIf="reportConsultas.length > 0; else default">
                   <app-edit-relatorio

@@ -42,6 +42,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedDate: Date;
   // appData$: Observable<AppData>;
   dayCellComponent = CustomDayCellComponent;
+  previousSelected: any;
 
   constructor(
     public clientesService: ClientesService,
@@ -109,12 +110,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.filteredConsultasCount = obj;
     return obj;
   }
+
   onChangeCalendarDate(date: Date) {
     this.filterConsultas(date);
-    // this.router.navigate(['profissional/edit-relatorio']);
   }
+
   filterConsultas(date: Date) {
-    console.log(date);
+    // console.log(date);
     const filteredConsultas = this.consultas
       .filter(
         (consulta) =>

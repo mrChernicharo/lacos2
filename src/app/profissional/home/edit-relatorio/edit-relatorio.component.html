@@ -1,95 +1,94 @@
 <div class="component-container">
-  <form [formGroup]="editForm">
-    <label>Data Relatório</label>
-    <input
-      id="data-relatorio"
-      type="text"
-      nbInput
-      formControlName="dataRelatorio"
-    />
-    <!-- [defaultValue]="reportDate | date: 'fullDate'" -->
-
-    <div *ngFor="let consulta of reportConsultas">
-      {{ consulta.horario }} {{ consulta.nomePaciente }}
-      {{ consulta.modalidade }}
+  <ng-container *ngIf="editForm">
+    <div class="relatorio-default-data">
+      <div *ngFor="let consulta of reportConsultas">
+        {{ consulta.horario }} {{ consulta.nomePaciente }}
+        {{ consulta.modalidade }}
+      </div>
     </div>
 
-    <div
-      class="consulta-form"
-      [formGroup]="consulta"
-      *ngFor="let consulta of getConsultasControls(); let i = index"
-    >
-      <div class="button-wrapper">
-        <button
-          nbButton
-          shape="round"
-          status="danger"
-          (click)="removeConsultaFormGroup(i)"
-        >
-          <nb-icon icon="close-outline"></nb-icon>
-        </button>
-      </div>
+    <form [formGroup]="editForm">
+      <label>Data Relatório</label>
+      <input
+        id="data-relatorio"
+        type="text"
+        nbInput
+        formControlName="dataRelatorio"
+      />
+      <!-- [defaultValue]="reportDate | date: 'fullDate'" -->
 
-      <div class="select-wrapper horario">
-        <nb-select-label>Horário</nb-select-label>
-        <nb-select formControlName="horario" status="basic" size="small">
-          <nb-option *ngFor="let hora of horarios" [value]="hora">
-            {{ hora }}
-          </nb-option>
-        </nb-select>
-      </div>
-
-      <div class="select-wrapper nome-paciente">
-        <nb-select-label>Paciente {{ i + 1 }}</nb-select-label>
-        <nb-select
-          formControlName="nomePaciente"
-          size="small"
-          [id]="'nomePaciente-' + i + 1"
-        >
-          <nb-option
-            *ngFor="let cliente of userClientes"
-            [value]="cliente.nome"
-          >
-            {{ cliente.nome }}
-          </nb-option>
-        </nb-select>
-      </div>
-
-      <div class="select-wrapper modalidade">
-        <nb-select-label>Modalidade</nb-select-label>
-        <nb-select formControlName="modalidade" size="small">
-          <nb-option
-            *ngFor="let modalidade of modalidades"
-            [value]="modalidade"
-          >
-            {{ modalidade }}
-          </nb-option>
-        </nb-select>
-      </div>
       <div
-        *ngIf="i + 1 === getConsultasControls().length"
-        class="button-wrapper add"
+        class="consulta-form"
+        [formGroup]="consulta"
+        *ngFor="let consulta of getConsultasControls(); let i = index"
       >
-        <button
-          nbButton
-          shape="round"
-          status="success"
-          (click)="addConsultaFormGroup()"
-        >
-          <nb-icon icon="plus-outline"></nb-icon>
-        </button>
-      </div>
+        <div class="button-wrapper">
+          <button
+            nbButton
+            shape="round"
+            status="danger"
+            (click)="removeConsultaFormGroup(i)"
+          >
+            <nb-icon icon="close-outline"></nb-icon>
+          </button>
+        </div>
 
-      <!-- </div> -->
-    </div>
-    <!-- <div
-    class="consulta-form"
-    [formGroup]="consulta"
-    *ngFor="let consulta of getConsultasControls(); let i = index"
-  ></div> -->
-  </form>
+        <div class="select-wrapper horario">
+          <nb-select-label>Horário</nb-select-label>
+          <nb-select formControlName="horario" status="basic" size="small">
+            <nb-option *ngFor="let hora of horarios" [value]="hora">
+              {{ hora }}
+            </nb-option>
+          </nb-select>
+        </div>
+
+        <div class="select-wrapper nome-paciente">
+          <nb-select-label>Paciente {{ i + 1 }}</nb-select-label>
+          <nb-select
+            formControlName="nomePaciente"
+            size="small"
+            [id]="'nomePaciente-' + i + 1"
+          >
+            <nb-option
+              *ngFor="let cliente of userClientes"
+              [value]="cliente.nome"
+            >
+              {{ cliente.nome }}
+            </nb-option>
+          </nb-select>
+        </div>
+
+        <div class="select-wrapper modalidade">
+          <nb-select-label>Modalidade</nb-select-label>
+          <nb-select formControlName="modalidade" size="small">
+            <nb-option
+              *ngFor="let modalidade of modalidades"
+              [value]="modalidade"
+            >
+              {{ modalidade }}
+            </nb-option>
+          </nb-select>
+        </div>
+        <div
+          *ngIf="i + 1 === getConsultasControls().length"
+          class="button-wrapper add"
+        >
+          <button
+            nbButton
+            shape="round"
+            status="success"
+            (click)="addConsultaFormGroup()"
+          >
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+        </div>
+
+        <!-- </div> -->
+      </div>
+    </form>
+  </ng-container>
   <div
-    *ngIf="getConsultasControls().length === 0"
+    *ngIf="getConsultasControls()?.length === 0"
     class="button-wrapper add no-consultas"
   >
     <button
