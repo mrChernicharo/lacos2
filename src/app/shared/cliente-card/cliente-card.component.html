@@ -7,7 +7,18 @@
   </nb-card-header>
 
   <nb-card-body>
-    <div class="origin-tag tag">
+    <div
+      [ngClass]="
+        cliente.origem === 'flamengo'
+          ? 'flamengo'
+          : cliente.origem === 'vale'
+          ? 'vale'
+          : cliente.origem === 'cpII'
+          ? 'cpII'
+          : 'clinica'
+      "
+      class="origin-tag tag"
+    >
       {{ cliente.origem }}
     </div>
     <p>
@@ -26,10 +37,21 @@
     </span>
   </nb-card-body>
 
-  <div
-    class="consultas-display"
-    *ngFor="let consulta of clienteConsultas; let i = index"
-  >
-    <p>{{ i + 1 }} {{ consulta.dataConsulta["seconds"] | date: "short" }}</p>
+  <div class="consultas-display">
+    <nb-accordion>
+      <nb-accordion-item>
+        <nb-accordion-item-header
+          >{{ clienteConsultas.length }} consulta</nb-accordion-item-header
+        >
+        <nb-accordion-item-body
+          *ngFor="let consulta of clienteConsultas; let i = index"
+        >
+          <span
+            >dia {{ consulta.dataConsulta["seconds"] | date: "fullDate" }}</span
+          >
+          <span>{{ consulta.modalidade }}</span>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+    </nb-accordion>
   </div>
 </nb-card>

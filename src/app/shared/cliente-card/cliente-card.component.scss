@@ -1,12 +1,45 @@
 nb-card {
   width: 360px;
 
-  span.title {
-    font-size: 30px;
+  nb-card-header {
+    display: flex;
+    align-items: center;
+
+    span.title {
+      font-size: 30px;
+    }
+
+    img {
+      width: 40px;
+      height: 40px;
+    }
   }
 
-  img {
-    width: 40px;
-    height: 40px;
+  .origin-tag.tag {
+    width: fit-content;
+    height: 30px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    border: 1px solid;
+    border-radius: 14px;
+    font-weight: bold;
+
+    &.clinica {
+      color: #fff;
+      background: #ffb5c1;
+    }
+    &.flamengo {
+      color: #fff;
+      background: crimson;
+    }
+    &.vale {
+      color: #fff;
+      background: orange;
+    }
+    &.cpII {
+      color: #fff;
+      background: dodgerblue;
+    }
   }
 }
