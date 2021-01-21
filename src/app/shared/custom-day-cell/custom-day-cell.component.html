@@ -2,10 +2,14 @@
   <p style="font-size: 10px">{{ date | date: "d" }}</p>
 </div> -->
 <!-- busy -->
-<span class="date-number">
-  {{ date | date: "d" }}
-</span>
+<ng-container *ngIf="consultasService._consultas$ | async">
+  <span class="date-number">
+    {{ date | date: "d" }}
+  </span>
 
-<span class="total-consultas-number">
-  {{ totalConsultas }}
-</span>
+  <ng-container *ngIf="showTotal">
+    <span class="total-consultas-number">
+      {{ totalConsultas }}
+    </span>
+  </ng-container>
+</ng-container>

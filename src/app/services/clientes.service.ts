@@ -22,7 +22,7 @@ export class ClientesService {
       .fetchAllClientes()
       .pipe(
         tap((data) => {
-          console.log(data);
+          // console.log(data);
           this.clientesSubject$.next(data);
         })
       )
@@ -43,7 +43,7 @@ export class ClientesService {
   }
 
   findUserClientesFromConsultas(consultas: Consulta[]) {
-    console.log('FETCH USER  CONSULTAS');
+    // console.log('FETCH USER  CONSULTAS');
 
     if (!consultas) return;
 

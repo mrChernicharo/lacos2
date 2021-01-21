@@ -20,17 +20,17 @@ export class DbService {
   //********* CONSULTAS **********//
 
   async storeConsultas(consultas: Consulta[]) {
-    console.log(consultas);
+    // console.log(consultas);
     for (let i = 0; i < consultas.length; i++) {
       try {
         // consultas.forEach((consulta) => {
-        console.log(consultas[i]);
+        // console.log(consultas[i]);
 
         await this.db
           .collection('consultas')
           .add(consultas[i])
           .then((doc) => {
-            console.log(doc);
+            // console.log(doc);
             this.db.doc(`consultas/${doc.id}`).update({ idConsulta: doc.id });
           });
         // });
@@ -50,7 +50,7 @@ export class DbService {
           return snaps.map((snap) => snap.payload.doc.data() as Consulta);
         }),
         tap((consultas) => {
-          console.log(consultas);
+          // console.log(consultas);
         })
       );
   }
@@ -149,8 +149,8 @@ export class DbService {
   }
 
   fetchUserClientes(clientesIds: string[]) {
-    console.log('DB FETCH USER ' + ' CLIENTES');
-    console.log(clientesIds);
+    // console.log('DB FETCH USER ' + ' CLIENTES');
+    // console.log(clientesIds);
   }
 
   //   const clientIds = this._userConsultasStore.reduce((acc, consulta) => {

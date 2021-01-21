@@ -1,16 +1,30 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
+  SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NbCalendarDayCellComponent } from '@nebular/theme';
-import { forkJoin, Observable, of } from 'rxjs';
-import { delay, map, switchMap, tap } from 'rxjs/operators';
+import {
+  NbCalendarComponent,
+  NbCalendarDayCellComponent,
+} from '@nebular/theme';
+import { forkJoin, from, fromEvent, Observable, of } from 'rxjs';
+import {
+  delay,
+  filter,
+  map,
+  skip,
+  switchMap,
+  tap,
+  timeout,
+} from 'rxjs/operators';
 import { AppData } from 'src/app/app.component';
 import { Cliente } from 'src/app/models/cliente.model';
 import { Consulta } from 'src/app/models/consulta.model';
@@ -27,7 +41,8 @@ import { IReportFormConsulta } from './novo-relatorio/novo-relatorio.component';
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
+export class HomeComponent
+  implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   // clientes$: Observable<Cliente[]>;
   currentPage$: Observable<string>;
   user: AppUser;
@@ -36,6 +51,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   appClientes: Cliente[];
 
   filteredConsultasCount: Object;
+  calendar = new NbCalendarComponent<Date>();
+  calendarSubs: Observable<Date>;
 
   user$: Observable<AppUser>;
   consultas$: Observable<Consulta[]>;
@@ -53,7 +70,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private headerService: HeaderService,
     public authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -92,9 +110,32 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         );
       })
     );
+
+    // console.log(this.calendar);
+    // this.calendarSubs = this.calendar.dateChange.asObservable();
+
+    // this.calendarSubs.pipe(tap((date) => console.log(date))).subscribe(
+    //   (date) => {
+    //     this.cd.detectChanges();
+    //     this.cd.markForCheck();
+    //   },
+    //   (err) => console.log(err),
+    //   () => console.log('completed')
+    // );
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() {
+    // of(this.calendar)
+    //   .pipe(
+    //     filter((date) => !!date),
+    //     tap((date) => console.log(date))
+    //   )
+    //   .subscribe();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+  }
 
   ngOnDestroy() {}
 
@@ -116,6 +157,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onChangeCalendarDate(date: Date) {
     this.filterConsultas(date);
+    this.calendar.dateChange.emit(this.selectedDate);
+
+    // getIsBusyDay();
   }
 
   filterConsultas(date: Date) {
@@ -131,5 +175,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         (a, b) => +a.horario.replace(':', '') - +b.horario.replace(':', '')
       );
     this.reportConsultas = filteredConsultas;
+  }
+
+  updateCellData(event) {
+    console.log(event);
   }
 }

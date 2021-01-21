@@ -31,12 +31,11 @@ export class ClienteCardComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (
-      // changes &&
       changes.allConsultas?.previousValue?.length !==
       changes.allConsultas?.currentValue?.length
     ) {
-      console.log(changes.allConsultas);
-      console.log('hora de atualizar essa bagaça!');
+      // console.log(changes.allConsultas);
+      // console.log('hora de atualizar essa bagaça!');
       this.setData();
     }
   }

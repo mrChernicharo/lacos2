@@ -243,15 +243,12 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
     console.log('save report changes!');
     console.log(this.editForm.value.consultas);
     //
-    // this.cd.detach();
 
     this.consultasService
       .updateConsultas(this.editForm.value.consultas, this.removedConsultasIds)
       .then((res) => {
         console.log(res);
-        // this.cd.detectChanges();
-        // this.cd.reattach();
-        this.cd.markForCheck();
+        // this.cd.markForCheck();
       });
   }
 
