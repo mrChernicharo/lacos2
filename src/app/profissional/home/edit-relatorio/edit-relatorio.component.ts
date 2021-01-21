@@ -54,6 +54,7 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
   reportRawDate: Date;
   // currentConasultas$: any;
   removedConsultasIds: string[];
+  showForm: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -69,6 +70,7 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
     this.horarios = HORARIOS;
     this.modalidades = MODALIDADES;
     this.removedConsultasIds = [];
+    this.showForm = false;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -108,6 +110,7 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
 
   destroyEditForm() {
     this.removedConsultasIds = [];
+    this.showForm = false;
 
     return (this.editForm = undefined);
   }
@@ -248,6 +251,7 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
       .updateConsultas(this.editForm.value.consultas, this.removedConsultasIds)
       .then((res) => {
         console.log(res);
+        this.destroyEditForm();
         // this.cd.markForCheck();
       });
   }
@@ -255,5 +259,10 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
   deleteReport() {
     console.log('delete report!');
     console.log(this.editForm.value);
+  }
+
+  toggleEditing() {
+    console.log('edit report!');
+    this.showForm = !this.showForm;
   }
 }

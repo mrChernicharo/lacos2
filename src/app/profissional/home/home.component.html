@@ -18,20 +18,23 @@
                 class="custom-calendar"
                 [dayCellComponent]="dayCellComponent"
                 (dateChange)="onChangeCalendarDate($event)"
-                size="large"
+                size="medium"
                 [(date)]="selectedDate"
               >
               </nb-calendar>
 
               <div class="filtered-consultas-container">
                 <!-- <ng-container *ngIf="currentPage === 'edit relatorio'"> -->
-                <ng-container *ngIf="reportConsultas.length > 0">
+                <ng-container *ngIf="reportConsultas.length > 0; else default">
                   <app-edit-relatorio
                     [user]="user"
                     [reportConsultas]="reportConsultas"
                     [userClientes]="userClientes$ | async"
                   ></app-edit-relatorio>
                 </ng-container>
+                <ng-template #default>
+                  <span>clique para ver detalhes</span>
+                </ng-template>
 
                 <!-- </ng-container> -->
               </div>
@@ -52,11 +55,11 @@
           <div><h3>Consultas</h3></div>
 
           <div class="consultas-container">
-            <pre *ngFor="let consulta of consultas"
-              >{{ consulta.nomePaciente }} {{ consulta.horario }} {{
+            <pre *ngFor="let consulta of consultas">
+              {{ consulta.nomePaciente }} {{ consulta.horario }} {{
                 consulta.dataConsulta["seconds"] | date: "shortDate"
-              }}</pre
-            >
+              }}
+            </pre>
           </div>
         </ng-container>
       </ng-container>

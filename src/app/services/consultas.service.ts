@@ -17,6 +17,10 @@ export class ConsultasService {
   consultasSubject$ = new BehaviorSubject<Consulta[]>([]);
   _consultas$ = this.consultasSubject$.asObservable();
 
+  get latestConsultas() {
+    return this.consultasSubject$.getValue();
+  }
+
   constructor(private db: DbService, public authService: AuthService) {}
 
   fetchUserConsultas(userData: AppUser) {
@@ -68,14 +72,9 @@ export class ConsultasService {
     this.db.storeConsultas(newConsultas);
   }
 
-  getConsultasSubjectLatestValue() {
-    return this.consultasSubject$.getValue();
-  }
-
   isBusyDay(date): boolean {
-    const consultas = this.consultasSubject$.getValue();
-
-    const foundConsultaOnDate = consultas.find(
+    //
+    const foundConsultaOnDate = this.latestConsultas.find(
       (consulta) =>
         new Date(
           (consulta.dataConsulta as IServerTimestamp).seconds
@@ -87,16 +86,12 @@ export class ConsultasService {
   }
 
   getConsultasAmountInDay(date): number {
-    const consultas = this.consultasSubject$.getValue();
-    const total = consultas.filter(
+    //
+    const total = this.latestConsultas.filter(
       (consulta) =>
         new Date(
           (consulta.dataConsulta as IServerTimestamp).seconds
         ).toLocaleDateString() === new Date(date).toLocaleDateString()
-      // ||
-      // new Date(
-      //   (consulta.dataConsulta as IServerTimestamp).seconds * 1000
-      // ).toLocaleDateString() === new Date(date).toLocaleDateString()
     ).length;
 
     return total;

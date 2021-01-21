@@ -37,28 +37,14 @@ export class CustomDayCellComponent<Date>
   }
 
   date: Date;
-  // consultas$: Observable<Consulta[]>;
   totalConsultas: number;
   showTotal: boolean;
-  // @Input() consultas: Consulta[];
+
   ngOnInit(): void {
     this.getIsBusyDay();
-
-    // console.log(this.consultas);
   }
 
-  // ngOnChanges(changes: SimpleChanges) {
-  //   console.log(changes);
-  //   // this.getIsBusyDay();
-  // }
-
-  // ngAfterViewChecked() {
-  //   // console.log('checked');
-  //   // this.getIsBusyDay();
-  // }
-
   ngAfterContentChecked() {
-    // console.log('checked');
     this.getIsBusyDay();
   }
 
@@ -73,8 +59,5 @@ export class CustomDayCellComponent<Date>
       this.dayCellClass = false;
       this.showTotal = false;
     }
-    // if (this.dayCellClass) {
-
-    // }
   }
 }

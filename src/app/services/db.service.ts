@@ -84,7 +84,7 @@ export class DbService {
       await this.db
         .doc(`consultas/${ids[i]}`)
         .delete()
-        .then((resp) => console.log(resp));
+        .then(() => console.log(`consulta ${ids[i]} deletada`));
     }
   }
 
@@ -107,7 +107,9 @@ export class DbService {
       await this.db
         .doc(`consultas/${consultas[i].idConsulta}`)
         .update(updateData)
-        .then((resp) => console.log(resp));
+        .then(() =>
+          console.log(`consulta ${consultas[i].idConsulta} atualizada`)
+        );
     }
     // consultas.forEach((consulta) => {
     // });

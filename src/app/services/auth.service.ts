@@ -80,17 +80,10 @@ export class AuthService {
     const provider = new firebase.auth.GoogleAuthProvider();
     const credential = await this.afAuth.signInWithPopup(provider);
 
-    // console.log('GOOGLE SIGNIN () => provider & credential');
-    // console.log(provider);
-    // console.log(credential);
-
     return this.updateUserData(credential.user, true);
   }
 
   async updateUserData(user, isGoogleSignin = false, isCreateAccount = false) {
-    // console.log('UPDATE USER DATA');
-    // console.log(user);
-
     const userRef: AngularFirestoreDocument<any> = this.db.getUserDoc(user);
     console.log(userRef);
     const userData: AppUser = {
@@ -150,55 +143,4 @@ export class AuthService {
         );
       });
   }
-
-  // handleAuthSuccess(user: AppUser) {
-  //   this.db
-  //     .checkUserExists(user)
-  //     .pipe(
-  //       catchError((err) => throwError(err)),
-  //       finalize(() => () => {
-  //         console.log('complete!');
-  //         this.redirectUser(user.role);
-  //       })
-  //     )
-  //     .subscribe((exists) => {
-  //       if (!exists) {
-  //         this.db.createUser(user);
-  //       }
-  //     });
-  // }
-  // signup(nome: string, email: string, password: string) {
-  //   from(this.afAuth.createUserWithEmailAndPassword(email, password))
-  //     .pipe(
-  //       take(1),
-  //       shareReplay(),
-  //       // tap((data) => console.log(data)),
-  //       map((data) => {
-  //         const newUser: AppUser = {
-  //           id: null,
-  //           nome: nome,
-  //           email: data.user.email,
-  //           dataCriacao: new Date(),
-  //           isAuth: true,
-  //           role: 'profissional',
-  //           ultimoAcesso: new Date(),
-  //           token: data.user.refreshToken,
-  //           avatarImg: data.user.photoURL,
-  //         };
-  //         return newUser;
-  //       }),
-  //       tap((user) => this.db.createUser(user)),
-  //       tap((user) => this.authStateSubject$.next(user)),
-  //       catchError((err) => throwError(err)),
-  //       finalize(() => console.log('completed signup!'))
-  //       )
-  //       .subscribe();
-  //     }
-
-  // login(email: string, password: string) {
-  //   // console.log(email, password);
-  //   from(this.afAuth.signInWithEmailAndPassword(email, password))
-  //     .pipe(tap((data) => console.log(data)))
-  //     .subscribe();
-  // }
 }

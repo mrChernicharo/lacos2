@@ -63,7 +63,7 @@ export class AppComponent implements OnInit, AfterViewInit {
           ]).pipe(
             distinctUntilChanged(),
             tap((data) => {
-              console.log(data);
+              // console.log(data);
             })
           );
         })
