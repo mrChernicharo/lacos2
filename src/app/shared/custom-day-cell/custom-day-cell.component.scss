@@ -6,7 +6,7 @@
   app-custom-day-cell {
     // background: lightseagreen;
     pointer-events: none;
-    width: 3rem;
+    width: 2.4rem;
     height: 3rem;
     display: flex;
     flex-direction: column;
@@ -20,7 +20,7 @@
   }
   .day-cell {
     pointer-events: all;
-    border-radius: 50%;
+    border-radius: 8px;
     background: lightcoral;
 
     span.date-number {

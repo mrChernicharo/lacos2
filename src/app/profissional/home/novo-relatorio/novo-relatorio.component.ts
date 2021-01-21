@@ -189,5 +189,6 @@ export class NovoRelatorioComponent implements OnInit {
     console.log(this.finalFormData);
     console.log(this.user);
     this.consultaService.saveConsultas(this.finalFormData, this.user);
+    this.router.navigate(['profissional/home']);
   }
 }

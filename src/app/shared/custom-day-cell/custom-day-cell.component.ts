@@ -46,6 +46,7 @@ export class CustomDayCellComponent<Date>
 
   ngAfterContentChecked() {
     this.getIsBusyDay();
+    // console.log(this.date);
   }
 
   getIsBusyDay() {

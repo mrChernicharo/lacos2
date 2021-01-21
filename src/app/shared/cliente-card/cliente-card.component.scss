@@ -8,6 +8,7 @@ nb-card {
   nb-card-header {
     display: flex;
     align-items: center;
+    max-height: 72px;
 
     span.title {
       font-size: 30px;

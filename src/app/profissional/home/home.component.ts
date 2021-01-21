@@ -41,8 +41,7 @@ import { IReportFormConsulta } from './novo-relatorio/novo-relatorio.component';
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent
-  implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class HomeComponent implements OnInit, OnChanges, OnDestroy {
   // clientes$: Observable<Cliente[]>;
   currentPage$: Observable<string>;
   user: AppUser;
@@ -58,10 +57,10 @@ export class HomeComponent
   consultas$: Observable<Consulta[]>;
   appClientes$: Observable<Cliente[]>;
   userClientes$: Observable<Cliente[]>;
-  // subs: Observable<[AppUser, Consulta[], Cliente[], Cliente[]]>;
   selectedDate: Date;
-  // appData$: Observable<AppData>;
   dayCellComponent = CustomDayCellComponent;
+  // subs: Observable<[AppUser, Consulta[], Cliente[], Cliente[]]>;
+  // appData$: Observable<AppData>;
   // previousSelected: any;
 
   constructor(
@@ -73,6 +72,9 @@ export class HomeComponent
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef
   ) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnInit(): void {
     this.reportConsultas = [];
@@ -80,7 +82,6 @@ export class HomeComponent
     this.currentPage$ = this.headerService.currentPage$.pipe(
       tap((page) => {
         console.log(page);
-        // this.route.data.subscribe((data) => console.log(data));
       })
     );
     this.appClientes$ = this.clientesService._clientes$.pipe(
@@ -90,8 +91,6 @@ export class HomeComponent
         console.log(clientes);
       })
     );
-
-    // this.clientes$.subscribe();
 
     this.authService.user$.pipe(
       tap((data) => {
@@ -110,32 +109,9 @@ export class HomeComponent
         );
       })
     );
-
-    // console.log(this.calendar);
-    // this.calendarSubs = this.calendar.dateChange.asObservable();
-
-    // this.calendarSubs.pipe(tap((date) => console.log(date))).subscribe(
-    //   (date) => {
-    //     this.cd.detectChanges();
-    //     this.cd.markForCheck();
-    //   },
-    //   (err) => console.log(err),
-    //   () => console.log('completed')
-    // );
   }
 
-  ngAfterViewInit() {
-    // of(this.calendar)
-    //   .pipe(
-    //     filter((date) => !!date),
-    //     tap((date) => console.log(date))
-    //   )
-    //   .subscribe();
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
-  }
+  ngAfterViewInit() {}
 
   ngOnDestroy() {}
 
@@ -158,8 +134,6 @@ export class HomeComponent
   onChangeCalendarDate(date: Date) {
     this.filterConsultas(date);
     this.calendar.dateChange.emit(this.selectedDate);
-
-    // getIsBusyDay();
   }
 
   filterConsultas(date: Date) {
@@ -177,7 +151,7 @@ export class HomeComponent
     this.reportConsultas = filteredConsultas;
   }
 
-  updateCellData(event) {
-    console.log(event);
-  }
+  // updateCellData(event) {
+  //   console.log(event);
+  // }
 }

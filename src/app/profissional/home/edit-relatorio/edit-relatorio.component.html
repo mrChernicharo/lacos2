@@ -11,7 +11,9 @@
       </div>
     </div>
 
-    <button nbButton (click)="toggleEditing()">Editar Relatório</button>
+    <button nbButton (click)="toggleEditing()">
+      {{ showForm ? "Voltar" : "Editar Relatório" }}
+    </button>
 
     <ng-container *ngIf="showForm">
       <form [formGroup]="editForm">
