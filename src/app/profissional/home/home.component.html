@@ -25,15 +25,14 @@
 
               <div class="filtered-consultas-container">
                 <!-- <ng-container *ngIf="currentPage === 'edit relatorio'"> -->
-                <ng-container *ngIf="reportConsultas.length > 0; else default">
+                <ng-container *ngIf="reportConsultas.length > 0">
                   <app-edit-relatorio
+                    [user]="user"
                     [reportConsultas]="reportConsultas"
                     [userClientes]="userClientes$ | async"
                   ></app-edit-relatorio>
                 </ng-container>
-                <ng-template #default>
-                  <span>clique para ver detalhes</span>
-                </ng-template>
+
                 <!-- </ng-container> -->
               </div>
             </nb-card-body>

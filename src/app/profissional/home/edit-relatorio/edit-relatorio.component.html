@@ -1,5 +1,9 @@
-<div class="component-container">
-  <ng-container *ngIf="editForm">
+<ng-container *ngIf="editForm; else default">
+  <div class="component-container">
+    <button nbButton ghost (click)="destroyEditForm()">
+      <nb-icon icon="arrow-back"></nb-icon>
+    </button>
+
     <div class="relatorio-default-data">
       <div *ngFor="let consulta of reportConsultas">
         {{ consulta.horario }} {{ consulta.nomePaciente }}
@@ -47,13 +51,26 @@
           <nb-select
             formControlName="nomePaciente"
             size="small"
-            [id]="'nomePaciente-' + i + 1"
+            [id]="'nomePaciente-' + i"
+            (selectedChange)="setPacienteData($event, i)"
+            [status]="
+              consulta.get('nomePaciente').valid
+                ? 'success'
+                : consulta.get('nomePaciente').dirty
+                ? 'danger'
+                : 'basic'
+            "
           >
+            <!-- [value]="cliente.nome + ' ' + cliente.origem + ' ' + cliente.id" -->
             <nb-option
-              *ngFor="let cliente of userClientes"
+              *ngFor="let cliente of userClientes; let j = index"
               [value]="cliente.nome"
+              (click)="findClienteData(cliente.id, i)"
             >
               {{ cliente.nome }}
+              <!-- <span style="display: none">
+                {{ cliente.origem + " " + cliente.id }}
+              </span> -->
             </nb-option>
           </nb-select>
         </div>
@@ -86,27 +103,32 @@
         <!-- </div> -->
       </div>
 
-      <button nbButton outline status="success" (click)="saveReportChanges()">
-        <nb-icon outline icon="edit-2-outline"></nb-icon> Salvar alterações
-      </button>
+      <div class="submit-btns-container">
+        <button nbButton outline status="success" (click)="saveReportChanges()">
+          <nb-icon outline icon="edit-2-outline"></nb-icon> Salvar alterações
+        </button>
 
-      <button nbButton outline status="danger" (click)="deleteReport()">
-        <nb-icon icon="trash-outline"></nb-icon> Apagar Relatório
-      </button>
+        <button nbButton outline status="danger" (click)="deleteReport()">
+          <nb-icon icon="trash-outline"></nb-icon> Apagar Relatório
+        </button>
+      </div>
     </form>
-  </ng-container>
-  <div
-    *ngIf="getConsultasControls()?.length === 0"
-    class="button-wrapper add no-consultas"
-  >
-    <button
-      nbButton
-      shape="round"
-      status="success"
-      (click)="addConsultaFormGroup()"
+    <div
+      *ngIf="getConsultasControls()?.length === 0"
+      class="button-wrapper add no-consultas"
     >
-      <nb-icon icon="plus-outline"></nb-icon>
-    </button>
-    <span style="color: #01a26c"> criar consulta</span>
+      <button
+        nbButton
+        shape="round"
+        status="success"
+        (click)="addConsultaFormGroup()"
+      >
+        <nb-icon icon="plus-outline"></nb-icon>
+      </button>
+      <span style="color: #01a26c"> criar consulta</span>
+    </div>
   </div>
-</div>
+</ng-container>
+<ng-template #default>
+  <span>clique para ver detalhes</span>
+</ng-template>
