@@ -20,19 +20,23 @@ export class DbService {
   //********* CONSULTAS **********//
 
   async storeConsultas(consultas: Consulta[]) {
-    // console.log(consultas);
-    try {
-      consultas.forEach((consulta) => {
-        this.db
+    console.log(consultas);
+    for (let i = 0; i < consultas.length; i++) {
+      try {
+        // consultas.forEach((consulta) => {
+        console.log(consultas[i]);
+
+        await this.db
           .collection('consultas')
-          .add(consulta)
+          .add(consultas[i])
           .then((doc) => {
             console.log(doc);
             this.db.doc(`consultas/${doc.id}`).update({ idConsulta: doc.id });
           });
-      });
-    } catch {
-      throw new Error('erro');
+        // });
+      } catch {
+        throw new Error('erro');
+      }
     }
   }
 
@@ -72,13 +76,41 @@ export class DbService {
       );
   }
 
-  deleteConsulta(id: string) {
-    console.log('delete ->  ' + id);
-    // this.db.doc(`consultas/${id}`)
+  async deleteConsultas(ids: string[]) {
+    console.log('delete ->  ' + ids);
+    //
+    for (let i = 0; i < ids.length; i++) {
+      //
+      await this.db
+        .doc(`consultas/${ids[i]}`)
+        .delete()
+        .then((resp) => console.log(resp));
+    }
   }
-  updateConsultas(consultas: Consulta[]) {
+
+  async updateConsultas(consultas: Consulta[]) {
     console.log('update: ');
     console.log(consultas);
+    //
+    for (let i = 0; i < consultas.length; i++) {
+      //
+      const updateData: Partial<Consulta> = Object.assign(
+        {},
+        {
+          idPaciente: consultas[i].idPaciente,
+          nomePaciente: consultas[i].nomePaciente,
+          origem: consultas[i].origem,
+          horario: consultas[i].horario,
+          modalidade: consultas[i].modalidade,
+        }
+      );
+      await this.db
+        .doc(`consultas/${consultas[i].idConsulta}`)
+        .update(updateData)
+        .then((resp) => console.log(resp));
+    }
+    // consultas.forEach((consulta) => {
+    // });
   }
   //********* CLIENTES **********//
 

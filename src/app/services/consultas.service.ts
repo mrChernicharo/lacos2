@@ -79,7 +79,8 @@ export class ConsultasService {
       (consulta) =>
         new Date(
           (consulta.dataConsulta as IServerTimestamp).seconds
-        ).toLocaleDateString() === new Date(date).toLocaleDateString()
+        ).toLocaleDateString('pt-BR') ===
+        new Date(date).toLocaleDateString('pt-BR')
     );
 
     return !!foundConsultaOnDate;
@@ -92,29 +93,47 @@ export class ConsultasService {
         new Date(
           (consulta.dataConsulta as IServerTimestamp).seconds
         ).toLocaleDateString() === new Date(date).toLocaleDateString()
+      // ||
+      // new Date(
+      //   (consulta.dataConsulta as IServerTimestamp).seconds * 1000
+      // ).toLocaleDateString() === new Date(date).toLocaleDateString()
     ).length;
 
     return total;
   }
 
-  updateConsultas(consultas: Consulta[], removedIds: string[]) {
-    // console.log(consultas);
+  async updateConsultas(consultas: Consulta[], removedIds: string[]) {
+    console.log(consultas);
     // console.log(removedIds);
 
-    // TODO deletar do banco consultas removidas no form
-    removedIds?.forEach((id) => {
-      this.db.deleteConsulta(id);
-    });
+    try {
+      // TODO alterar consultas simplesmente editadas
+      const editedConsultas = consultas.filter(
+        (consulta) => consulta.idConsulta
+      );
+      // console.log('edit consultas:');
+      // console.log(editedConsultas);
 
-    // TODO alterar consultas simplesmente editadas
-    const editedConsultas = consultas.filter((consulta) => consulta.idConsulta);
-    this.db.updateConsultas(editedConsultas);
+      // TODO criar id pras consultas adicionadas
+      const addedConsultas = consultas.filter(
+        (consulta) => !consulta.idConsulta
+      );
+      // console.log('add consultas:');
+      // console.log(addedConsultas);
 
-    // TODO criar id pras consultas adicionadas
-    const addedConsultas = consultas.filter((consulta) => !consulta.idConsulta);
-    // this.db.storeConsultas(addedConsultas);
-    console.log('add consultas:');
-    console.log(addedConsultas);
+      // TODO deletar do banco consultas removidas no form
+      if (removedIds.length > 0) {
+        this.db.deleteConsultas(removedIds);
+      }
+
+      await this.db.updateConsultas(editedConsultas);
+      await this.db.storeConsultas(addedConsultas);
+
+      return 'OK!';
+    } catch {
+      console.log('deu ruim na atualização!');
+      return 'Deu Ruim!';
+    }
   }
 
   _destroy() {

@@ -1,5 +1,7 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Input,
   OnChanges,
@@ -38,6 +40,7 @@ const dateFormatOptions = {
   templateUrl: './edit-relatorio.component.html',
   styleUrls: ['./edit-relatorio.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditRelatorioComponent implements OnInit, OnChanges {
   @Input() reportConsultas: Consulta[];
@@ -54,7 +57,8 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private consultasService: ConsultasService
+    private consultasService: ConsultasService,
+    private cd: ChangeDetectorRef
   ) {}
 
   get consultaRows() {
@@ -131,7 +135,7 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
         Validators.required,
         RxwebValidators.unique(),
       ]),
-      dataConsulta: new FormControl(this.reportRawDate),
+      dataConsulta: new FormControl(''),
       dataCriacao: new FormControl(consulta?.dataCriacao || new Date()),
       dataAtualizacao: new FormControl(new Date()),
       origem: new FormControl(consulta?.origem),
@@ -213,16 +217,42 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
   }
 
   saveReportChanges() {
+    console.log(this.reportRawDate);
     if (this.editForm.invalid) {
       console.log('form inválido');
       return;
     }
-    console.log('save report changes!');
 
-    this.consultasService.updateConsultas(
-      this.editForm.value.consultas,
-      this.removedConsultasIds
-    );
+    for (let consulta of this.getConsultasControls()) {
+      // console.log(consulta.get('dataConsulta').value);
+      if (!consulta.get('dataConsulta').value) {
+        consulta.get('dataConsulta').patchValue({
+          seconds: new Date(
+            this.reportRawDate.getFullYear(),
+            this.reportRawDate.getMonth(),
+            this.reportRawDate.getDate(),
+            consulta.get('horario').value.substr(0, 2),
+            consulta.get('horario').value.substr(3, 2),
+            0
+          ).getTime(),
+          nanoseconds: 0,
+        });
+      }
+      // console.log(consulta.get('dataConsulta').value);
+    }
+    console.log('save report changes!');
+    console.log(this.editForm.value.consultas);
+    //
+    // this.cd.detach();
+
+    this.consultasService
+      .updateConsultas(this.editForm.value.consultas, this.removedConsultasIds)
+      .then((res) => {
+        console.log(res);
+        // this.cd.detectChanges();
+        // this.cd.reattach();
+        this.cd.markForCheck();
+      });
   }
 
   deleteReport() {

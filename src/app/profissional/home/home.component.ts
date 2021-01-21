@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   Input,
   OnDestroy,
@@ -24,6 +25,7 @@ import { IReportFormConsulta } from './novo-relatorio/novo-relatorio.component';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   // clientes$: Observable<Cliente[]>;
@@ -39,11 +41,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   consultas$: Observable<Consulta[]>;
   appClientes$: Observable<Cliente[]>;
   userClientes$: Observable<Cliente[]>;
-  subs: Observable<[AppUser, Consulta[], Cliente[], Cliente[]]>;
+  // subs: Observable<[AppUser, Consulta[], Cliente[], Cliente[]]>;
   selectedDate: Date;
   // appData$: Observable<AppData>;
   dayCellComponent = CustomDayCellComponent;
-  previousSelected: any;
+  // previousSelected: any;
 
   constructor(
     public clientesService: ClientesService,
