@@ -49,7 +49,8 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
   horarios: string[];
   reportDate: string;
   reportRawDate: Date;
-  currentConasultas$: any;
+  // currentConasultas$: any;
+  removedConsultasIds: string[];
 
   constructor(
     private fb: FormBuilder,
@@ -63,6 +64,7 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.horarios = HORARIOS;
     this.modalidades = MODALIDADES;
+    this.removedConsultasIds = [];
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -85,6 +87,8 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
         this.destroyEditForm();
         changes.reportConsultas.currentValue = null;
       } else {
+        this.destroyEditForm();
+
         this.createEditForm();
         this.fillEditForm();
       }
@@ -99,6 +103,8 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
   }
 
   destroyEditForm() {
+    this.removedConsultasIds = [];
+
     return (this.editForm = undefined);
   }
 
@@ -135,13 +141,6 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
       ),
     });
 
-    for (let i = 0; i <= this.getConsultasControls().length; i++) {
-      // setTimeout(() => {
-      //   this.trimInput(i);
-      // }, 10);
-      // this.setPacienteData(i)
-    }
-
     return fg;
   }
 
@@ -161,23 +160,28 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
   }
 
   removeConsultaFormGroup(i) {
+    const consultaId = this.getConsultasControls()[i].get('idConsulta').value;
+    if (!!consultaId) {
+      this.removedConsultasIds.push(consultaId);
+    }
+    console.log(this.removedConsultasIds);
     this.consultaRows.removeAt(i);
   }
 
-  setPacienteData(event: string, i: number) {
-    const selectElChild = document.querySelector(`#nomePaciente-${i}`)
-      .firstElementChild as HTMLButtonElement;
-    console.log(event);
-    // console.log(selectElChild);
-    // console.log(selectElChild.textContent);
-    // console.log(selectElChild.innerText);
-    // let arrText = event.split(' ');
-    // console.log(arrText);
-    //   arrText.pop();
-    //   arrText.pop();
-    //   let ftext = arrText.join(' ');
-    //   selectElChild.textContent = ftext;
-  }
+  // setPacienteData(event: string, i: number) {
+  //   const selectElChild = document.querySelector(`#nomePaciente-${i}`)
+  //     .firstElementChild as HTMLButtonElement;
+  //   console.log(event);
+  // console.log(selectElChild);
+  // console.log(selectElChild.textContent);
+  // console.log(selectElChild.innerText);
+  // let arrText = event.split(' ');
+  // console.log(arrText);
+  //   arrText.pop();
+  //   arrText.pop();
+  //   let ftext = arrText.join(' ');
+  //   selectElChild.textContent = ftext;
+  // }
 
   findClienteData(id, i) {
     // console.log(id);
@@ -214,7 +218,11 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
       return;
     }
     console.log('save report changes!');
-    console.log(this.editForm.value);
+
+    this.consultasService.updateConsultas(
+      this.editForm.value.consultas,
+      this.removedConsultasIds
+    );
   }
 
   deleteReport() {

@@ -52,7 +52,6 @@
             formControlName="nomePaciente"
             size="small"
             [id]="'nomePaciente-' + i"
-            (selectedChange)="setPacienteData($event, i)"
             [status]="
               consulta.get('nomePaciente').valid
                 ? 'success'

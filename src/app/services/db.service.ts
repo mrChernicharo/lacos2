@@ -71,6 +71,15 @@ export class DbService {
         })
       );
   }
+
+  deleteConsulta(id: string) {
+    console.log('delete ->  ' + id);
+    // this.db.doc(`consultas/${id}`)
+  }
+  updateConsultas(consultas: Consulta[]) {
+    console.log('update: ');
+    console.log(consultas);
+  }
   //********* CLIENTES **********//
 
   async createCliente(cliente: Cliente) {

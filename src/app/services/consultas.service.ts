@@ -97,6 +97,26 @@ export class ConsultasService {
     return total;
   }
 
+  updateConsultas(consultas: Consulta[], removedIds: string[]) {
+    // console.log(consultas);
+    // console.log(removedIds);
+
+    // TODO deletar do banco consultas removidas no form
+    removedIds?.forEach((id) => {
+      this.db.deleteConsulta(id);
+    });
+
+    // TODO alterar consultas simplesmente editadas
+    const editedConsultas = consultas.filter((consulta) => consulta.idConsulta);
+    this.db.updateConsultas(editedConsultas);
+
+    // TODO criar id pras consultas adicionadas
+    const addedConsultas = consultas.filter((consulta) => !consulta.idConsulta);
+    // this.db.storeConsultas(addedConsultas);
+    console.log('add consultas:');
+    console.log(addedConsultas);
+  }
+
   _destroy() {
     this.consultasSubject$.next([]);
   }
