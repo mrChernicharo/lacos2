@@ -1,116 +1,171 @@
 <ng-container *ngIf="editForm; else default">
   <div class="component-container">
-    <button nbButton ghost (click)="destroyEditForm()">
-      <nb-icon icon="arrow-back"></nb-icon>
-    </button>
-
-    <div class="relatorio-default-data">
-      <div class="list-header">
-        <nb-icon icon="calendar-outline"></nb-icon>{{ reportDate }}
-      </div>
-      <nb-list>
-        <nb-list-item class="list-row" *ngFor="let consulta of reportConsultas">
-          <div class="li">
-            <nb-icon icon="clock-outline"></nb-icon>&nbsp;{{ consulta.horario }}
-          </div>
-          <div class="li nome">
-            <nb-icon icon="person-outline"></nb-icon>{{ consulta.nomePaciente }}
-          </div>
-          <div class="li modalidade">
-            <nb-icon icon="pin-outline"></nb-icon>{{ consulta.modalidade }}
-          </div>
-        </nb-list-item>
-      </nb-list>
-
-      <div class="edit-button-container">
-        <button
-          nbButton
-          style="margin: 0 8px 0 0"
-          outline
-          (click)="toggleEditing()"
-        >
-          <nb-icon icon="edit-2-outline"></nb-icon>Editar
-        </button>
-
-        <button nbButton ghost status="danger" (click)="deleteReport()">
-          <nb-icon icon="trash-outline"></nb-icon>Excluir
-        </button>
-      </div>
-    </div>
-
-    <ng-container *ngIf="showForm">
-      <form [formGroup]="editForm">
-        <div class="edit-form-header">
-          <nb-icon icon="calendar-outline"></nb-icon>{{ reportDate }}
-        </div>
-
-        <div
-          class="consulta-form"
-          [formGroup]="consulta"
-          *ngFor="let consulta of getConsultasControls(); let i = index"
-        >
-          <div class="button-wrapper">
-            <button
-              nbButton
-              shape="round"
-              status="danger"
-              (click)="removeConsultaFormGroup(i)"
-            >
-              <nb-icon icon="close-outline"></nb-icon>
+    <nb-flip-card [showToggleButton]="false" [flipped]="flipped">
+      <nb-card-front>
+        <nb-card id="front-card">
+          <div class="back-btn">
+            <button nbButton ghost (click)="destroyEditForm()">
+              <nb-icon icon="arrow-back"></nb-icon>
             </button>
           </div>
 
-          <div class="select-wrapper horario">
-            <nb-select-label>Horário</nb-select-label>
-            <nb-select formControlName="horario" status="basic" size="small">
-              <nb-option *ngFor="let hora of horarios" [value]="hora">
-                {{ hora }}
-              </nb-option>
-            </nb-select>
-          </div>
-
-          <div class="select-wrapper nome-paciente">
-            <nb-select-label>Paciente {{ i + 1 }}</nb-select-label>
-            <nb-select
-              formControlName="nomePaciente"
-              size="small"
-              [id]="'nomePaciente-' + i"
-              [status]="
-                consulta.get('nomePaciente').valid
-                  ? 'success'
-                  : consulta.get('nomePaciente').dirty
-                  ? 'danger'
-                  : 'basic'
-              "
-            >
-              <!-- [value]="cliente.nome + ' ' + cliente.origem + ' ' + cliente.id" -->
-              <nb-option
-                *ngFor="let cliente of userClientes; let j = index"
-                [value]="cliente.nome"
-                (click)="findClienteData(cliente.id, i)"
+          <div class="relatorio-default-data">
+            <div class="list-header">
+              <nb-icon icon="calendar-outline"></nb-icon>{{ reportDate }}
+            </div>
+            <nb-list>
+              <nb-list-item
+                class="list-row"
+                *ngFor="let consulta of reportConsultas"
               >
-                {{ cliente.nome }}
-                <!-- <span style="display: none">
+                <div class="li">
+                  <nb-icon icon="clock-outline"></nb-icon>&nbsp;{{
+                    consulta.horario
+                  }}
+                </div>
+                <div class="li nome">
+                  <nb-icon icon="person-outline"></nb-icon
+                  >{{ consulta.nomePaciente }}
+                </div>
+                <div class="li modalidade">
+                  <nb-icon icon="pin-outline"></nb-icon
+                  >{{ consulta.modalidade }}
+                </div>
+              </nb-list-item>
+            </nb-list>
+
+            <div class="edit-button-container">
+              <button
+                nbButton
+                style="margin: 0 2px 0 0"
+                ghost
+                (click)="toggleEditing()"
+              >
+                <nb-icon icon="edit-2-outline"></nb-icon>Editar
+              </button>
+
+              <button nbButton ghost status="danger" (click)="deleteReport()">
+                <nb-icon icon="trash-outline"></nb-icon>Excluir
+              </button>
+            </div>
+          </div>
+        </nb-card>
+      </nb-card-front>
+
+      <nb-card-back>
+        <nb-card id="back-card">
+          <div class="back-btn">
+            <button nbButton ghost (click)="toggleEditing()">
+              <nb-icon icon="arrow-back"></nb-icon>
+            </button>
+          </div>
+          <!-- <ng-container *ngIf="showForm"> -->
+          <form [formGroup]="editForm">
+            <div class="edit-form-header">
+              <nb-icon icon="calendar-outline"></nb-icon>{{ reportDate }}
+            </div>
+
+            <div
+              class="consulta-form"
+              [formGroup]="consulta"
+              *ngFor="let consulta of getConsultasControls(); let i = index"
+            >
+              <div class="button-wrapper">
+                <button
+                  nbButton
+                  shape="round"
+                  status="danger"
+                  (click)="removeConsultaFormGroup(i)"
+                >
+                  <nb-icon icon="close-outline"></nb-icon>
+                </button>
+              </div>
+
+              <div class="select-wrapper horario">
+                <nb-select-label>Horário</nb-select-label>
+                <nb-select
+                  formControlName="horario"
+                  status="basic"
+                  size="small"
+                >
+                  <nb-option *ngFor="let hora of horarios" [value]="hora">
+                    {{ hora }}
+                  </nb-option>
+                </nb-select>
+              </div>
+
+              <div class="select-wrapper nome-paciente">
+                <nb-select-label>Paciente {{ i + 1 }}</nb-select-label>
+                <nb-select
+                  formControlName="nomePaciente"
+                  size="small"
+                  [id]="'nomePaciente-' + i"
+                  [status]="
+                    consulta.get('nomePaciente').valid
+                      ? 'success'
+                      : consulta.get('nomePaciente').dirty
+                      ? 'danger'
+                      : 'basic'
+                  "
+                >
+                  <!-- [value]="cliente.nome + ' ' + cliente.origem + ' ' + cliente.id" -->
+                  <nb-option
+                    *ngFor="let cliente of userClientes; let j = index"
+                    [value]="cliente.nome"
+                    (click)="findClienteData(cliente.id, i)"
+                  >
+                    {{ cliente.nome }}
+                    <!-- <span style="display: none">
                 {{ cliente.origem + " " + cliente.id }}
               </span> -->
-              </nb-option>
-            </nb-select>
-          </div>
+                  </nb-option>
+                </nb-select>
+              </div>
 
-          <div class="select-wrapper modalidade">
-            <nb-select-label>Modalidade</nb-select-label>
-            <nb-select formControlName="modalidade" size="small">
-              <nb-option
-                *ngFor="let modalidade of modalidades"
-                [value]="modalidade"
+              <div class="select-wrapper modalidade">
+                <nb-select-label>Modalidade</nb-select-label>
+                <nb-select formControlName="modalidade" size="small">
+                  <nb-option
+                    *ngFor="let modalidade of modalidades"
+                    [value]="modalidade"
+                  >
+                    {{ modalidade }}
+                  </nb-option>
+                </nb-select>
+              </div>
+              <div
+                *ngIf="i + 1 === getConsultasControls().length"
+                class="button-wrapper add"
               >
-                {{ modalidade }}
-              </nb-option>
-            </nb-select>
-          </div>
+                <button
+                  nbButton
+                  shape="round"
+                  status="success"
+                  (click)="addConsultaFormGroup()"
+                >
+                  <nb-icon icon="plus-outline"></nb-icon>
+                </button>
+              </div>
+
+              <!-- </div> -->
+            </div>
+
+            <div class="submit-btns-container">
+              <button
+                nbButton
+                outline
+                status="success"
+                (click)="saveReportChanges()"
+              >
+                <nb-icon outline icon="checkmark-outline"></nb-icon> Salvar
+                alterações
+              </button>
+            </div>
+          </form>
+
           <div
-            *ngIf="i + 1 === getConsultasControls().length"
-            class="button-wrapper add"
+            *ngIf="getConsultasControls()?.length === 0"
+            class="button-wrapper add no-consultas"
           >
             <button
               nbButton
@@ -120,39 +175,12 @@
             >
               <nb-icon icon="plus-outline"></nb-icon>
             </button>
+            <span style="color: #01a26c"> criar consulta</span>
           </div>
-
-          <!-- </div> -->
-        </div>
-
-        <div class="submit-btns-container">
-          <button
-            nbButton
-            outline
-            status="success"
-            (click)="saveReportChanges()"
-          >
-            <nb-icon outline icon="checkmark-outline"></nb-icon> Salvar
-            alterações
-          </button>
-        </div>
-      </form>
-
-      <div
-        *ngIf="getConsultasControls()?.length === 0"
-        class="button-wrapper add no-consultas"
-      >
-        <button
-          nbButton
-          shape="round"
-          status="success"
-          (click)="addConsultaFormGroup()"
-        >
-          <nb-icon icon="plus-outline"></nb-icon>
-        </button>
-        <span style="color: #01a26c"> criar consulta</span>
-      </div>
-    </ng-container>
+          <!-- </ng-container> -->
+        </nb-card>
+      </nb-card-back>
+    </nb-flip-card>
   </div>
 </ng-container>
 <ng-template #default>

@@ -1,12 +1,22 @@
 .component-container {
-  border: 1px solid pink;
-  width: 556px;
-  padding: 16px;
+  // border: 1px solid pink;
   border-radius: 4px;
 
   input#data-relatorio {
     width: 400px !important;
     pointer-events: none;
+  }
+
+  nb-card {
+    padding: 16px;
+
+    &#front-card {
+      // width: 464px;
+      width: 554px;
+    }
+    &#back-card {
+      width: 554px;
+    }
   }
 
   .relatorio-default-data {
@@ -61,8 +71,8 @@
   .consulta-form {
     // border: 1px solid green;
     display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
+    // flex-wrap: wrap;
+    // align-items: flex-end;
     margin: 6px 0;
 
     .select-wrapper {
