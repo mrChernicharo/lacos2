@@ -72,6 +72,10 @@ export class ConsultasService {
     this.db.storeConsultas(newConsultas);
   }
 
+  deleteConsultas(ids: string[]) {
+    this.db.deleteConsultas(ids);
+  }
+
   isBusyDay(date): boolean {
     //
     const foundConsultaOnDate = this.latestConsultas.find(
@@ -118,7 +122,7 @@ export class ConsultasService {
 
       // TODO deletar do banco consultas removidas no form
       if (removedIds.length > 0) {
-        this.db.deleteConsultas(removedIds);
+        this.deleteConsultas(removedIds);
       }
 
       await this.db.updateConsultas(editedConsultas);

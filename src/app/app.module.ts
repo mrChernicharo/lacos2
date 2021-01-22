@@ -132,6 +132,7 @@ const matModules = [
     RxReactiveFormsModule,
     NbThemeModule.forRoot({ name: 'default' }),
     NbMenuModule.forRoot(),
+    NbToastrModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,

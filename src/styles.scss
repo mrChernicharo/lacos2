@@ -50,5 +50,22 @@ nb-context-menu.nb-overlay-bottom-end {
 //   background-color: #fff !important;
 // }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+nb-toast {
+  .content-container {
+    span.title {
+      display: inherit;
+    }
+    .message {
+      display: inherit;
+    }
+  }
+}

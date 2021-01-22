@@ -9,6 +9,55 @@
     pointer-events: none;
   }
 
+  .relatorio-default-data {
+    .list-header {
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      margin: 0 0 10px;
+
+      nb-icon {
+        margin: 0 4px 0 0;
+      }
+    }
+
+    nb-list-item.list-row {
+      padding: 0 !important;
+      overflow: hidden;
+
+      .li {
+        height: 36px;
+        // border: 1px solid blue;
+        margin-left: 4px;
+        display: flex;
+        align-items: center;
+        line-height: 16px;
+
+        &.nome {
+          width: 100%;
+          justify-content: center;
+        }
+
+        &.modalidade {
+          margin-right: 4px;
+        }
+      }
+    }
+
+    .edit-button-container {
+      display: flex;
+      justify-content: center;
+      padding: 16px 0 0;
+    }
+  }
+
+  .edit-form-header {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    margin: 18px 0;
+  }
+
   .consulta-form {
     // border: 1px solid green;
     display: flex;

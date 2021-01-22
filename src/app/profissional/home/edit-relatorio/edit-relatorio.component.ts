@@ -28,11 +28,17 @@ import {
   MODALIDADES,
 } from 'src/app/services/consultas.service';
 
-const dateFormatOptions = {
+const dateFormatOptionsLONG = {
   weekday: 'long',
   day: '2-digit',
   month: 'long',
   year: 'numeric',
+};
+
+const dateFormatOptionsSHORT = {
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long',
 };
 
 @Component({
@@ -82,7 +88,7 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
       );
       this.reportDate = this.reportRawDate.toLocaleDateString(
         'pt-BR',
-        dateFormatOptions
+        dateFormatOptionsLONG
       );
 
       // se clicou na mesma data, destrua, senão crie o novo editForm
@@ -257,8 +263,23 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
   }
 
   deleteReport() {
-    console.log('delete report!');
-    console.log(this.editForm.value);
+    //
+    const willDelete = confirm(
+      `⚠️ Você está prestes a deletar o realório de ${new Date(
+        this.reportRawDate.getFullYear(),
+        this.reportRawDate.getMonth(),
+        this.reportRawDate.getDate()
+      ).toLocaleDateString('pt-BR', dateFormatOptionsSHORT)}. Tem certeza?`
+    );
+
+    if (willDelete) {
+      const removedIds = this.reportConsultas.map(
+        (consulta) => consulta.idConsulta
+      );
+
+      console.log(removedIds);
+      this.consultasService.deleteConsultas(removedIds);
+    }
   }
 
   toggleEditing() {

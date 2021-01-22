@@ -8,6 +8,7 @@ import firebase from 'firebase/app';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, of } from 'rxjs';
+import { ToastrService } from './toastr.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,14 +16,19 @@ import { Observable, of } from 'rxjs';
 export class DbService {
   // private _userConsultasStore: Consulta[];
 
-  constructor(private db: AngularFirestore, private aFAuth: AngularFireAuth) {}
+  constructor(
+    private db: AngularFirestore,
+    private toastr: ToastrService,
+    private aFAuth: AngularFireAuth
+  ) {}
 
   //********* CONSULTAS **********//
 
   async storeConsultas(consultas: Consulta[]) {
+    let i: number;
     // console.log(consultas);
-    for (let i = 0; i < consultas.length; i++) {
-      try {
+    try {
+      for (i = 0; i < consultas.length; i++) {
         // consultas.forEach((consulta) => {
         // console.log(consultas[i]);
 
@@ -34,9 +40,13 @@ export class DbService {
             this.db.doc(`consultas/${doc.id}`).update({ idConsulta: doc.id });
           });
         // });
-      } catch {
-        throw new Error('erro');
       }
+
+      if (i === consultas.length) {
+        this.toastr.showToast('top-end', 'success', 'sucesso!', 'bolei');
+      }
+    } catch {
+      throw new Error('erro');
     }
   }
 

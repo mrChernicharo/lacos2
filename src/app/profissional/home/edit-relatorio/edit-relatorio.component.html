@@ -5,26 +5,44 @@
     </button>
 
     <div class="relatorio-default-data">
-      <div *ngFor="let consulta of reportConsultas">
-        {{ consulta.horario }} {{ consulta.nomePaciente }}
-        {{ consulta.modalidade }}
+      <div class="list-header">
+        <nb-icon icon="calendar-outline"></nb-icon>{{ reportDate }}
+      </div>
+      <nb-list>
+        <nb-list-item class="list-row" *ngFor="let consulta of reportConsultas">
+          <div class="li">
+            <nb-icon icon="clock-outline"></nb-icon>&nbsp;{{ consulta.horario }}
+          </div>
+          <div class="li nome">
+            <nb-icon icon="person-outline"></nb-icon>{{ consulta.nomePaciente }}
+          </div>
+          <div class="li modalidade">
+            <nb-icon icon="pin-outline"></nb-icon>{{ consulta.modalidade }}
+          </div>
+        </nb-list-item>
+      </nb-list>
+
+      <div class="edit-button-container">
+        <button
+          nbButton
+          style="margin: 0 8px 0 0"
+          outline
+          (click)="toggleEditing()"
+        >
+          <nb-icon icon="edit-2-outline"></nb-icon>Editar
+        </button>
+
+        <button nbButton ghost status="danger" (click)="deleteReport()">
+          <nb-icon icon="trash-outline"></nb-icon>Excluir
+        </button>
       </div>
     </div>
 
-    <button nbButton (click)="toggleEditing()">
-      {{ showForm ? "Voltar" : "Editar Relatório" }}
-    </button>
-
     <ng-container *ngIf="showForm">
       <form [formGroup]="editForm">
-        <label>Data Relatório</label>
-        <input
-          id="data-relatorio"
-          type="text"
-          nbInput
-          formControlName="dataRelatorio"
-        />
-        <!-- [defaultValue]="reportDate | date: 'fullDate'" -->
+        <div class="edit-form-header">
+          <nb-icon icon="calendar-outline"></nb-icon>{{ reportDate }}
+        </div>
 
         <div
           class="consulta-form"
@@ -114,11 +132,8 @@
             status="success"
             (click)="saveReportChanges()"
           >
-            <nb-icon outline icon="edit-2-outline"></nb-icon> Salvar alterações
-          </button>
-
-          <button nbButton outline status="danger" (click)="deleteReport()">
-            <nb-icon icon="trash-outline"></nb-icon> Apagar Relatório
+            <nb-icon outline icon="checkmark-outline"></nb-icon> Salvar
+            alterações
           </button>
         </div>
       </form>
