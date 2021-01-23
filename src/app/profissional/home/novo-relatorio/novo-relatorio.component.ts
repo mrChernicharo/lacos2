@@ -130,9 +130,6 @@ export class NovoRelatorioComponent implements OnInit {
 
     this.calendarForm.get('date').setValue(date);
     this.reportForm.get('dataRelatorio').setValue(date);
-
-    const el = window.document.querySelector(`#${date.getDate()}-${date.getMonth() + 1}`);
-    this.renderer.addClass(el, 'selected');
   }
 
   createReportForm() {

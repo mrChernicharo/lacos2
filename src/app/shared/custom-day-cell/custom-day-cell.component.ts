@@ -58,7 +58,7 @@ export class CustomDayCellComponent<Date>
 
   ngOnInit(): void {
     this.getIsBusyDay();
-    this.id = `${this.date.getDate()}-${this.date.getMonth() + 1}`;
+    this.id = `dia-${this.date.getDate()}-${this.date.getMonth() + 1}`;
   }
 
   ngAfterViewInit() {

@@ -1,8 +1,10 @@
+import { DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Inject,
   Input,
   OnChanges,
   OnDestroy,
@@ -60,6 +62,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   destroySubject$ = new Subject<boolean>();
 
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     public clientesService: ClientesService,
     private consultasService: ConsultasService,
     private headerService: HeaderService,
@@ -140,8 +143,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     ) {
       this.filterConsultas(date);
     }
-
     this.calendar.dateChange.emit(this.selectedDate);
+
+    let el = this.document.querySelector(`#dia-${date.getDate()}-${date.getMonth() + 1}`);
+    if (el) {
+      this.renderer.addClass(el, 'selected');
+    }
   }
 
   filterConsultas(date: Date) {
