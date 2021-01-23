@@ -83,9 +83,7 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
     // console.log(changes);
 
     if (changes.reportConsultas) {
-      this.reportRawDate = new Date(
-        this.reportConsultas[0].dataConsulta['seconds']
-      );
+      this.reportRawDate = new Date(this.reportConsultas[0].dataConsulta['seconds']);
       this.reportDate = this.reportRawDate.toLocaleDateString(
         'pt-BR',
         dateFormatOptionsLONG
@@ -122,7 +120,7 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
   }
 
   fillEditForm() {
-    this.reportConsultas.forEach((consulta) => {
+    this.reportConsultas.forEach(consulta => {
       const consultaRow = this.newConultaForm(consulta);
       this.consultaRows.push(consultaRow);
     });
@@ -132,14 +130,8 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
     const fg = this.fb.group({
       idConsulta: new FormControl(consulta?.idConsulta),
       idPaciente: new FormControl(consulta?.idPaciente),
-      nomePaciente: new FormControl(
-        consulta?.nomePaciente || '',
-        Validators.required
-      ),
-      modalidade: new FormControl(
-        consulta?.modalidade || '',
-        Validators.required
-      ),
+      nomePaciente: new FormControl(consulta?.nomePaciente || '', Validators.required),
+      modalidade: new FormControl(consulta?.modalidade || '', Validators.required),
       horario: new FormControl(consulta?.horario || '', [
         Validators.required,
         RxwebValidators.unique(),
@@ -149,9 +141,7 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
       dataAtualizacao: new FormControl(new Date()),
       origem: new FormControl(consulta?.origem),
       idProfissional: new FormControl(consulta?.idProfissional || this.user.id),
-      nomeProfissional: new FormControl(
-        consulta?.nomeProfissional || this.user.nome
-      ),
+      nomeProfissional: new FormControl(consulta?.nomeProfissional || this.user.nome),
     });
 
     return fg;
@@ -198,9 +188,7 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
 
   findClienteData(id, i) {
     // console.log(id);
-    const targetCliente = this.userClientes.find(
-      (cliente) => cliente.id === id
-    );
+    const targetCliente = this.userClientes.find(cliente => cliente.id === id);
     // console.log(targetCliente);
     // console.log(this.getConsultasControls());
     this.getConsultasControls()[i].get('idPaciente').setValue(targetCliente.id);
@@ -255,7 +243,7 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
 
     this.consultasService
       .updateConsultas(this.editForm.value.consultas, this.removedConsultasIds)
-      .then((res) => {
+      .then(res => {
         console.log(res);
         this.destroyEditForm();
         this.flipped = false;
@@ -275,9 +263,7 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
     );
 
     if (willDelete) {
-      const removedIds = this.reportConsultas.map(
-        (consulta) => consulta.idConsulta
-      );
+      const removedIds = this.reportConsultas.map(consulta => consulta.idConsulta);
 
       console.log(removedIds);
       this.consultasService.deleteConsultas(removedIds);

@@ -14,14 +14,13 @@ export class ClientesService {
   private clientesSubject$ = new BehaviorSubject<Cliente[]>([]);
   public _clientes$ = this.clientesSubject$.asObservable();
 
-  constructor(
-    private db: DbService,
-    private consultasService: ConsultasService
-  ) {
-    this.db
+  constructor(private db: DbService, private consultasService: ConsultasService) {}
+
+  fetchAllClientes() {
+    return this.db
       .fetchAllClientes()
       .pipe(
-        tap((data) => {
+        tap(data => {
           // console.log(data);
           this.clientesSubject$.next(data);
         })
@@ -29,9 +28,7 @@ export class ClientesService {
       .subscribe();
   }
 
-  addCliente(
-    formData: Omit<Cliente, 'dataCadastro' | 'atualizadoEm' | 'atendimentos'>
-  ) {
+  addCliente(formData: Omit<Cliente, 'dataCadastro' | 'atualizadoEm' | 'atendimentos'>) {
     const cliente = Object.assign(formData, {
       dataCadastro: new Date(),
       atualizadoEm: new Date(),
@@ -47,19 +44,16 @@ export class ClientesService {
 
     if (!consultas) return;
 
-    const pacientesIdsInAllUserConsultas: string[] = consultas.reduce(
-      (acc, consulta) => {
-        acc.push(consulta.idPaciente);
-        return acc;
-      },
-      []
-    );
+    const pacientesIdsInAllUserConsultas: string[] = consultas.reduce((acc, consulta) => {
+      acc.push(consulta.idPaciente);
+      return acc;
+    }, []);
 
     const uniqueIds = Array.from(new Set([...pacientesIdsInAllUserConsultas]));
 
     const filteredClientes = this.clientesSubject$
       .getValue()
-      .filter((cliente) => uniqueIds.includes(cliente.id));
+      .filter(cliente => uniqueIds.includes(cliente.id));
 
     // this.clientesSubject$.next([...filteredClientes]);
     return of(filteredClientes);

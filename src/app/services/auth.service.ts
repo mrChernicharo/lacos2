@@ -55,11 +55,11 @@ export class AuthService {
     this.user$ = this.afAuth.authState.pipe(
       // quando não logado, os dados vem brutos do firebase
       // quando vc já tem conta, os dados já foram processados e ao invés de FireUser, temos um obj AppUser
-      tap((authUser) => {
+      tap(authUser => {
         // console.log('1. authService constructor -> ANGULAR FIRE AUTH STATE');
         // console.log(authUser);
       }),
-      switchMap((authUser) => {
+      switchMap(authUser => {
         if (authUser) {
           // console.log('2. ANGULAR FIRE AUTH STATE == TRUE -> VÁ AO BANCO');
           return this.db.getFireUser(authUser);
@@ -121,7 +121,7 @@ export class AuthService {
 
   login(email: string, password: string) {
     // console.log('1 SIGN IN WITH EMAIL AND PASSWORD, PASSWORD: ' + password);
-    this.afAuth.signInWithEmailAndPassword(email, password).then((respData) => {
+    this.afAuth.signInWithEmailAndPassword(email, password).then(respData => {
       // console.log(respData);
       this.updateUserData(respData.user);
     });
@@ -132,15 +132,13 @@ export class AuthService {
       .log
       // '1 CREATE ACCOUNT WITH EMAIL AND PASSWORD, PASSWORD: ' + password
       ();
-    this.afAuth
-      .createUserWithEmailAndPassword(email, password)
-      .then((respData) => {
-        // console.log(respData);
-        this.updateUserData(
-          { ...respData.user, displayName: nome },
-          false, // isGoogle X
-          true // isCreateAccount ✔︎
-        );
-      });
+    this.afAuth.createUserWithEmailAndPassword(email, password).then(respData => {
+      // console.log(respData);
+      this.updateUserData(
+        { ...respData.user, displayName: nome },
+        false, // isGoogle X
+        true // isCreateAccount ✔︎
+      );
+    });
   }
 }

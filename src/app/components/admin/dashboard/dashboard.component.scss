@@ -1,0 +1,11 @@
+.clientes-container {
+  // border: 1px solid orange;
+  width: calc(100% - 21px);
+  display: flex;
+  overflow-x: auto;
+  transform: rotateX(180deg);
+
+  .card-wrapper {
+    transform: rotateX(180deg);
+  }
+}

@@ -1,14 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import {
-  AuthProvider,
-  NgxAuthFirebaseUIConfig,
-  Theme,
-} from 'ngx-auth-firebaseui';
+import { AuthProvider, NgxAuthFirebaseUIConfig, Theme } from 'ngx-auth-firebaseui';
 
 import { tap } from 'rxjs/operators';
-import { AuthService, AppUser } from '../services/auth.service';
+import { AuthService, AppUser } from '../../services/auth.service';
 
 @Component({
   selector: 'app-auth',

@@ -1,12 +1,6 @@
-import {
-  Component,
-  Inject,
-  OnInit,
-  ViewChild,
-  ViewEncapsulation,
-} from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
-import { appIcons } from '../../../assets/app-icons';
+import { appIcons } from '../../../../assets/app-icons';
 import { Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
 import {
@@ -48,15 +42,12 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.routerState$ = this.headerService.currentPage$.pipe(
-      tap((page) => {
+      tap(page => {
         this.menuItems.length = 0; // reset menu items array
         // reposition them according to page
         switch (page) {
           case 'profissional':
-            this.menuItems.push(
-              { title: 'novo relatorio' },
-              { title: 'logoff' }
-            );
+            this.menuItems.push({ title: 'novo relatorio' }, { title: 'logoff' });
             break;
           case 'admin':
             this.menuItems.push({ title: 'clientes' }, { title: 'logoff' });
@@ -79,7 +70,7 @@ export class HeaderComponent implements OnInit {
         filter(({ tag }) => tag === 'context-menu'),
         map(({ item: { title } }) => title)
       )
-      .subscribe((title) => this.goToPage(title));
+      .subscribe(title => this.goToPage(title));
   }
 
   goToPage(page: string) {

@@ -4,11 +4,13 @@
 
     <ng-container *ngIf="consultas$ | async as appConsultas">
       <ng-container *ngIf="appClientes$ | async as appClientes">
-        <div class="cliente" *ngFor="let cliente of appClientes">
-          <app-cliente-card
-            [cliente]="cliente"
-            [allConsultas]="appConsultas"
-          ></app-cliente-card>
+        <div class="clientes-container">
+          <div class="card-wrapper" *ngFor="let cliente of appClientes">
+            <app-cliente-card
+              [cliente]="cliente"
+              [allConsultas]="consultas"
+            ></app-cliente-card>
+          </div>
         </div>
       </ng-container>
       <pre>{{ consultas | json }}</pre>

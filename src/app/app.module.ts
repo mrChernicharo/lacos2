@@ -4,34 +4,35 @@ import {
   LOCALE_ID,
   NgModule,
 } from '@angular/core';
-
+import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
-
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 
-import { AppRoutingModule } from './app-routing.module';
+import { environment } from 'src/environments/environment';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
-import { environment } from 'src/environments/environment';
+// import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './structure/header/header.component';
-import { AuthComponent } from './auth/auth.component';
-import { HomeComponent } from './profissional/home/home.component';
-import { NovoRelatorioComponent } from './profissional/home/novo-relatorio/novo-relatorio.component';
-import { DashboardComponent } from './admin/dashboard/dashboard.component';
-import { AddClientesComponent } from './admin/dashboard/add-clientes/add-clientes.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HeaderComponent } from './components/shared/header/header.component';
+import { AuthComponent } from './components/auth/auth.component';
+import { HomeComponent } from './components/profissional/home/home.component';
+import { NovoRelatorioComponent } from './components/profissional/home/novo-relatorio/novo-relatorio.component';
+import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
+import { AddClientesComponent } from './components/admin/dashboard/add-clientes/add-clientes.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { ClienteCardComponent } from './components/shared/cliente-card/cliente-card.component';
+import { CustomDayCellComponent } from './components/shared/custom-day-cell/custom-day-cell.component';
+import { EditRelatorioComponent } from './components/profissional/home/edit-relatorio/edit-relatorio.component';
+import { SignupComponent } from './components/auth/signup/signup.component';
 
-import { NbEvaIconsModule } from '@nebular/eva-icons';
 import {
   NbAccordionModule,
   NbActionsModule,
@@ -48,30 +49,23 @@ import {
   NbListModule,
   NbMenuModule,
   NbToastrModule,
-
-  // NbNativeDateService,
   NbOptionModule,
   NbSelectModule,
   NbStepperModule,
   NbTableModule,
   NbThemeModule,
-  NB_TIME_PICKER_CONFIG,
+  // NbNativeDateService,
+  // NB_TIME_PICKER_CONFIG,
 } from '@nebular/theme';
-
-import { LoginComponent } from './auth/login/login.component';
-import { SignupComponent } from './auth/signup/signup.component';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-// import { } from '@angular/material/t'
-
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { ClienteCardComponent } from './shared/cliente-card/cliente-card.component';
-import { CustomDayCellComponent } from './shared/custom-day-cell/custom-day-cell.component';
-import { EditRelatorioComponent } from './profissional/home/edit-relatorio/edit-relatorio.component';
+// import { } from '@angular/material/t'
 
 registerLocaleData(localePt);
 
@@ -136,7 +130,7 @@ const matModules = [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
-    NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig),
+    // NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig),
     ...nbModules,
   ],
   providers: [

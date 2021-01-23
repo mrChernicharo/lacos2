@@ -35,7 +35,7 @@ export class DbService {
         await this.db
           .collection('consultas')
           .add(consultas[i])
-          .then((doc) => {
+          .then(doc => {
             // console.log(doc);
             this.db.doc(`consultas/${doc.id}`).update({ idConsulta: doc.id });
           });
@@ -56,10 +56,10 @@ export class DbService {
       .collection('consultas')
       .snapshotChanges()
       .pipe(
-        map((snaps) => {
-          return snaps.map((snap) => snap.payload.doc.data() as Consulta);
+        map(snaps => {
+          return snaps.map(snap => snap.payload.doc.data() as Consulta);
         }),
-        tap((consultas) => {
+        tap(consultas => {
           // console.log(consultas);
         })
       );
@@ -70,16 +70,14 @@ export class DbService {
     console.log(userId);
     // return of([{}] as Consulta[]);
     return this.db
-      .collection('consultas', (ref) =>
-        ref.where('idProfissional', '==', userId)
-      )
+      .collection('consultas', ref => ref.where('idProfissional', '==', userId))
       .snapshotChanges()
       .pipe(
         shareReplay(),
-        map((snaps) => {
-          return snaps.map((snap) => snap.payload.doc.data() as Consulta);
+        map(snaps => {
+          return snaps.map(snap => snap.payload.doc.data() as Consulta);
         }),
-        tap((consultas) => {
+        tap(consultas => {
           // this._userConsultasStore = consultas;
           // console.log(this._userConsultasStore);
         })
@@ -117,9 +115,7 @@ export class DbService {
       await this.db
         .doc(`consultas/${consultas[i].idConsulta}`)
         .update(updateData)
-        .then(() =>
-          console.log(`consulta ${consultas[i].idConsulta} atualizada`)
-        );
+        .then(() => console.log(`consulta ${consultas[i].idConsulta} atualizada`));
     }
     // consultas.forEach((consulta) => {
     // });
@@ -136,7 +132,7 @@ export class DbService {
           await this.db
             .doc(`clientes/${doc.id}`)
             .update({ id: doc.id })
-            .then((response) => {
+            .then(response => {
               //log
               // console.log({ id: doc.id, ...doc });
             });
@@ -152,8 +148,8 @@ export class DbService {
       .snapshotChanges()
       .pipe(
         shareReplay(),
-        map((snaps) => {
-          return snaps.map((snap) => {
+        map(snaps => {
+          return snaps.map(snap => {
             return snap.payload.doc.data() as Cliente;
           });
         })
@@ -200,7 +196,7 @@ export class DbService {
           await this.db
             .doc(`users/${doc.id}`)
             .update({ id: doc.id })
-            .then((response) => {
+            .then(response => {
               //log
               // console.log({ id: doc.id, ...doc });
             });
@@ -215,7 +211,7 @@ export class DbService {
       .doc(`users/${user.uid || user.id}`)
       .valueChanges()
       .pipe(
-        tap((data) => {
+        tap(data => {
           // console.log('3. RESULTADO DA QUERY');
           // console.log(data);
         })

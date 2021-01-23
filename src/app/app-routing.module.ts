@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AddClientesComponent } from './admin/dashboard/add-clientes/add-clientes.component';
-import { DashboardComponent } from './admin/dashboard/dashboard.component';
-import { AuthComponent } from './auth/auth.component';
+import { AddClientesComponent } from './components/admin/dashboard/add-clientes/add-clientes.component';
+import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
+import { AuthComponent } from './components/auth/auth.component';
 // import { LoginComponent } from './auth/login/login.component';
 // import { SignupComponent } from './auth/signup/signup.component';
-import { HomeComponent } from './profissional/home/home.component';
-import { NovoRelatorioComponent } from './profissional/home/novo-relatorio/novo-relatorio.component';
+import { HomeComponent } from './components/profissional/home/home.component';
+import { NovoRelatorioComponent } from './components/profissional/home/novo-relatorio/novo-relatorio.component';
 import { AdminGuard } from './guards/admin.guard';
 import { AuthGuard } from './guards/auth.guard';
-import { EditRelatorioComponent } from './profissional/home/edit-relatorio/edit-relatorio.component';
+import { EditRelatorioComponent } from './components/profissional/home/edit-relatorio/edit-relatorio.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/auth', pathMatch: 'full' },

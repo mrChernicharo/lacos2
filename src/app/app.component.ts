@@ -49,7 +49,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       .pipe(
         // delay(1000),
         shareReplay(),
-        tap((user) => {
+        tap(user => {
           if (user) {
             // console.log('QUERO SABER AS CONSULTAS DO USER');
             // console.log(user);
@@ -69,7 +69,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             this.clientes$,
           ]).pipe(
             distinctUntilChanged(),
-            tap((data) => {
+            tap(data => {
               console.log(data);
             })
           );

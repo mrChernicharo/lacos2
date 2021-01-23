@@ -5,7 +5,7 @@ import { DbService } from './db.service';
 import {
   IReportForm,
   IReportFormConsulta,
-} from 'src/app/profissional/home/novo-relatorio/novo-relatorio.component';
+} from 'src/app/components/profissional/home/novo-relatorio/novo-relatorio.component';
 import { BehaviorSubject, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IServerTimestamp } from '../models/cliente.model';

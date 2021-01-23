@@ -19,6 +19,7 @@ import { forkJoin, from, fromEvent, Observable, of, Subject } from 'rxjs';
 import {
   delay,
   filter,
+  finalize,
   map,
   skip,
   switchMap,
@@ -33,7 +34,7 @@ import { AppUser, AuthService } from 'src/app/services/auth.service';
 import { ClientesService } from 'src/app/services/clientes.service';
 import { ConsultasService } from 'src/app/services/consultas.service';
 import { HeaderService } from 'src/app/services/header.service';
-import { CustomDayCellComponent } from 'src/app/shared/custom-day-cell/custom-day-cell.component';
+import { CustomDayCellComponent } from 'src/app/components/shared/custom-day-cell/custom-day-cell.component';
 import { IReportFormConsulta } from './novo-relatorio/novo-relatorio.component';
 
 @Component({
@@ -73,8 +74,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef
   ) {}
   ngOnInit(): void {
+    this.clientesService.fetchAllClientes();
     this.currentPage$ = this.headerService.currentPage$.pipe(
-      takeUntil(this.destroySubject$),
+      // takeUntil(this.destroySubject$),
       tap(page => {
         console.log(page);
         this.reportConsultas = [];
@@ -82,16 +84,17 @@ export class HomeComponent implements OnInit, OnDestroy {
       })
     );
     this.appClientes$ = this.clientesService._clientes$.pipe(
-      takeUntil(this.destroySubject$),
+      // takeUntil(this.destroySubject$),
       tap(clientes => {
         this.appClientes = clientes;
         console.log('appclientes');
         console.log(clientes);
-      })
+      }),
+      finalize(() => console.log('clientes completed!'))
     );
 
     this.authService.user$.pipe(
-      takeUntil(this.destroySubject$),
+      // takeUntil(this.destroySubject$),
       tap(data => {
         console.log(data);
         this.user = data as AppUser;
@@ -99,7 +102,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
 
     this.consultas$ = this.consultasService._consultas$.pipe(
-      takeUntil(this.destroySubject$),
+      // takeUntil(this.destroySubject$),
       tap(consultas => {
         this.consultas = consultas;
       }),
@@ -107,7 +110,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.userClientes$ = this.clientesService.findUserClientesFromConsultas(
           consultas
         );
-      })
+      }),
+      finalize(() => console.log('consultas completed!'))
     );
   }
 
