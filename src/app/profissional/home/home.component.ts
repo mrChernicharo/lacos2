@@ -7,13 +7,23 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
+  Renderer2,
   SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbCalendarComponent, NbCalendarDayCellComponent } from '@nebular/theme';
-import { forkJoin, from, fromEvent, Observable, of } from 'rxjs';
-import { delay, filter, map, skip, switchMap, tap, timeout } from 'rxjs/operators';
+import { forkJoin, from, fromEvent, Observable, of, Subject } from 'rxjs';
+import {
+  delay,
+  filter,
+  map,
+  skip,
+  switchMap,
+  takeUntil,
+  tap,
+  timeout,
+} from 'rxjs/operators';
 import { AppData } from 'src/app/app.component';
 import { Cliente } from 'src/app/models/cliente.model';
 import { Consulta } from 'src/app/models/consulta.model';
@@ -30,50 +40,46 @@ import { IReportFormConsulta } from './novo-relatorio/novo-relatorio.component';
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent implements OnInit, OnChanges, OnDestroy {
-  // clientes$: Observable<Cliente[]>;
+export class HomeComponent implements OnInit, OnDestroy {
   currentPage$: Observable<string>;
   user: AppUser;
   consultas: Consulta[];
   reportConsultas: Consulta[];
   appClientes: Cliente[];
-
   filteredConsultasCount: Object;
+
+  selectedDate: Date;
   calendar = new NbCalendarComponent<Date>();
   calendarSubs: Observable<Date>;
+  dayCellComponent = CustomDayCellComponent;
 
   user$: Observable<AppUser>;
   consultas$: Observable<Consulta[]>;
   appClientes$: Observable<Cliente[]>;
   userClientes$: Observable<Cliente[]>;
-  selectedDate: Date;
-  dayCellComponent = CustomDayCellComponent;
-  // subs: Observable<[AppUser, Consulta[], Cliente[], Cliente[]]>;
-  // appData$: Observable<AppData>;
-  // previousSelected: any;
+  destroySubject$ = new Subject<boolean>();
 
   constructor(
     public clientesService: ClientesService,
     private consultasService: ConsultasService,
     private headerService: HeaderService,
     public authService: AuthService,
+    public renderer: Renderer2,
     private router: Router,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef
   ) {}
-  ngOnChanges(changes: SimpleChanges): void {
-    throw new Error('Method not implemented.');
-  }
-
   ngOnInit(): void {
-    this.reportConsultas = [];
-
     this.currentPage$ = this.headerService.currentPage$.pipe(
+      takeUntil(this.destroySubject$),
       tap(page => {
         console.log(page);
+        this.reportConsultas = [];
+        this.selectedDate = null;
       })
     );
     this.appClientes$ = this.clientesService._clientes$.pipe(
+      takeUntil(this.destroySubject$),
       tap(clientes => {
         this.appClientes = clientes;
         console.log('appclientes');
@@ -82,6 +88,7 @@ export class HomeComponent implements OnInit, OnChanges, OnDestroy {
     );
 
     this.authService.user$.pipe(
+      takeUntil(this.destroySubject$),
       tap(data => {
         console.log(data);
         this.user = data as AppUser;
@@ -89,6 +96,7 @@ export class HomeComponent implements OnInit, OnChanges, OnDestroy {
     );
 
     this.consultas$ = this.consultasService._consultas$.pipe(
+      takeUntil(this.destroySubject$),
       tap(consultas => {
         this.consultas = consultas;
       }),
@@ -102,7 +110,9 @@ export class HomeComponent implements OnInit, OnChanges, OnDestroy {
 
   ngAfterViewInit() {}
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.destroySubject$.next(true);
+  }
 
   filterModalidades(consultas: Consulta[]) {
     if (!consultas) return;
@@ -130,11 +140,11 @@ export class HomeComponent implements OnInit, OnChanges, OnDestroy {
     ) {
       this.filterConsultas(date);
     }
+
     this.calendar.dateChange.emit(this.selectedDate);
   }
 
   filterConsultas(date: Date) {
-    // console.log(date);
     const filteredConsultas = this.consultas
       .filter(
         consulta =>
@@ -142,10 +152,8 @@ export class HomeComponent implements OnInit, OnChanges, OnDestroy {
           date.toDateString()
       )
       .sort((a, b) => +a.horario.replace(':', '') - +b.horario.replace(':', ''));
+
+    console.log(filteredConsultas);
     this.reportConsultas = filteredConsultas;
   }
-
-  // updateCellData(event) {
-  //   console.log(event);
-  // }
 }

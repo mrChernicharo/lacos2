@@ -13,6 +13,7 @@
     align-items: center;
     justify-content: center;
     font-weight: bold;
+    border: none;
 
     &.bounding-month {
       color: #808080;
@@ -21,7 +22,19 @@
   .day-cell {
     pointer-events: all;
     border-radius: 8px;
-    background: lightcoral;
+    background: #f5b5b5;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &:active {
+      border: 2px solid #ffe0e0;
+    }
+
+    &.selected {
+      background: lightcoral;
+    }
 
     span.date-number {
       line-height: 2px;

@@ -73,7 +73,7 @@ export class NovoRelatorioComponent implements OnInit {
   horarios = HORARIOS;
   modalidades = MODALIDADES;
   finalFormData: IReportForm;
-  routerData$: any;
+  // routerData$: any;
   modalidadesCountObj: Object;
 
   // @ViewChild('nomeField')
@@ -83,6 +83,8 @@ export class NovoRelatorioComponent implements OnInit {
     private r: Renderer2,
     private router: Router,
     private headerService: HeaderService,
+    public renderer: Renderer2,
+
     private consultaService: ConsultasService,
     private route: ActivatedRoute
   ) {} // @Inject('reportForm') public reportForm: ReportFormComponent // @Inject('calendarForm') public calendarForm: CalendarFormComponent,
@@ -123,6 +125,16 @@ export class NovoRelatorioComponent implements OnInit {
     this.modalidadesCountObj = this.filterModalidades(this.finalFormData.consultas);
   }
 
+  handleCalendarDateChanges(date: Date) {
+    this.date = date;
+
+    this.calendarForm.get('date').setValue(date);
+    this.reportForm.get('dataRelatorio').setValue(date);
+
+    const el = window.document.querySelector(`#${date.getDate()}-${date.getMonth() + 1}`);
+    this.renderer.addClass(el, 'selected');
+  }
+
   createReportForm() {
     return (this.reportForm = this.fb.group({
       // nomeProfissional: new FormControl(''),
@@ -144,12 +156,6 @@ export class NovoRelatorioComponent implements OnInit {
     });
   }
 
-  handleCalendarDateChanges(date: Date) {
-    this.date = date;
-    this.calendarForm.get('date').setValue(date);
-    this.reportForm.get('dataRelatorio').setValue(date);
-  }
-
   getConsultasControls() {
     return this.consultas.controls;
   }
@@ -160,6 +166,7 @@ export class NovoRelatorioComponent implements OnInit {
   removeConsultaFormGroup(i) {
     this.consultas.removeAt(i);
   }
+
   trimPacienteName(event: string, i: number) {
     // console.log(event);
     const selectElChild = document.querySelector(`#nomePaciente-${i}`)
@@ -199,12 +206,7 @@ export class NovoRelatorioComponent implements OnInit {
     if (date.getTime() > new Date().getTime()) {
       // futuro?
       return false;
-    }
-    // if () {
-    //  tem consulta?
-    // return false;
-    // }
-    else {
+    } else {
       //
       return this.isWithinLimits(date) && !this.consultaService.isBusyDay(date);
     }
