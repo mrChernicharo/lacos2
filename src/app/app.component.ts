@@ -14,6 +14,7 @@ import { Consulta } from './models/consulta.model';
 import { AppUser, AuthService } from './services/auth.service';
 import { ClientesService } from './services/clientes.service';
 import { ConsultasService } from './services/consultas.service';
+import { DataService } from './services/data.service';
 
 export type AppData = [AppUser, Consulta[], Cliente[]];
 
@@ -33,7 +34,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     private db: AngularFirestore,
     private consultasService: ConsultasService,
     private clientesService: ClientesService,
-    public authService: AuthService
+    public authService: AuthService,
+    private dataService: DataService
   ) {}
   ngOnInit() {
     this.user$ = this.authService.user$ as Observable<AppUser>;
@@ -56,6 +58,11 @@ export class AppComponent implements OnInit, AfterViewInit {
           }
         }),
         tap(() => {
+          // this.dataService.appData$ = combineLatest([
+          //   this.user$,
+          //   this.consultas$,
+          //   this.clientes$,
+          // ])
           this.appData$ = combineLatest([
             this.user$,
             this.consultas$,
@@ -63,7 +70,7 @@ export class AppComponent implements OnInit, AfterViewInit {
           ]).pipe(
             distinctUntilChanged(),
             tap((data) => {
-              // console.log(data);
+              console.log(data);
             })
           );
         })

@@ -9,12 +9,12 @@ import {
   OnInit,
   SimpleChanges,
   ViewEncapsulation,
-} from '@angular/core';
-import { NbCalendarDayCellComponent, NbDateService } from '@nebular/theme';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { Consulta } from 'src/app/models/consulta.model';
-import { ConsultasService } from 'src/app/services/consultas.service';
+} from '@angular/core'
+import { NbCalendarDayCellComponent, NbDateService } from '@nebular/theme'
+import { Observable } from 'rxjs'
+import { tap } from 'rxjs/operators'
+import { Consulta } from 'src/app/models/consulta.model'
+import { ConsultasService } from 'src/app/services/consultas.service'
 
 @Component({
   selector: 'app-custom-day-cell',
@@ -33,32 +33,32 @@ export class CustomDayCellComponent<Date>
     public consultasService: ConsultasService,
     private cd: ChangeDetectorRef
   ) {
-    super(dateService);
+    super(dateService)
   }
 
-  date: Date;
-  totalConsultas: number;
-  showTotal: boolean;
+  date: Date
+  totalConsultas: number
+  showTotal: boolean
 
   ngOnInit(): void {
-    this.getIsBusyDay();
+    this.getIsBusyDay()
   }
 
   ngAfterContentChecked() {
-    this.getIsBusyDay();
+    if (this.showTotal) {
+      this.getIsBusyDay()
+    }
     // console.log(this.date);
   }
 
   getIsBusyDay() {
     if (this.consultasService.isBusyDay(this.date)) {
-      this.dayCellClass = true;
-      this.totalConsultas = this.consultasService.getConsultasAmountInDay(
-        this.date
-      );
-      this.showTotal = true;
+      this.dayCellClass = true
+      this.totalConsultas = this.consultasService.getConsultasAmountInDay(this.date)
+      this.showTotal = true
     } else {
-      this.dayCellClass = false;
-      this.showTotal = false;
+      this.dayCellClass = false
+      this.showTotal = false
     }
   }
 }
