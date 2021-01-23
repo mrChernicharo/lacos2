@@ -11,10 +11,12 @@
     padding: 16px;
 
     &#front-card {
-      // width: 464px;
-      width: 554px;
+      position: absolute;
+      width: 464px;
+      // width: 554px;
     }
     &#back-card {
+      // position: absolute;
       width: 554px;
     }
   }
@@ -65,7 +67,7 @@
     font-size: 18px;
     font-weight: bold;
     text-align: center;
-    margin: 18px 0;
+    margin: 0 0 32px 0;
   }
 
   .consulta-form {
@@ -118,7 +120,7 @@
   }
 
   .button-wrapper {
-    &:not([class="add"]) {
+    &:not([class='add']) {
       margin: 0 3px 0 0;
     }
     &.add {

@@ -19,22 +19,19 @@ export class HeaderService {
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {
     this.currentPage$ = this.router.events.pipe(
-      filter(
-        (state: any) => state.__proto__.constructor.name === 'NavigationEnd'
-      ),
-      tap((state) => {
+      filter((state: any) => state.__proto__.constructor.name === 'NavigationEnd'),
+      tap(state => {
         console.log(state);
       }),
       map((state: NavigationEnd) => {
         return state.url;
       }),
-      tap((url) => {
+      tap(url => {
         console.log(url);
       }),
-      map((url) => {
-        // console.log(state.url.split('/'));
-        const currentPage = url.split('/').pop().replace('-', ' ');
-        return currentPage;
+      map(url => {
+        //
+        return url === '/' ? 'auth' : url.split('/').pop().replace('-', ' ');
       }),
       shareReplay()
 

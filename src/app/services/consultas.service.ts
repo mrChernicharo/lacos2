@@ -27,16 +27,14 @@ export class ConsultasService {
     console.log(userData);
     // console.log('FETCH USER CONSULTAS');
     return userData.role === 'admin'
-      ? this.db
-          .fetchAllConsultas()
-          .pipe(tap((data) => this.consultasSubject$.next(data)))
+      ? this.db.fetchAllConsultas().pipe(tap(data => this.consultasSubject$.next(data)))
       : this.db
           .fetchUserConsultas(userData.id)
-          .pipe(tap((data) => this.consultasSubject$.next(data)));
+          .pipe(tap(data => this.consultasSubject$.next(data)));
   }
 
   saveConsultas(finalFormData: IReportForm, user: AppUser) {
-    const newConsultas = finalFormData.consultas.map((item) => {
+    const newConsultas = finalFormData.consultas.map(item => {
       const newConsulta: Consulta = {
         nomeProfissional: user.nome,
         idProfissional: user.id,
@@ -79,11 +77,10 @@ export class ConsultasService {
   isBusyDay(date): boolean {
     //
     const foundConsultaOnDate = this.latestConsultas.find(
-      (consulta) =>
-        new Date(
-          (consulta.dataConsulta as IServerTimestamp).seconds
-        ).toLocaleDateString('pt-BR') ===
-        new Date(date).toLocaleDateString('pt-BR')
+      consulta =>
+        new Date((consulta.dataConsulta as IServerTimestamp).seconds).toLocaleDateString(
+          'pt-BR'
+        ) === new Date(date).toLocaleDateString('pt-BR')
     );
 
     return !!foundConsultaOnDate;
@@ -92,7 +89,7 @@ export class ConsultasService {
   getConsultasAmountInDay(date): number {
     //
     const total = this.latestConsultas.filter(
-      (consulta) =>
+      consulta =>
         new Date(
           (consulta.dataConsulta as IServerTimestamp).seconds
         ).toLocaleDateString() === new Date(date).toLocaleDateString()
@@ -107,16 +104,12 @@ export class ConsultasService {
 
     try {
       // TODO alterar consultas simplesmente editadas
-      const editedConsultas = consultas.filter(
-        (consulta) => consulta.idConsulta
-      );
+      const editedConsultas = consultas.filter(consulta => consulta.idConsulta);
       // console.log('edit consultas:');
       // console.log(editedConsultas);
 
       // TODO criar id pras consultas adicionadas
-      const addedConsultas = consultas.filter(
-        (consulta) => !consulta.idConsulta
-      );
+      const addedConsultas = consultas.filter(consulta => !consulta.idConsulta);
       // console.log('add consultas:');
       // console.log(addedConsultas);
 

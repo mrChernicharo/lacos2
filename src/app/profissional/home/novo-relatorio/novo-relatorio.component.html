@@ -1,17 +1,18 @@
 <!-- <p>novo-relatorio works!</p> -->
 <nb-card>
   <nb-card-body>
-    <nb-stepper #stepper [linear]="false">
+    <nb-stepper #stepper [linear]="true">
       <!-- /*********************/ STEP #1 /*********************/ -->
       <nb-step label="Data" [stepControl]="calendarForm">
         <div class="instruction">selecione a data</div>
         <form [formGroup]="calendarForm">
           <nb-calendar
             class="calendar"
+            [filter]="dateFilter"
             [date]="date"
             (dateChange)="handleCalendarDateChanges($event)"
           ></nb-calendar>
-          <h4 class="selected-date">{{ date | date: "fullDate" }}</h4>
+          <h4 class="selected-date">{{ date | date: 'fullDate' }}</h4>
           <button nbButton status="success" [disabled]="!date" nbStepperNext>
             <nb-icon icon="arrow-right"></nb-icon>
             Próximo
@@ -100,10 +101,7 @@
                   : 'basic'
               "
             >
-              <nb-option
-                *ngFor="let modalidade of modalidades"
-                [value]="modalidade"
-              >
+              <nb-option *ngFor="let modalidade of modalidades" [value]="modalidade">
                 {{ modalidade }}
               </nb-option>
             </nb-select>
@@ -161,7 +159,7 @@
           </div>
           <div>
             {{ consultas.length }}
-            {{ consultas.length === 1 ? " consulta" : " consultas" }}
+            {{ consultas.length === 1 ? ' consulta' : ' consultas' }}
           </div>
           <div *ngFor="let modalidade of modalidadesCountObj | keyvalue">
             <ng-container *ngIf="modalidade.value > 0">
@@ -172,10 +170,7 @@
 
         <div class="list-container">
           <nb-list *ngIf="finalFormData">
-            <nb-list-item
-              class="list-row"
-              *ngFor="let item of finalFormData.consultas"
-            >
+            <nb-list-item class="list-row" *ngFor="let item of finalFormData.consultas">
               <div class="li">
                 <nb-icon icon="clock-outline"></nb-icon>&nbsp;{{ item.horario }}
               </div>
@@ -198,12 +193,7 @@
           Voltar
         </button>
 
-        <button
-          nbButton
-          status="success"
-          nbStepperNext
-          (click)="submitReport()"
-        >
+        <button nbButton status="success" nbStepperNext (click)="submitReport()">
           <nb-icon icon="checkmark-outline"></nb-icon>
           Concluir
         </button>

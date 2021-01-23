@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   Inject,
   Input,
@@ -28,6 +29,7 @@ import { Consulta } from 'src/app/models/consulta.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
 import { AppUser } from 'src/app/services/auth.service';
+import { HeaderService } from 'src/app/services/header.service';
 
 export type IReportFormConsulta = Pick<
   Consulta,
@@ -53,6 +55,7 @@ interface ModalidadeCountObj {
   styleUrls: ['./novo-relatorio.component.scss'],
   encapsulation: ViewEncapsulation.None,
   providers: [NbNativeDateService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NovoRelatorioComponent implements OnInit {
   // date = new Date();
@@ -61,6 +64,7 @@ export class NovoRelatorioComponent implements OnInit {
   reportForm: FormGroup;
   consultaForm: FormGroup;
   revisionTable: any;
+  dateFilter = date => this.setDateFilter(date);
 
   @Input() clientes: Cliente[];
   @Input() user: AppUser;
@@ -78,6 +82,7 @@ export class NovoRelatorioComponent implements OnInit {
     private fb: FormBuilder,
     private r: Renderer2,
     private router: Router,
+    private headerService: HeaderService,
     private consultaService: ConsultasService,
     private route: ActivatedRoute
   ) {} // @Inject('reportForm') public reportForm: ReportFormComponent // @Inject('calendarForm') public calendarForm: CalendarFormComponent,
@@ -100,9 +105,7 @@ export class NovoRelatorioComponent implements OnInit {
     //
     this.consultas.controls.forEach((consulta, i) => {
       // console.log(consulta);
-      const pacienteInfo = (consulta.get('nomePaciente').value as string).split(
-        ' '
-      );
+      const pacienteInfo = (consulta.get('nomePaciente').value as string).split(' ');
       // console.log(pacienteInfo);
 
       const idPaciente = pacienteInfo.pop();
@@ -117,9 +120,7 @@ export class NovoRelatorioComponent implements OnInit {
       (a, b) => +a.horario.replace(':', '') - +b.horario.replace(':', '')
     );
     // console.log(this.finalFormData);
-    this.modalidadesCountObj = this.filterModalidades(
-      this.finalFormData.consultas
-    );
+    this.modalidadesCountObj = this.filterModalidades(this.finalFormData.consultas);
   }
 
   createReportForm() {
@@ -139,10 +140,7 @@ export class NovoRelatorioComponent implements OnInit {
       idPaciente: new FormControl(''),
       origem: new FormControl(''),
       modalidade: new FormControl('', Validators.required),
-      horario: new FormControl('', [
-        Validators.required,
-        RxwebValidators.unique(),
-      ]),
+      horario: new FormControl('', [Validators.required, RxwebValidators.unique()]),
     });
   }
 
@@ -189,6 +187,63 @@ export class NovoRelatorioComponent implements OnInit {
     console.log(this.finalFormData);
     console.log(this.user);
     this.consultaService.saveConsultas(this.finalFormData, this.user);
-    this.router.navigate(['profissional/home']);
+    this.router.navigate(['profissional']);
+  }
+
+  setDateFilter(date: Date) {
+    if (date.getDay() === 0) {
+      // domingo?
+      return false;
+    }
+
+    if (date.getTime() > new Date().getTime()) {
+      // futuro?
+      return false;
+    }
+    // if () {
+    //  tem consulta?
+    // return false;
+    // }
+    else {
+      //
+      return this.isWithinLimits(date) && !this.consultaService.isBusyDay(date);
+    }
+  }
+
+  isWithinLimits(date: Date) {
+    const y = new Date().getFullYear();
+    const m = new Date().getMonth();
+    const d = new Date().getDate();
+    const today = new Date(y, m, d, 0, 0, 0);
+
+    // console.log(date);
+    // console.log(today.getTime() - date.getTime());
+    //
+    const diff = () => today.getTime() - date.getTime();
+    // 24h == 86.400.000ms
+    switch (date.getDay()) {
+      case 0: // dom -> 6 dias pra trás
+        return diff() <= 86_400_000 * 6 && diff() > 0;
+
+      case 1: // seg -> 7 dias pra trás
+        return diff() <= 86_400_000 * 7 && diff() > 0;
+
+      case 2: // ter -> 8 dias pra trás
+        return diff() <= 86_400_000 * 8 && diff() > 0;
+
+      case 3: // qua -> 9 dias pra trás
+        return diff() <= 86_400_000 * 9 && diff() > 0;
+
+      case 4: // qui -> 3 dias pra trás
+        return diff() <= 86_400_000 * 3 && diff() > 0;
+
+      case 5: // sex -> 4 dias pra trás
+        return diff() <= 86_400_000 * 4 && diff() > 0;
+
+      case 6: // sab -> 5 dias pra trás
+        return diff() <= 86_400_000 * 5 && diff() > 0;
+    }
+
+    return true;
   }
 }

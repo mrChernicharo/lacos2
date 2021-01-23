@@ -9,7 +9,7 @@
             <nb-card-header>
               <div><h3>Relatórios</h3></div>
               <h1 *ngIf="selectedDate; else placeholder" class="h5">
-                {{ selectedDate | date: "longDate" }}
+                {{ selectedDate | date: 'longDate' }}
               </h1>
               <ng-template #placeholder>&nbsp;</ng-template>
             </nb-card-header>
@@ -57,7 +57,7 @@
           <div class="consultas-container">
             <pre *ngFor="let consulta of consultas">
               {{ consulta.nomePaciente }} {{ consulta.horario }} {{
-                consulta.dataConsulta["seconds"] | date: "shortDate"
+                consulta.dataConsulta['seconds'] | date: 'shortDate'
               }}
             </pre>
           </div>

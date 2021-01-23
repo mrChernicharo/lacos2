@@ -1,6 +1,7 @@
 import {
   AfterContentChecked,
   AfterViewChecked,
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -11,8 +12,17 @@ import {
   ViewEncapsulation,
 } from '@angular/core'
 import { NbCalendarDayCellComponent, NbDateService } from '@nebular/theme'
-import { Observable } from 'rxjs'
-import { tap } from 'rxjs/operators'
+import { defer, Observable, of, timer } from 'rxjs'
+import {
+  debounceTime,
+  delay,
+  distinctUntilChanged,
+  finalize,
+  skip,
+  take,
+  tap,
+  throttleTime,
+} from 'rxjs/operators'
 import { Consulta } from 'src/app/models/consulta.model'
 import { ConsultasService } from 'src/app/services/consultas.service'
 
@@ -21,13 +31,13 @@ import { ConsultasService } from 'src/app/services/consultas.service'
   templateUrl: './custom-day-cell.component.html',
   styleUrls: ['./custom-day-cell.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-// AfterViewChecked,
+//
 // OnChanges,
 export class CustomDayCellComponent<Date>
   extends NbCalendarDayCellComponent<Date>
-  implements OnInit, AfterContentChecked {
+  implements OnInit, AfterContentChecked, AfterViewInit {
   constructor(
     public dateService: NbDateService<Date>,
     public consultasService: ConsultasService,
@@ -44,11 +54,29 @@ export class CustomDayCellComponent<Date>
     this.getIsBusyDay()
   }
 
+  ngAfterViewInit() {
+    this.cd.detach()
+  }
+
   ngAfterContentChecked() {
-    if (this.showTotal) {
-      this.getIsBusyDay()
+    if (this.showTotal && this.totalConsultas) {
+      // console.log('opa')
+      const obs$ = of(0).pipe(
+        // throttleTime(200),
+        // first(),
+        take(1),
+        tap(() => this.cd.reattach()),
+        // tap(() => console.log('attached')),
+        // tap(() => console.log('change!')),
+        tap(() => this.getIsBusyDay()),
+        delay(10),
+        // tap(() => console.log('detach!')),
+        tap(() => this.cd.detach())
+        // finalize(() => console.log('completed!'))
+      )
+
+      obs$.subscribe()
     }
-    // console.log(this.date);
   }
 
   getIsBusyDay() {
