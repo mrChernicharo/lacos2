@@ -1,8 +1,21 @@
 <div *ngIf="currentPage$ | async as currentPage" class="page-container">
   <ng-container *ngIf="currentPage === 'admin'">
     dashboard
-    <pre *ngFor="let consulta of consultas">{{ consulta | json }}</pre>
+
+    <ng-container *ngIf="consultas$ | async as appConsultas">
+      <ng-container *ngIf="appClientes$ | async as appClientes">
+        <div class="cliente" *ngFor="let cliente of appClientes">
+          <app-cliente-card
+            [cliente]="cliente"
+            [allConsultas]="appConsultas"
+          ></app-cliente-card>
+        </div>
+      </ng-container>
+      <pre>{{ consultas | json }}</pre>
+    </ng-container>
+    <!-- <ng-container *ngIf="|async as"></ng-container> -->
   </ng-container>
+
   <ng-container *ngIf="currentPage === 'clientes'">
     <router-outlet></router-outlet>
   </ng-container>
