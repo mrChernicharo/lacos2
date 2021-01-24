@@ -12,9 +12,9 @@
 
             <nb-card-header>
               <div><h5>Meus Relatórios</h5></div>
-              <h1 *ngIf="selectedDate; else placeholder" class="h5">
+              <!-- <h1 *ngIf="selectedDate; else placeholder" class="h5">
                 {{ selectedDate | date: 'longDate' }}
-              </h1>
+              </h1> -->
               <ng-template #placeholder>&nbsp;</ng-template>
             </nb-card-header>
             <!--  -->
@@ -55,6 +55,7 @@
           <div class="clientes-container">
             <div class="card-wrapper" *ngFor="let cliente of clientes">
               <app-cliente-card
+                [userRole]="user.role"
                 [cliente]="cliente"
                 [allConsultas]="consultas"
               ></app-cliente-card>

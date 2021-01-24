@@ -70,18 +70,6 @@
               [formGroup]="consulta"
               *ngFor="let consulta of getConsultasControls(); let i = index"
             >
-              <div class="button-wrapper">
-                <button
-                  nbButton
-                  size="small"
-                  shape="round"
-                  status="danger"
-                  (click)="removeConsultaFormGroup(i)"
-                >
-                  <nb-icon icon="close-outline"></nb-icon>
-                </button>
-              </div>
-
               <div class="select-wrapper horario">
                 <nb-select-label>Horário</nb-select-label>
                 <nb-select
@@ -147,43 +135,22 @@
                   </nb-option>
                 </nb-select>
               </div>
-              <div
-                *ngIf="i + 1 === getConsultasControls().length"
-                class="button-wrapper add"
-              >
+
+              <div class="button-wrapper">
                 <button
                   nbButton
-                  hero
                   size="small"
                   shape="round"
-                  status="success"
-                  (click)="addConsultaFormGroup()"
+                  status="danger"
+                  (click)="removeConsultaFormGroup(i)"
                 >
-                  <nb-icon icon="plus-outline"></nb-icon>
+                  <nb-icon icon="close-outline"></nb-icon>
                 </button>
               </div>
-
-              <!-- </div> -->
-            </div>
-
-            <div class="submit-btn-container">
-              <button
-                nbButton
-                outline
-                size="medium"
-                fullWidth
-                status="info"
-                (click)="saveReportChanges()"
-              >
-                <nb-icon outline icon="checkmark-outline"></nb-icon> Salvar alterações
-              </button>
             </div>
           </form>
 
-          <div
-            *ngIf="getConsultasControls()?.length === 0"
-            class="button-wrapper add no-consultas"
-          >
+          <div class="button-wrapper add">
             <button
               nbButton
               hero
@@ -194,7 +161,20 @@
             >
               <nb-icon icon="plus-outline"></nb-icon>
             </button>
-            <span style="color: #01a26c"> criar consulta</span>
+            <span style="color: #00d68f"> criar consulta</span>
+          </div>
+
+          <div class="submit-btn-container">
+            <button
+              nbButton
+              outline
+              size="medium"
+              fullWidth
+              status="info"
+              (click)="saveReportChanges()"
+            >
+              <nb-icon outline icon="checkmark-outline"></nb-icon> Salvar alterações
+            </button>
           </div>
           <!-- </ng-container> -->
         </nb-card>

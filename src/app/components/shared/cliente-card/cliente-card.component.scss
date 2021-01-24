@@ -1,18 +1,22 @@
 nb-card {
-  width: 286px;
+  width: 234px;
+  margin-top: 18px;
+  border-radius: 6px;
 
   &:not(last-child) {
-    margin: 0 3px 0 0;
+    margin-right: 3px;
   }
 
   nb-card-header {
     display: flex;
     align-items: center;
-    max-height: 68px;
+    padding: 10px 16px;
+    max-height: 50px;
 
     span.title {
-      font-size: 28px;
-      line-height: 26px;
+      font-size: 18px;
+      line-height: 18px;
+      margin-left: 6px;
     }
 
     img {
@@ -21,31 +25,58 @@ nb-card {
     }
   }
 
-  .origin-tag.tag {
-    width: fit-content;
-    height: 30px;
-    padding: 12px;
-    display: flex;
-    align-items: center;
-    border: 1px solid;
-    border-radius: 14px;
-    font-weight: bold;
+  nb-card-body {
+    padding: 10px 16px;
 
-    &.clinica {
-      color: #fff;
-      background: #ffb5c1;
+    .tags-row {
+      // border: 1px solid;
+      display: flex;
+      justify-content: space-between;
+
+      .tag {
+        width: fit-content;
+        height: 30px;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        font-size: 12px;
+        // border: 1px solid;
+
+        &.origin-tag {
+          border-radius: 14px;
+
+          &.clinica {
+            color: #fff;
+            background: #ffb5c1;
+          }
+          &.flamengo {
+            color: #fff;
+            background: crimson;
+          }
+          &.vale {
+            color: #fff;
+            background: orange;
+          }
+          &.cpII {
+            color: #fff;
+            background: dodgerblue;
+          }
+        }
+
+        &.consultas-tag.border {
+          color: #707070;
+          // background: rgba(0, 0, 0, 0.2);
+        }
+      }
     }
-    &.flamengo {
-      color: #fff;
-      background: crimson;
-    }
-    &.vale {
-      color: #fff;
-      background: orange;
-    }
-    &.cpII {
-      color: #fff;
-      background: dodgerblue;
+    .cliente-info-container {
+      margin-top: 6px;
+      line-height: 16px;
+      //
+      .cliente-info {
+        font-size: 12px;
+      }
     }
   }
 }

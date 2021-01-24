@@ -7,36 +7,33 @@
   </nb-card-header>
 
   <nb-card-body>
-    <div
-      [ngClass]="
-        cliente.origem === 'flamengo'
-          ? 'flamengo'
-          : cliente.origem === 'vale'
-          ? 'vale'
-          : cliente.origem === 'cpII'
-          ? 'cpII'
-          : 'clinica'
-      "
-      class="origin-tag tag"
-    >
-      {{ cliente.origem }}
+    <div class="tags-row">
+      <div
+        class="origin-tag tag"
+        [ngClass]="
+          cliente.origem === 'flamengo'
+            ? 'flamengo'
+            : cliente.origem === 'vale'
+            ? 'vale'
+            : cliente.origem === 'cpII'
+            ? 'cpII'
+            : 'clinica'
+        "
+      >
+        <span>{{ cliente.origem }}</span>
+      </div>
+
+      <div class="consultas-tag tag border">
+        {{ clienteConsultas.length }}
+        {{ clienteConsultas.length === 1 ? 'consulta' : 'consultas' }}
+      </div>
     </div>
+
     <!-- <p>
       atendimentos realizados: <span>{{ clienteConsultas.length }}</span>
     </p> -->
 
-    <ng-container *ngIf="lastConsulta && firstConsulta">
-      <span>
-        seu paciente desde
-        {{ firstConsulta.dataConsulta['seconds'] | date: 'shortDate' }}
-      </span>
-      <br />
-      <span>
-        última consulta:
-        {{ lastConsulta.dataConsulta['seconds'] | date: 'shortDate' }} às
-        {{ lastConsulta.horario }}
-      </span>
-    </ng-container>
+    <!--  -->
   </nb-card-body>
 
   <div class="consultas-display">
@@ -44,10 +41,38 @@
       <nb-accordion-item>
         <nb-accordion-item-header
           >{{ clienteConsultas.length }}
-          {{
-            clienteConsultas.length === 1 ? 'consulta' : 'consultas'
-          }}</nb-accordion-item-header
-        >
+          {{ clienteConsultas.length === 1 ? 'consulta' : 'consultas' }}
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <div class="cliente-info-container">
+            <!--  -->
+            <ng-container *ngIf="userRole === 'profissional'; else admin">
+              <span class="cliente-info">
+                seu paciente desde
+                {{ firstConsulta.dataConsulta['seconds'] | date: 'shortDate' }}
+              </span>
+              <br />
+              <span class="cliente-info">
+                última consulta:
+                {{ lastConsulta.dataConsulta['seconds'] | date: 'shortDate' }} às
+                {{ lastConsulta.horario }}
+              </span>
+            </ng-container>
+            <!--  -->
+            <ng-template #admin>
+              <span class="cliente-info">
+                primeira consulta:
+                {{ firstConsulta.dataConsulta['seconds'] | date: 'shortDate' }}
+              </span>
+              <br />
+              <span class="cliente-info">
+                última consulta:
+                {{ lastConsulta.dataConsulta['seconds'] | date: 'shortDate' }} às
+                {{ lastConsulta.horario }}
+              </span>
+            </ng-template>
+          </div>
+        </nb-accordion-item-body>
         <nb-accordion-item-body *ngFor="let consulta of clienteConsultas; let i = index">
           <span>dia {{ consulta.dataConsulta['seconds'] | date: 'fullDate' }}</span>
           <span>{{ consulta.modalidade }}</span>

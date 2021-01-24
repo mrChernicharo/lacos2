@@ -12,6 +12,7 @@ import {} from '@nebular/theme';
 export class ClienteCardComponent implements OnInit, OnChanges {
   @Input() cliente: Cliente;
   @Input() allConsultas: Consulta[];
+  @Input() userRole: 'profissional' | 'admin';
   clienteConsultas: Consulta[];
   avatarImg: string;
   firstConsulta: Consulta;
