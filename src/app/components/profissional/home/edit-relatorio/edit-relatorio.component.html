@@ -14,22 +14,15 @@
               <nb-icon icon="calendar-outline"></nb-icon>{{ reportDate }}
             </div>
             <nb-list>
-              <nb-list-item
-                class="list-row"
-                *ngFor="let consulta of reportConsultas"
-              >
+              <nb-list-item class="list-row" *ngFor="let consulta of reportConsultas">
                 <div class="li">
-                  <nb-icon icon="clock-outline"></nb-icon>&nbsp;{{
-                    consulta.horario
-                  }}
+                  <nb-icon icon="clock-outline"></nb-icon>&nbsp;{{ consulta.horario }}
                 </div>
                 <div class="li nome">
-                  <nb-icon icon="person-outline"></nb-icon
-                  >{{ consulta.nomePaciente }}
+                  <nb-icon icon="person-outline"></nb-icon>{{ consulta.nomePaciente }}
                 </div>
                 <div class="li modalidade">
-                  <nb-icon icon="pin-outline"></nb-icon
-                  >{{ consulta.modalidade }}
+                  <nb-icon icon="pin-outline"></nb-icon>{{ consulta.modalidade }}
                 </div>
               </nb-list-item>
             </nb-list>
@@ -37,6 +30,7 @@
             <div class="edit-button-container">
               <button
                 nbButton
+                size="small"
                 style="margin: 0 2px 0 0"
                 ghost
                 (click)="toggleEditing()"
@@ -44,7 +38,13 @@
                 <nb-icon icon="edit-2-outline"></nb-icon>Editar
               </button>
 
-              <button nbButton ghost status="danger" (click)="deleteReport()">
+              <button
+                nbButton
+                ghost
+                size="small"
+                status="danger"
+                (click)="deleteReport()"
+              >
                 <nb-icon icon="trash-outline"></nb-icon>Excluir
               </button>
             </div>
@@ -73,6 +73,7 @@
               <div class="button-wrapper">
                 <button
                   nbButton
+                  size="small"
                   shape="round"
                   status="danger"
                   (click)="removeConsultaFormGroup(i)"
@@ -85,8 +86,14 @@
                 <nb-select-label>Horário</nb-select-label>
                 <nb-select
                   formControlName="horario"
-                  status="basic"
                   size="small"
+                  [status]="
+                    consulta.get('horario').valid
+                      ? 'info'
+                      : consulta.get('horario').dirty
+                      ? 'danger'
+                      : 'basic'
+                  "
                 >
                   <nb-option *ngFor="let hora of horarios" [value]="hora">
                     {{ hora }}
@@ -102,7 +109,7 @@
                   [id]="'nomePaciente-' + i"
                   [status]="
                     consulta.get('nomePaciente').valid
-                      ? 'success'
+                      ? 'info'
                       : consulta.get('nomePaciente').dirty
                       ? 'danger'
                       : 'basic'
@@ -124,11 +131,18 @@
 
               <div class="select-wrapper modalidade">
                 <nb-select-label>Modalidade</nb-select-label>
-                <nb-select formControlName="modalidade" size="small">
-                  <nb-option
-                    *ngFor="let modalidade of modalidades"
-                    [value]="modalidade"
-                  >
+                <nb-select
+                  formControlName="modalidade"
+                  size="small"
+                  [status]="
+                    consulta.get('modalidade').valid
+                      ? 'info'
+                      : consulta.get('modalidade').dirty
+                      ? 'danger'
+                      : 'basic'
+                  "
+                >
+                  <nb-option *ngFor="let modalidade of modalidades" [value]="modalidade">
                     {{ modalidade }}
                   </nb-option>
                 </nb-select>
@@ -139,6 +153,8 @@
               >
                 <button
                   nbButton
+                  hero
+                  size="small"
                   shape="round"
                   status="success"
                   (click)="addConsultaFormGroup()"
@@ -150,15 +166,16 @@
               <!-- </div> -->
             </div>
 
-            <div class="submit-btns-container">
+            <div class="submit-btn-container">
               <button
                 nbButton
                 outline
-                status="success"
+                size="medium"
+                fullWidth
+                status="info"
                 (click)="saveReportChanges()"
               >
-                <nb-icon outline icon="checkmark-outline"></nb-icon> Salvar
-                alterações
+                <nb-icon outline icon="checkmark-outline"></nb-icon> Salvar alterações
               </button>
             </div>
           </form>
@@ -169,6 +186,8 @@
           >
             <button
               nbButton
+              hero
+              size="small"
               shape="round"
               status="success"
               (click)="addConsultaFormGroup()"
@@ -184,5 +203,5 @@
   </div>
 </ng-container>
 <ng-template #default>
-  <span>clique para ver detalhes</span>
+  <div class="default-placeholder">clique para ver detalhes</div>
 </ng-template>

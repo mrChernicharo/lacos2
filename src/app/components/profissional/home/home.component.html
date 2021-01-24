@@ -1,29 +1,38 @@
 <div *ngIf="currentPage$ | async as currentPage" class="page-container">
   <div *ngIf="currentPage === 'profissional'">
-    <h1>Home</h1>
+    <div class="section-header">
+      <h3>Home</h3>
+    </div>
     <ng-container *ngIf="authService.user$ | async as user">
       <ng-container *ngIf="consultas$ | async as consultas">
         <ng-container *ngIf="userClientes$ | async as clientes">
           <!--  -->
           <nb-card>
+            <!--  -->
+
             <nb-card-header>
-              <div><h3>Relatórios</h3></div>
+              <div><h5>Meus Relatórios</h5></div>
               <h1 *ngIf="selectedDate; else placeholder" class="h5">
                 {{ selectedDate | date: 'longDate' }}
               </h1>
               <ng-template #placeholder>&nbsp;</ng-template>
             </nb-card-header>
-            <nb-card-body class="relatorios">
-              <nb-calendar
-                class="custom-calendar"
-                [dayCellComponent]="dayCellComponent"
-                (dateChange)="onChangeCalendarDate($event)"
-                size="medium"
-                [(date)]="selectedDate"
-              >
-              </nb-calendar>
+            <!--  -->
 
-              <div class="filtered-consultas-container">
+            <nb-card-body class="relatorios">
+              <div class="calendar-container">
+                <nb-calendar
+                  class="custom-calendar"
+                  [dayCellComponent]="dayCellComponent"
+                  (dateChange)="onChangeCalendarDate($event)"
+                  size="medium"
+                  [(date)]="selectedDate"
+                >
+                </nb-calendar>
+              </div>
+              <!--  -->
+
+              <div class="consultas-edit-container">
                 <!-- <ng-container *ngIf="currentPage === 'edit relatorio'"> -->
                 <ng-container *ngIf="reportConsultas.length > 0; else default">
                   <app-edit-relatorio
@@ -33,7 +42,7 @@
                   ></app-edit-relatorio>
                 </ng-container>
                 <ng-template #default>
-                  <span>clique para ver detalhes</span>
+                  <div class="default-placeholder">clique para ver detalhes</div>
                 </ng-template>
 
                 <!-- </ng-container> -->

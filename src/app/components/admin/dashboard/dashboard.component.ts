@@ -41,7 +41,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
 
     this.appClientes$ = this.clientesService._clientes$.pipe(
-      // takeUntil(this.destroySubject$),
+      takeUntil(this.destroySubject$),
       tap(clientes => {
         this.appClientes = clientes;
         console.log('appclientes');
@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     // );
 
     this.consultas$ = this.consultasService._consultas$.pipe(
-      // takeUntil(this.destroySubject$),
+      takeUntil(this.destroySubject$),
       tap(consultas => {
         this.consultas = consultas;
       }),

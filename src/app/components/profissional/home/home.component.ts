@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.clientesService.fetchAllClientes();
     this.currentPage$ = this.headerService.currentPage$.pipe(
-      // takeUntil(this.destroySubject$),
+      takeUntil(this.destroySubject$),
       tap(page => {
         console.log(page);
         this.reportConsultas = [];
@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       })
     );
     this.appClientes$ = this.clientesService._clientes$.pipe(
-      // takeUntil(this.destroySubject$),
+      takeUntil(this.destroySubject$),
       tap(clientes => {
         this.appClientes = clientes;
         console.log('appclientes');
@@ -94,7 +94,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
 
     this.authService.user$.pipe(
-      // takeUntil(this.destroySubject$),
+      takeUntil(this.destroySubject$),
       tap(data => {
         console.log(data);
         this.user = data as AppUser;

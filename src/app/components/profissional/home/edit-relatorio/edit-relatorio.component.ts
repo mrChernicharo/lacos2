@@ -1,11 +1,14 @@
+import { DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Inject,
   Input,
   OnChanges,
   OnInit,
+  Renderer2,
   SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
@@ -65,6 +68,8 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private consultasService: ConsultasService,
+    @Inject(DOCUMENT) private document: Document,
+    private renderer: Renderer2,
     private cd: ChangeDetectorRef
   ) {}
 
@@ -80,7 +85,7 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // console.log(changes);
+    console.log(changes);
 
     if (changes.reportConsultas) {
       this.reportRawDate = new Date(this.reportConsultas[0].dataConsulta['seconds']);
@@ -96,6 +101,7 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
       ) {
         this.destroyEditForm();
         changes.reportConsultas.currentValue = null;
+        //
       } else {
         this.destroyEditForm();
 
@@ -114,7 +120,12 @@ export class EditRelatorioComponent implements OnInit, OnChanges {
 
   destroyEditForm() {
     this.removedConsultasIds = [];
-    // this.showForm = false;
+
+    const d = this.reportRawDate;
+
+    const cell = this.document.querySelector(`#dia-${d.getDate()}-${d.getMonth() + 1}`);
+
+    this.renderer.removeClass(cell, 'selected');
 
     return (this.editForm = undefined);
   }

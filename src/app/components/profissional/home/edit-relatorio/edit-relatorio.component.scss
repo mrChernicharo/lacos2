@@ -9,11 +9,12 @@
 
   nb-card {
     padding: 16px;
+    // margin: 16px 0 0;
 
     &#front-card {
       position: absolute;
-      width: 464px;
-      // width: 554px;
+      // width: 464px;
+      width: 554px;
     }
     &#back-card {
       // position: absolute;
@@ -38,12 +39,12 @@
       overflow: hidden;
 
       .li {
-        height: 36px;
-        // border: 1px solid blue;
+        height: 34px;
         margin-left: 4px;
         display: flex;
         align-items: center;
         line-height: 16px;
+        font-size: 12px;
 
         &.nome {
           width: 100%;
@@ -71,16 +72,20 @@
   }
 
   .consulta-form {
-    // border: 1px solid green;
     display: flex;
+    margin: 6px 0;
+    // border: 1px solid green;
     // flex-wrap: wrap;
     // align-items: flex-end;
-    margin: 6px 0;
 
     .select-wrapper {
       display: flex;
-      // border: 1px solid grey;
       flex-direction: column;
+      // border: 1px solid grey;
+
+      nb-select-label {
+        font-size: 11px;
+      }
 
       &.nome-paciente {
         width: 214px;
@@ -119,21 +124,31 @@
     }
   }
 
+  .submit-btn-container {
+    padding: 30px 34px 8px;
+  }
+
   .button-wrapper {
     &:not([class='add']) {
-      margin: 0 3px 0 0;
+      // todos os vermelhos
+      margin: 18px 6px 0 0;
     }
     &.add {
       position: relative;
-      margin: 0 0 0 3px;
+      margin: 21px 0 0 3px;
       // border: 1px solid green;
 
       &.no-consultas {
         position: relative;
-
         padding: 6px 0;
         margin: 6px;
       }
     }
   }
+}
+.default-placeholder {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
